@@ -17,17 +17,17 @@ pip install -r requirements.txt
 ```
 ### 2. Description of the files
 
-**Airbnb_NYC.csv** - is the NYC airbnb dataset (Features are described below)
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;**Airbnb_NYC.csv** - is the NYC airbnb dataset (Features are described below)
 
-**NYC_airbnb.ipynb** - contains the data exploratory data analysis (graphs and other visualizations)
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;**NYC_airbnb.ipynb** - contains the data exploratory data analysis (graphs and other visualizations)
 
-**classification_models_to_predict_borough.ipynb** - models to predict the borough of an airbnb listing
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;**classification_models_to_predict_borough.ipynb** - models to predict the borough of an airbnb listing
 
-**classification_models_to_predict_property_type.ipynb** - Predicting the property type
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;**classification_models_to_predict_property_type.ipynb** - Predicting the property type
 
-**helpers.py** - contains helper functions used in the other files for scoring the models, etc.
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;**helpers.py** - contains helper functions used in the other files for scoring the models, etc.
 
-**requirements.txt** - required python packages needed to run the files 
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;**requirements.txt** - required python packages needed to run the files 
 
 
 ## Motivation
