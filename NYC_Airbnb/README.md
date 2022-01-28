@@ -40,7 +40,7 @@ Questions answered by this dataset:
   4. **What kind of price point have the most reviews?** Most of the reviews are on properties priced around the median**
   5. **Is there a relationship between the number of reviews and the price?** Slight positive correlation between reviews and price
 
-For a Non-Technical Overview of the results: 
+Overview provided by article: https://medium.com/@salmanhossain500/what-you-need-to-know-about-airbnb-in-nyc-92ab935144f6 
 
 ## Features of the Dataset
 
@@ -62,11 +62,13 @@ For a Non-Technical Overview of the results:
 
 ## Insights
 
-1. Correlation Matrix
+### 1. Correlation Matrix
 
 ![](https://cdn-images-1.medium.com/max/800/1*7_cx9RQ7FUKH7qxasR6lRw.png)
 
 From this correlation matrix we can gather the different linear of relationships that may exist between the features. The strongest relationship seems to be between Min_Nights and Host_Listing_Cnt suggesting that as the greater number of minimum nights required by the listing the longer that listing is available for. So having lower minimum nights correlates to less time the property is listed on airbnb.
+
+### 2. Box and Whiskers Plot
 
 ![](https://cdn-images-1.medium.com/max/800/1*TXYCO3zJm_66nGt4IwoleA.png)
 
