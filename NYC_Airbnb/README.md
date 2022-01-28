@@ -74,6 +74,8 @@ From this correlation matrix we can gather the different linear of relationships
 
 From the box and whiskers plot we can see the median prices grouped by the different boroughs. From this graph we can extract a few things such as entire homes typically have more variance in their pricing than the other property types.
 
+### 3. Scatter Plot
+
 ![](https://cdn-images-1.medium.com/max/800/1*iJT3Oz77s5DmrHZesdFwNQ.png)
 
 Private rooms tend ot have a steeper drop in price which makes sense since most people would not want to pay more when they could just get an entire home listing. This is indicated when seeing how right skewed the Private room is compared to Enitre home
