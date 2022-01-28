@@ -27,6 +27,11 @@
 
 **Price** - What is the market price they are askin for
 
+## Libraries used
+Numpy
+Pandas
+Sklearn
+XGBoost
 
-Credits:
+## Credits:
 Dataset from https://www.kaggle.com/sarthakniwate13/air-bnb-nyc-data
