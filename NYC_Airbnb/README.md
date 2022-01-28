@@ -15,7 +15,7 @@
 ```
 pip install -r requirements.txt
 ```
-### 2. Description of the files
+### 2. Content of the files
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;**Airbnb_NYC.csv** - is the NYC airbnb dataset (Features are described below)
 
