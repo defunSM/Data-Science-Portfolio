@@ -1,16 +1,12 @@
 # New York City Airbnb Dataset
 
 ## Table of Contents
-
 **[Setup](#setup)**<br>
-
 **[Motivation](#motivation)**<br>
-
 **[Features of the Dataset](#features-of-the-dataset)**<br>
-
-Libraries
-
-Credit
+**[Insights](#insights)**<br>
+**[Libraries](#libraries)**<br>
+**[Credits](#credits)**<br>
 
 ## Setup
 
@@ -49,7 +45,11 @@ Questions answered by this dataset:
 
 **Price** - What is the market price they are askin for
 
-## Libraries used
+## Insights
+
+
+
+## Libraries
 - Numpy
 - Pandas
 - Sklearn
