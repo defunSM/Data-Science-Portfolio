@@ -1,4 +1,6 @@
 # New York City Airbnb Dataset
+## Description
+An exploratory data analysis of NYC airbnb dataset and creating a classification model in order to predict the borough of a property.
 
 ## Table of Contents
 **[Setup](#setup)**<br>
@@ -34,11 +36,11 @@ pip install -r requirements.txt
 The motivation for examining this data set is to see what kind of insights we can extract to help answer the following questions below:
 
 Questions answered by this dataset:
-  1. **What is a fair price for an airbnb?** $150 for Entire Home, $75 for Private Room and $45 for Shared Room
-  2. **Which borough has the highest or lowest prices per night?** Manhattan
-  3. **What kind of properties are rented out the most?** Entire Homes
-  4. **What kind of price point have the most reviews?** Most of the reviews are on properties priced around the median**
-  5. **Is there a relationship between the number of reviews and the price?** Slight positive correlation between reviews and price
+  1. What kind of properties are available and are most demanded?
+
+  2. So how do we know what is a “fair price” for an Airbnb in NYC and how does it vary based on borough?
+
+  3. If you have a property in NYC how should you setup your listing so that it is appealing offer?
 
 Overview provided by article: https://medium.com/@salmanhossain500/what-you-need-to-know-about-airbnb-in-nyc-92ab935144f6 
 
