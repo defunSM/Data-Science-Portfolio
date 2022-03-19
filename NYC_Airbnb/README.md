@@ -7,6 +7,7 @@ An exploratory data analysis of NYC airbnb dataset and creating a classification
 **[Motivation](#motivation)**<br>
 **[Features of the Dataset](#features-of-the-dataset)**<br>
 **[Insights](#insights)**<br>
+**[Conclusion](#conclusion)**<br>
 **[Libraries](#libraries)**<br>
 **[Credits](#credits)**<br>
 
@@ -82,6 +83,20 @@ From the box and whiskers plot we can see the median prices grouped by the diffe
 ![](https://cdn-images-1.medium.com/max/800/1*iJT3Oz77s5DmrHZesdFwNQ.png)
 
 Private rooms tend ot have a steeper drop in price which makes sense since most people would not want to pay more when they could just get an entire home listing. This is indicated when seeing how right skewed the Private room is compared to Enitre home
+
+## Conclusion
+
+> What kind of properties are available and are most demanded?
+
+There is greater demand in entire homes rather than private rooms or shared rooms. Also the most reviewed listings are the ones that are around the median price.
+
+> So how do we know what is a “fair price” for an Airbnb in NYC and how does it vary based on borough?
+
+So now that we taken a look at all of that. We have a better understanding of the airbnb market. The fairest prices as mentioned are the median price found for each the property types. The cheapest being in the Bronx and the higher prices in Manhattan.
+
+> If you have a property in NYC how should you setup your listing so that it is appealing offer?
+
+So with all this data how should one list a property on airbnb? For the best results rent out an entire home with low minimum nights if you are trying to rent it out faster which we identified as to decrease the number of days that listing is available. With entire homes we know people are willing to spend more so those are the most profitable having higher price points.
 
 ## Libraries
 - Numpy
