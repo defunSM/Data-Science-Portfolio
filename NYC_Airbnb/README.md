@@ -19,7 +19,7 @@ pip install -r requirements.txt
 ```
 ### 2. File Contents
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;[Airbnb_NYC.csv] - is the NYC airbnb dataset (Features are described below)
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;**Airbnb_NYC.csv** - is the NYC airbnb dataset (Features are described below)
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;**NYC_airbnb.ipynb** - is the main file contains the data exploratory data analysis (graphs and other visualizations)
 
