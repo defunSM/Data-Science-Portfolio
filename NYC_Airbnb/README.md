@@ -10,16 +10,16 @@ An exploratory data analysis of NYC airbnb dataset and creating a classification
 **[Libraries](#libraries)**<br>
 **[Credits](#credits)**<br>
 
-## Setup
+# Setup
 
 ### 1. To get started install the requirements using pip
 
 ```
 pip install -r requirements.txt
 ```
-### 2. Content of the files
+### 2. File Contents
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;**Airbnb_NYC.csv** - is the NYC airbnb dataset (Features are described below)
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;![Airbnb_NYC.csv](https://github.com/defunSM/Data-Science-Machine-Learning-Portfolio/blob/main/NYC_Airbnb/NYC_airbnb.ipynb) - is the NYC airbnb dataset (Features are described below)
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;**NYC_airbnb.ipynb** - is the main file contains the data exploratory data analysis (graphs and other visualizations)
 
@@ -32,7 +32,7 @@ pip install -r requirements.txt
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;**requirements.txt** - required python packages needed to run the files 
 
 
-## Motivation
+# Motivation
 The motivation for examining this data set is to see what kind of insights we can extract to help answer the following questions below:
 
 Questions answered by this dataset:
@@ -44,7 +44,7 @@ Questions answered by this dataset:
 
 Overview provided by article: https://medium.com/@salmanhossain500/what-you-need-to-know-about-airbnb-in-nyc-92ab935144f6 
 
-## Features of the Dataset
+# Features of the Dataset
 
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;**Latitude and Longitude** - Geographical location of the property
 
@@ -65,19 +65,20 @@ Overview provided by article: https://medium.com/@salmanhossain500/what-you-need
 ## Insights
 
 ### 1. Correlation Matrix
+---
 
 ![](https://cdn-images-1.medium.com/max/800/1*7_cx9RQ7FUKH7qxasR6lRw.png)
 
 From this correlation matrix we can gather the different linear of relationships that may exist between the features. The strongest relationship seems to be between Min_Nights and Host_Listing_Cnt suggesting that as the greater number of minimum nights required by the listing the longer that listing is available for. So having lower minimum nights correlates to less time the property is listed on airbnb.
 
 ### 2. Box and Whiskers Plot
-
+---
 ![](https://cdn-images-1.medium.com/max/800/1*TXYCO3zJm_66nGt4IwoleA.png)
 
 From the box and whiskers plot we can see the median prices grouped by the different boroughs. From this graph we can extract a few things such as entire homes typically have more variance in their pricing than the other property types.
 
 ### 3. Scatter Plot
-
+---
 ![](https://cdn-images-1.medium.com/max/800/1*iJT3Oz77s5DmrHZesdFwNQ.png)
 
 Private rooms tend ot have a steeper drop in price which makes sense since most people would not want to pay more when they could just get an entire home listing. This is indicated when seeing how right skewed the Private room is compared to Enitre home
