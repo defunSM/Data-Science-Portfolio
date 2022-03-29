@@ -45,6 +45,38 @@ def main():
         categories = pd.read_csv(sys.argv[2])
     except:
         print("Error: Failed to read the second csv argument")
+        
+    # Merge both datasets
+    df = pd.merge(messages, categories)
+    
+    # Split categories into seperate category columns
+    categories = categories['categories'].str.split(";", expand=True)
+    
+    # rename column names
+    row = categories.iloc[0]
+    category_colnames = [i.split('-')[0] for i in row]
+    categories.columns = category_colnames
+    
+    # Convert category values to numberic either 0 or 1
+    for column in categories:
+        # set each value to be the last character of the string
+        categories[column] = categories[column].str.split('-', expand=True)[1]
+    
+        # convert column from string to numeric
+        categories[column] = pd.to_numeric(categories[column])
+        
+    # Replace categories colum in df to new category columns
+    df = df.drop(columns=['categories'])
+    
+    # concatenate the original dataframe with the new categories dataframe
+    df = pd.concat([df, categories], axis=1)
+    
+    # Remove duplicates
+    df = df.drop_duplicates
+    
+    # Save and clean dataset into sqlite database
+    engine = create_engine('sqlite:///' + sys.argv[3])
+    df.to_sql(sys.argv[3], engine, index=False)
     
 if __name__ == '__main__':
     main()
