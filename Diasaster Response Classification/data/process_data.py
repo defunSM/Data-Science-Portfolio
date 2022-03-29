@@ -1,17 +1,56 @@
 import sys
-
+import numpy as np
+import pandas as pd
+from sqlalchemy import create_engine
 
 def load_data(messages_filepath, categories_filepath):
-    pass
+    """Loading messages and categories csv"""
+    
+    # Reading from the disaster messages
+    try:
+        messages = pd.read_csv(messages_filepath)
+    except:
+        print("Error: Failed to read the first csv argument")
+    
+    # Reading from the disaster categories
+    try:
+        categories = pd.read_csv(categories_filepath)
+    except:
+        print("Error: Failed to read the second csv argument")
+        
+    # Merge both datasets
+    df = pd.merge(messages, categories)
+    
+    # Convert category values to numberic either 0 or 1
+    for column in categories:
+        # set each value to be the last character of the string
+        categories[column] = categories[column].str.split('-', expand=True)[1]
+    
+        # convert column from string to numeric
+        categories[column] = pd.to_numeric(categories[column])
+        
+    # Replace categories colum in df to new category columns
+    df = df.drop(columns=['categories'])
+    
+    # concatenate the original dataframe with the new categories dataframe
+    df = pd.concat([df, categories], axis=1)
+    
+    return df
 
 
 def clean_data(df):
-    pass
+    """Doing any data set cleaning such as removing duplicates on the dataframe"""
+    
+    # Remove duplicates
+    df = df.drop_duplicates
+    return df
 
 
 def save_data(df, database_filename):
-    pass  
-
+    """Save and clean dataset into sqlite database"""
+    
+    engine = create_engine('sqlite:///' + database_filename)
+    df.to_sql(database_filename, engine, index=False)
 
 def main():
     if len(sys.argv) == 4:
