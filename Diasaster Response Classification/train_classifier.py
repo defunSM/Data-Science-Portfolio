@@ -13,3 +13,15 @@
     Example Usage: python train_classifier.py ../data/DisasterResponse.db classifier.pkl
 
 """
+
+def load_data():
+    pass
+
+def model_data():
+    pass
+
+def main():
+    pass
+
+if __name__ == '__main__':
+    pass
