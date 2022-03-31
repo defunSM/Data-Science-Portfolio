@@ -44,7 +44,6 @@ from sklearn.metrics import confusion_matrix, accuracy_score, classification_rep
 from sklearn.neighbors import KNeighborsClassifier
 
 
-
 def load_data(db_filepath):
     """ Loads the features from the database into dataframes needed to train the ML model
 
