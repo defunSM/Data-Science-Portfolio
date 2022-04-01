@@ -43,6 +43,9 @@ def clean_data(df):
     
     # Remove duplicates
     df = df.drop_duplicates
+    
+    # Want to drop child_alone as well since there are no samples for that category
+    df = df.drop(columns=['child_alone'])
     return df
 
 
