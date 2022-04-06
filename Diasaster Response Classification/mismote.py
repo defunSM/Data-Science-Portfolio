@@ -1,8 +1,5 @@
 # This code is from https://medium.com/thecyphy/handling-data-imbalance-in-multi-label-classification-mlsmote-531155416b87
 
-# With some modifications in the MLSMOTE to make it work in ML pipeline to avoid
-# an attributeError: 'numpy.ndarray' object has no attribute 'loc'
-
 # -*- coding: utf-8 -*-
 # Importing required Library
 import numpy as np
@@ -116,10 +113,6 @@ def MLSMOTE(X,y, n_sample):
     n = len(indices2)
     new_X = np.zeros((n_sample, X.shape[1]))
     target = np.zeros((n_sample, y.shape[1]))
-    
-    # Modified so that X, and y are dataframes
-    #X = pd.DataFrame(X)
-    #y = pd.DataFrame(y)
     
     for i in range(n_sample):
         reference = random.randint(0,n-1)
