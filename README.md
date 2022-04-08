@@ -10,7 +10,7 @@ A showcase of projects using data science and machine learning models.
 
 ## Projects
 
-[**Disaster Response Classification**](https://github.com/defunSM/Data-Science-Machine-Learning-Portfolio/tree/main/Diasaster%20Response%20Classification) - Text messages to created a model to do **Multi-Label** classification of the diasaster category. Built a ETL and ML pipeline to process **class imbalanced** data from [Appen](https://appen.com/) and *improved f1-score* of model using **undersampling**. 
+[**Disaster Response Classification**](https://github.com/defunSM/Data-Science-Machine-Learning-Portfolio/tree/main/Diasaster%20Response%20Classification) - Text messages as input to a **Multi-Label** classification model to identify the diasaster category. Built a ETL and ML pipeline to process **class imbalanced** data from [Appen](https://appen.com/) and *improved f1-score* of model using **undersampling**. 
 
 [**NYC Salary Growth Predicator**](https://github.com/defunSM/NYC-Salary-Predictor) - Created model to predict Salary based on title description and forcast expected growth of a job to help inform NYC budget. Exploratory Data Analysis of the data set from [OpenData](https://opendata.cityofnewyork.us/data/). 
 
