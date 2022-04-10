@@ -13,3 +13,13 @@
 3. Run your web app: `python run.py`
 
 4. Click the `PREVIEW` button to open the homepage
+
+```mermaid
+graph TB
+    A[Text Message] -->|Tokenization| B(Transformed Text Message)
+    B --> D[Machine Learning Pipeline]
+    C[Labeled Output] --> |Feature Extraction| D[Machine Learning Pipeline]
+    D --> |Exported Classifier| E{Multi Label Classifier}
+    G[User Input Text Messages] --> |NLP Pipeline| E
+    E --> F[(New Labeled Output)]
+```
