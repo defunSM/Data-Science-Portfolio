@@ -10,7 +10,7 @@
     Outputs results on the test set
     Exports the final model as a pickle file
     
-    Example Usage: python train_classifier.py ../data/DisasterResponse.db classifier.pkl
+    Example Usage: python train_classifier.py data/DisasterResponse.db classifier.pkl
 
 """
 # import libraries
@@ -57,7 +57,7 @@ def load_data(db_filepath):
     """
     # Reading from the database
     engine = create_engine('sqlite:///' + db_filepath)
-    df = pd.read_sql_table(db_filepath)
+    df = pd.read_sql_table('disaster', engine)
     
     # Setting up the X and Y dataframes
     X = df.iloc[:,1].dropna()
@@ -99,7 +99,7 @@ def ml_pipeline():
     
     return pipeline
 
-def classification_report(model, X_test, Y_test, col_names):
+def classification_model_report(model, X_test, Y_test, col_names):
     
     Y_pred = model.predict(X_test)
     print(classification_report(Y_test, Y_pred, target_names=col_names))
@@ -109,6 +109,7 @@ def save_model(model, model_filepath):
     joblib.dump(model, model_filepath)
 
 def main():
+
     if len(sys.argv) == 3:
         db_filepath, model_filepath = sys.argv[1:]
         print('Loading data...\n    DATABASE: {}'.format(db_filepath))
@@ -122,7 +123,7 @@ def main():
         model.fit(X_train, Y_train)
         
         print('Evaluating model...')
-        classification_report(model, X_test, Y_test, col_names)
+        classification_model_report(model, X_test, Y_test, col_names)
 
         print('Saving model...\n    MODEL: {}'.format(model_filepath))
         save_model(model, model_filepath)
@@ -137,4 +138,4 @@ def main():
 
 
 if __name__ == '__main__':
-    pass
+    main()
