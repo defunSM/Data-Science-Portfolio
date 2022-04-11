@@ -26,11 +26,11 @@ def tokenize(text):
     return clean_tokens
 
 # load data
-engine = create_engine('sqlite:///../data/disaster.db')
-df = pd.read_sql_table('disaster', engine)
+engine = create_engine('sqlite:///disaster2.db')
+df = pd.read_sql_table('disaster2.db', engine)
 
 # load model
-model = joblib.load("../classifier.pkl")
+model = joblib.load("classifier2.pkl")
 
 
 # index webpage displays cool visuals and receives user input text for model

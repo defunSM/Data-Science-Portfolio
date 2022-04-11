@@ -57,7 +57,7 @@ def load_data(db_filepath):
     """
     # Reading from the database
     engine = create_engine('sqlite:///' + db_filepath)
-    df = pd.read_sql_table('disaster', engine)
+    df = pd.read_sql_table(db_filepath, engine)
     
     # Setting up the X and Y dataframes
     X = df.iloc[:,1].dropna()
