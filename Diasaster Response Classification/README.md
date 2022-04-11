@@ -4,7 +4,7 @@ In an emergency situation such as a diasaster, diasaster response workers may be
 ---
 
 + [**Setup Instructions**](#instructions)
-    + [**Project Flowchart**](#flowchart)
+    + [**Flowchart**](#flowchart)
     + [**Motivation**](#motivation)
     + [**Preprocessing**](#preprocessing)
 + [**NLP Pipeline**](#nlp-pipeline)
@@ -50,11 +50,27 @@ As such this project utilizes both a [NLP pipeline](#nlp-pipeline) as we are dea
 ---
 ### NLP pipeline
 ---
+process_data.py, write a data cleaning pipeline that:
+
+    Loads the messages and categories datasets
+    Merges the two datasets
+    Cleans the data
+    Stores it in a SQLite database
+
+
 #### Tokenization
 ---
 ### ML pipeline
 ---
-The machine learning script, train_classifier.py, runs in the terminal without errors. The script takes the database file path and model file path, creates and trains a classifier, and stores the classifier into a pickle file to the specified model file path.
+train_classifier.py, write a machine learning pipeline that:
+
+    Loads data from the SQLite database
+    Splits the dataset into training and test sets
+    Builds a text processing and machine learning pipeline
+    Trains and tunes a model using GridSearchCV
+    Outputs results on the test set
+    Exports the final model as a pickle file
+
 
 #### MultiOutputClassifier
 ---
