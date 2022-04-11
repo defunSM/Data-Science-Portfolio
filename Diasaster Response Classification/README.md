@@ -6,7 +6,6 @@ In an emergency situation such as a diasaster, diasaster response workers may be
 + [**Setup Instructions**](#instructions)
     + [**Flowchart**](#flowchart)
     + [**Motivation**](#motivation)
-    + [**Preprocessing**](#preprocessing)
 + [**NLP Pipeline**](#nlp-pipeline)
     + [**Tokenization**](#tokenization)
 + [**ML Pipeline**](#ML-pipeline)
@@ -43,9 +42,6 @@ graph TB
 In an emergency situation such as a diasaster, diasaster response workers may be flooded with new messages requesting aid. This web app is intended to classify these messages into several categories in order to help emergency workers response quicker!
 
 As such this project utilizes both a [NLP pipeline](#nlp-pipeline) as we are dealing with text data and a [ML pipeline](#ml-pipeline) to optimize our classifier. 
-
-#### Preprocessing
-----
 
 ---
 ### NLP pipeline

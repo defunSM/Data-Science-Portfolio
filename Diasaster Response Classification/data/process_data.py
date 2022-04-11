@@ -21,6 +21,19 @@ def load_data(messages_filepath, categories_filepath):
     # Merge both datasets
     df = pd.merge(messages, categories)
     
+    # Create a dataframe of the 36 individual category columns
+    categories = df['categories'].str.split(';', expand = True)
+    
+    # select the first row of the categories dataframe
+    row = categories.iloc[0]
+
+    # use this row to extract a list of new column names for categories.
+    # one way is to apply a lambda function that takes everything 
+    # up to the second to last character of each string with slicing
+    category_colnames = [i.split('-')[0] for i in row]
+    
+    categories.columns = category_colnames
+    
     # Convert category values to numberic either 0 or 1
     for column in categories:
         # set each value to be the last character of the string
@@ -32,8 +45,11 @@ def load_data(messages_filepath, categories_filepath):
     # Replace categories colum in df to new category columns
     df = df.drop(columns=['categories'])
     
+    
     # concatenate the original dataframe with the new categories dataframe
     df = pd.concat([df, categories], axis=1)
+    
+
     
     return df
 
@@ -42,10 +58,15 @@ def clean_data(df):
     """Doing any data set cleaning such as removing duplicates on the dataframe"""
     
     # Remove duplicates
-    df = df.drop_duplicates
+    df.drop_duplicates
     
     # Want to drop child_alone as well since there are no samples for that category
-    df = df.drop(columns=['child_alone'])
+    #df.drop(columns=['child_alone'])
+    
+    # Dropping rows that have a value of 2
+    print(df.head(5))
+    df = df[df['related'] != 2]
+    
     return df
 
 
