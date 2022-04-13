@@ -26,11 +26,12 @@ def tokenize(text):
     return clean_tokens
 
 # load data
-engine = create_engine('sqlite:///disaster2.db')
-df = pd.read_sql_table('disaster2.db', engine)
+engine = create_engine('sqlite:///disaster.db')
+df = pd.read_sql_table('disaster.db', engine)
+df.drop(['child_alone'], axis=1, inplace=True)
 
 # load model
-model = joblib.load("classifier2.pkl")
+model = joblib.load("classifier.pkl")
 
 
 # index webpage displays cool visuals and receives user input text for model
@@ -83,6 +84,9 @@ def go():
     # use model to predict classification for query
     print(query)
     classification_labels = model.predict(["".join(query)])[0]
+    # Improvement try to get probabilities for classification
+    # https://machinelearningmastery.com/probability-metrics-for-imbalanced-classification/
+    
     print(classification_labels)
     classification_results = dict(zip(df.columns[4:], classification_labels))
 

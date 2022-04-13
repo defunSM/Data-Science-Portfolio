@@ -43,6 +43,44 @@ from sklearn.metrics import confusion_matrix, accuracy_score, classification_rep
 
 from sklearn.neighbors import KNeighborsClassifier
 
+def under_sampling_multilabel(df, y_feature_index=1, samples=200):
+    """This is an undersampling function for multilabel data.
+       Part of this code is used to make a transformer to be used in a
+       ml pipeline 
+
+    Args:
+        df (Dataframe): The imbalanced dataframe
+        ---
+        y_feature_index (int, optional): indexing where the independent features begin for the dataset. 
+        
+        Example: Imagine a simple dataset with columns ['age', 'smoker', 'college student']
+        
+        If trying to predict smoker and college student using the age column then y_feature_index should be 1
+        ----
+        samples (int, optional): The number of samples for each category. Defaults to 200.
+
+    Returns:
+        Dataframe: Returns an undersampled dataset using sample
+    """
+    print("Applying undersampling...")
+    
+    df_resampled = []
+    
+    # Adding samples if the categatory matches.
+    # IMPROVEMENT: This process can be improved
+    # by trying to also not select categories that were
+    # already added in. This way you don't accumulate extra
+    # samples. This is the reason why the sample is kept low.
+    
+    for i in df.iloc[:,y_feature_index:].columns:
+        new_df = df[df[i]==1]
+        #print(new_df.shape)
+        df_resampled.append(new_df.sample(200, replace=True))
+        
+    df = pd.concat(df_resampled)
+    print(df.shape)
+    
+    return df
 
 def load_data(db_filepath):
     """ Loads the features from the database into dataframes needed to train the ML model
@@ -58,6 +96,16 @@ def load_data(db_filepath):
     # Reading from the database
     engine = create_engine('sqlite:///' + db_filepath)
     df = pd.read_sql_table(db_filepath, engine)
+    
+    # Drop child_alone since there are no samples for it and so
+    # it doesn't make sense to predict for it if there are no samples
+    try:
+        df.drop(['child_alone'], axis=1, inplace=True)
+    except:
+        pass
+    
+    # Applying underSampling
+    df = under_sampling_multilabel(df, y_feature_index=4, samples=200)
     
     # Setting up the X and Y dataframes
     X = df.iloc[:,1].dropna()
