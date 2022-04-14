@@ -25,7 +25,7 @@ Some of the difficulities with this dataset stem from implementing the sampling 
 We can improve the performance of the model even further through feature engineering. The idea is to merge some of the small sample target features into the larger ones. The larger target features are typically more general and so it can make sense to do this. This improves f1 score to 0.93 improving by 0.09 however its important to consider that we are trading off the ability of our model to predict very specific types of diasasters. This may not be acceptable since there might be specialized gear that disaster teams may need to being with them before hand to deal with the situation. Therefore they may need that information of what the exact situation is. However if that information isn't needed and it is okay to have the general category then it may be okay to do this feature merging.
 
 ![With Feature Engineering](https://i.imgur.com/tDa920W.png)
-
+Undersampling, With Feature Engineering, Without GridSearchCV
 (Left to right: Precision Score, Recall Score, F1 Score, # of Samples)
 
 #### Model Results
@@ -33,9 +33,28 @@ There are three models that was tested **DecisionTreeClassifier**, **Random Fore
 
 Through a combination of **undersampling**, **tokenization**, **tdifTransformer** and **feature engineering** the model improved in _precision_, _recall_ and _f1-score_. 
 
-![Without Feature Engineering](https://i.imgur.com/1EPIk7G.png)
+**Random Forest**
 
+![Without Feature Engineering](https://i.imgur.com/1EPIk7G.png)
+Undersampling, Without Feature Engineering, Without GridSearchCV
 (Left to right: Precision Score, Recall Score, F1 Score, # of Samples)
+
+![GridSearchCV](https://i.imgur.com/2iaYAnb.png)
+Undersampling, Without Feature Engineering, With GridSearchCV
+(Left to right: Precision Score, Recall Score, F1 Score, # of Samples)
+
+**Decision Tree**
+
+![decision tree results](https://i.imgur.com/9KZLmzB.png)
+Undersampling, Without Feature Engineering, Without GridSearchCV
+(Left to right: Precision Score, Recall Score, F1 Score, # of Samples)
+
+**AdaBoostClassifier**
+
+![adaboost results](https://i.imgur.com/1DzeVXD.png)
+Undersampling, Without Feature Engineering, Without GridSearchCV
+(Left to right: Precision Score, Recall Score, F1 Score, # of Samples)
+
 ### Instructions
 ___
 1. Run the following commands in the project's root directory to set up your database and model.
