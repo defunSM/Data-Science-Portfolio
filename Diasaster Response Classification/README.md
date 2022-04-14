@@ -27,6 +27,10 @@ We can improve the performance of the model even further through feature enginee
 #### Model Results
 There are three models that was tested **DecisionTreeClassifier**, **Random Forest Classifier**, **AdaBoostClassifier**. The Random Forest Classifier out performed in our evaluation metrics relative to the other two as expected since it is an ensemble method. 
 
+Through a combination of **undersampling**, **tokenization**, **tdifTransformer** and **feature engineering** the model improved in _precision_, _recall_ and _f1-score_. 
+
+![https://i.imgur.com/tDa920W.png](https://i.imgur.com/tDa920W.png)
+(Left to right: Precision Score, Recall Score, F1 Score, # of Samples)
 
 
 
