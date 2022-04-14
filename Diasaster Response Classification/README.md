@@ -30,6 +30,7 @@ There are three models that was tested **DecisionTreeClassifier**, **Random Fore
 Through a combination of **undersampling**, **tokenization**, **tdifTransformer** and **feature engineering** the model improved in _precision_, _recall_ and _f1-score_. 
 
 ![https://i.imgur.com/tDa920W.png](https://i.imgur.com/tDa920W.png)
+
 (Left to right: Precision Score, Recall Score, F1 Score, # of Samples)
 
 
