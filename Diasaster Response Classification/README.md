@@ -6,7 +6,7 @@ The disaster response dataset is class imbalanced with several categories that h
 
 Some of the difficulities with this dataset stem from implementing the sampling since this is a **multi label classification** model. There are several categories that are are predicted. Thus SMOTE which artificially creates samples can not be implemented easily. Potentially can revisit this avenue of improvement and try to implement a custom SMOTE transformer for the ML pipeline.
 
-There are three models that was tested **DecisionTreeClassifier**, **Random Forest Classifier**, **AdaBoostClassifier**. THe Random Forest Classifier out performed in our evaluation metrics relative to the other two as expected since it is an ensemble method.
+There are three models that was tested **DecisionTreeClassifier**, **Random Forest Classifier**, **AdaBoostClassifier**. The Random Forest Classifier out performed in our evaluation metrics relative to the other two as expected since it is an ensemble method.
 ### Table of Contents
 ---
 + [**Conclusion**](#conclusion)
