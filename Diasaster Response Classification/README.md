@@ -2,7 +2,7 @@
 In an emergency situation such as a diasaster, diasaster response workers may be flooded with new messages requesting aid. This web app is intended to classify these messages into several categories in order to help emergency workers response quicker!
 
 ### Conclusion
-The disaster response dataset is class imbalanced with several categories that have 5% and even 1% of the total samples in the dataset. As such the approach chosen is undersampling. In the context of the data this is an appropriate method to deal with imbalance since many of the text data are very similar but not exactly the same. However it is important to understand the trade off in using undersampling is we are losing a ton of data. This approach improved f1 score by 0.33.
+The disaster response dataset is class imbalanced with several categories that have 5% and even 1% of the total samples in the dataset. As such the approach chosen is undersampling. In the context of the data this is an appropriate method to deal with imbalance since many of the text data are very similar but not exactly the same. However it is important to understand the trade off in using undersampling is we are losing a ton of data. Thus we are justifying this choice since most of the data is similar. This approach improved f1 score by 0.33 from 0.51 to 0.84. This is without even using GridSearchCV to optimize for hyperparameters.
 
 Some of the difficulities with this dataset stem from implementing the sampling since this is a multi label classification model. There are several categories that is being predicted with one category that has no samples which was dropped. Thus SMOTE which artificially creates samples can not be implemented easily. Potentially can revisit this avenue of improvement and try to implement a custom SMOTE transformer for the ML pipeline.
 
@@ -63,6 +63,26 @@ process_data.py, write a data cleaning pipeline that:
 
 #### Tokenization
 ---
+
+For the text message data we need to handle capitalization, punctuation, steming and also removing stop words, before we use TfidfTransformer.
+
+```
+def tokenize(text):
+    
+    clean_tokens = []
+    
+    # lowercasing and removing punctuation
+    text = re.sub(r"[^a-zA-Z0-9]", " ", text.lower().strip())
+    tokens = word_tokenize(text)
+    # Remove stop words + stem
+    stemmer = PorterStemmer()
+    
+    
+    stop_words = stopwords.words("english")
+    clean_tokens = [ stemmer.stem(word) for word in tokens if word not in stop_words]
+
+    return clean_tokens
+```
 ### ML pipeline
 ---
 train_classifier.py, write a machine learning pipeline that:
@@ -77,3 +97,5 @@ train_classifier.py, write a machine learning pipeline that:
 
 #### MultiOutputClassifier
 ---
+
+As mentioned since the model that is developed involves predicting potentially 36 categories and most classifiers only one target feature. Multi Output Classifier is used to use typical classifiers that don't natively support multi-target classification.
