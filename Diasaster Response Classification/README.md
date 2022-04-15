@@ -75,7 +75,7 @@ ___
 
 3. Run your web app: `python run.py`
 
-4. Click the `PREVIEW` button to open the homepage
+4. Go to http://127.0.0.1:3000 to view the homepage
 
 #### Flowchart
 ---
