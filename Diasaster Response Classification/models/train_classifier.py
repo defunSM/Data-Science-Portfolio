@@ -79,7 +79,7 @@ def under_sampling_multilabel(df, y_feature_index=1, samples=200):
         df_resampled.append(new_df.sample(200, replace=True))
         
     df = pd.concat(df_resampled)
-    print(df.shape)
+    #print(df.shape)
     
     return df
 
@@ -143,6 +143,15 @@ def ml_pipeline():
         ('clf', MultiOutputClassifier(RandomForestClassifier(), n_jobs=-1))
     ])
     
+    # Optimizing hyperparameters
+    parameters = {'clf__estimator__n_estimators': [100,150],
+                  'clf__estimator__min_samples_split': [2, 5],
+                  'clf__estimator__max_depth': [100, None],
+              'clf__n_jobs': [-1], 
+              'clf__estimator__n_jobs': [-1]}
+
+    pipeline = GridSearchCV(pipeline, parameters)
+    
     return pipeline
 
 def classification_model_report(model, X_test, Y_test, col_names):
@@ -167,6 +176,8 @@ def main():
         
         print('Training model...')
         model.fit(X_train, Y_train)
+        
+        print(model.best_params_)
         
         print('Evaluating model...')
         classification_model_report(model, X_test, Y_test, col_names)
