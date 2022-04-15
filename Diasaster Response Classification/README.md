@@ -37,29 +37,21 @@ There are three models that was tested **DecisionTreeClassifier**, **Random Fore
 
 Through a combination of **undersampling**, **tokenization**, **tdifTransformer** and **feature engineering** the model improved in _precision_, _recall_ and _f1-score_. 
 
-##### **Random Forest**
+##### **Random Forest** (Without and with GridSearchCV)
 
 ![Without Feature Engineering](https://i.imgur.com/1EPIk7G.png)
 
-Undersampling, Without Feature Engineering, Without GridSearchCV
 
 ![GridSearchCV](https://i.imgur.com/2iaYAnb.png)
 
-Undersampling, Without Feature Engineering, With GridSearchCV
-
-
-##### **Decision Tree**
+##### **Decision Tree** 
 
 ![decision tree results](https://i.imgur.com/9KZLmzB.png)
-
-Undersampling, Without Feature Engineering, Without GridSearchCV
 
 
 ##### **AdaBoostClassifier**
 
 ![adaboost results](https://i.imgur.com/1DzeVXD.png)
-
-Undersampling, Without Feature Engineering, Without GridSearchCV
 
 
 ### Instructions
