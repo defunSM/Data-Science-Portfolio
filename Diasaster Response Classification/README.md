@@ -100,7 +100,7 @@ process_data.py, write a data cleaning pipeline that:
 #### Tokenization
 ---
 
-For the text message data we need to handle capitalization, punctuation, steming and also removing stop words, before we use TfidfTransformer.
+For the text message data we need to handle capitalization, punctuation, lemmatization.
 
 ```python
 def tokenize(text):
@@ -110,14 +110,11 @@ def tokenize(text):
     # lowercasing and removing punctuation
     text = re.sub(r"[^a-zA-Z0-9]", " ", text.lower().strip())
     tokens = word_tokenize(text)
-    # Remove stop words + stem
-    stemmer = PorterStemmer()
     
-    
-    stop_words = stopwords.words("english")
-    clean_tokens = [ stemmer.stem(word) for word in tokens if word not in stop_words]
+    # Applying lemmatization i.e mapping words back into its root
+    lemmed_tokens = [WordNetLemmatizer().lemmatize(word) for word in tokens]
 
-    return clean_tokens
+    return lemmed_tokens
 ```
 ### ML pipeline
 ---
