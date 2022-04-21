@@ -8,6 +8,7 @@ In an emergency situation such as a diasaster, diasaster response workers may be
 + [**Setup Instructions**](#instructions)
     + [**Flowchart**](#flowchart)
     + [**Motivation**](#motivation)
+    + [**Visualizations**](#visualizations)
 + [**NLP Pipeline**](#nlp-pipeline)
     + [**Tokenization**](#tokenization)
 + [**ML Pipeline**](#mL-pipeline)
@@ -85,6 +86,13 @@ graph TB
 In an emergency situation such as a diasaster, diasaster response workers may be flooded with new messages requesting aid. This web app is intended to classify these messages into several categories in order to help emergency workers response quicker!
 
 As such this project utilizes both a [NLP pipeline](#nlp-pipeline) as we are dealing with text data and a [ML pipeline](#ml-pipeline) to optimize our classifier. 
+
+#### Visualizations
+---
+##### Barplot
+![](https://github.com/defunSM/Data-Science-Machine-Learning-Portfolio/blob/main/Diasaster%20Response%20Classification/viz/barplot_viz.png)
+##### Word Cloud
+![](https://github.com/defunSM/Data-Science-Machine-Learning-Portfolio/blob/main/Diasaster%20Response%20Classification/viz/wordcloud.png)
 
 ---
 ### NLP pipeline
