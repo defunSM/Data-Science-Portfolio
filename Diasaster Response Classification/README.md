@@ -21,10 +21,10 @@ In an emergency situation such as a diasaster, diasaster response workers may be
 The disaster response dataset is class imbalanced with several categories that have 5% and even 1% of the total samples in the dataset. As such the approach chosen is undersampling. In the context of the data this is an appropriate method to deal with imbalance since many of the text data are very similar but not exactly the same. However it is important to understand the trade off in using undersampling is we are losing a ton of data. Thus we are justifying this choice since most of the data is similar. _This approach improved **f1 score** by 0.33 from 0.51 to 0.84_. This is without even using **GridSearchCV** to optimize for hyperparameters.
 
 #### Sampling
-Some of the difficulities with this dataset stem from implementing the sampling since this is a **multi label classification** model. There are several categories that are are predicted. Thus SMOTE which artificially creates samples can not be implemented easily. Potentially can revisit this avenue of improvement and try to implement a custom SMOTE transformer for the ML pipeline.
+Some of the difficulities with this dataset stem from implementing the sampling since this is a **multi label classification** model. There are several categories that are are predicted. Thus SMOTE which artificially creates samples can not be implemented easily. Potentially can revisit this avenue of improvement and try to implement a custom SMOTE transformer for the ML pipeline. Thus for handling the imbalanced dataset we use a stratified bootstrap method. In which we subsampled each group seperately. This resulted in a porportional dataset and improved our overall evaluation metrics for the model.
 
 #### Feature Engineering (Trade offs)
-We can improve the performance of the model even further through feature engineering. The idea is to merge some of the small sample target features into the larger ones. The larger target features are typically more general and so it can make sense to do this. This improves f1 score to 0.93 improving by 0.09 however its important to consider that we are trading off the ability of our model to predict very specific types of diasasters. This may not be acceptable since there might be specialized gear that disaster teams may need to being with them before hand to deal with the situation. Therefore they may need that information of what the exact situation is. However if that information isn't needed and it is okay to have the general category then it may be okay to do this feature merging.
+The performance of the model was further improved through feature engineering. This was done by merging some of the small sample target features into the larger ones. The larger target features are typically more general and so it can make sense to do this. This improves f1 score to 0.93 improving by 0.09 however its important to consider that we are trading off the ability of our model to predict very specific types of diasasters. This may not be acceptable since there might be specialized gear that disaster teams may need to being with them before hand to deal with the situation. Therefore they may need that information of what the exact situation is. However if that information isn't needed and it is okay to have the general category then it may be okay to do this feature merging.
 
 ![With Feature Engineering](https://i.imgur.com/tDa920W.png)
 
@@ -100,7 +100,7 @@ process_data.py, write a data cleaning pipeline that:
 #### Tokenization
 ---
 
-For the text message data we need to handle capitalization, punctuation, lemmatization.
+For the text message data we need to handle capitalization, punctuation, lemmatization. Stemming was avoided due to stemming can often cause loss in information.
 
 ```python
 def tokenize(text):
@@ -118,7 +118,7 @@ def tokenize(text):
 ```
 ### ML pipeline
 ---
-train_classifier.py, write a machine learning pipeline that:
+train_classifier.py, a machine learning pipeline that:
 
     Loads data from the SQLite database
     Splits the dataset into training and test sets
