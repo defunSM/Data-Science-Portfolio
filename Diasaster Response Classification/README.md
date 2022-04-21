@@ -21,9 +21,17 @@ In an emergency situation such as a diasaster, diasaster response workers may be
 #### The Dataset Challenges
 The disaster response dataset is class imbalanced with several categories that have 5% and even 1% of the total samples in the dataset. As such the approach chosen is undersampling. In the context of the data this is an appropriate method to deal with imbalance since many of the text data are very similar but not exactly the same. However it is important to understand the trade off in using undersampling is we are losing a ton of data. Thus we are justifying this choice since most of the data is similar. _This approach improved **f1 score** by 0.33 from 0.51 to 0.84_. This is without even using **GridSearchCV** to optimize for hyperparameters.
 
+<details>
+    <summary>Sampling</summary>
+    
 #### Sampling
 Some of the difficulities with this dataset stem from implementing the sampling since this is a **multi label classification** model. There are several categories that are are predicted. Thus SMOTE which artificially creates samples can not be implemented easily. Potentially can revisit this avenue of improvement and try to implement a custom SMOTE transformer for the ML pipeline. 
+    
+</details>
 
+<details>
+    <summary>Feature Engineering</summary>
+    
 #### Feature Engineering (Trade offs)
 The performance of the model was further improved through feature engineering. This was done by merging some of the small sample target features into the larger ones. The larger target features are typically more general and so it can make sense to do this. This improves f1 score to 0.93 improving by 0.09 however its important to consider that we are trading off the ability of our model to predict very specific types of diasasters. This may not be acceptable since there might be specialized gear that disaster teams may need to being with them before hand to deal with the situation. Therefore they may need that information of what the exact situation is. However if that information isn't needed and it is okay to have the general category then it may be okay to do this feature merging.
 
@@ -32,8 +40,13 @@ The performance of the model was further improved through feature engineering. T
 Undersampling, With Feature Engineering, Without GridSearchCV
 
 (Left to right: Precision Score, Recall Score, F1 Score, # of Samples)
+</details>
 
-#### Model Results
+<details> 
+    <summary>Model Results</summary>
+
+    
+#### Model Results    
 There are three models that was tested **DecisionTreeClassifier**, **Random Forest Classifier**, **AdaBoostClassifier**. The Random Forest Classifier out performed in our evaluation metrics relative to the other two as expected since it is an ensemble method. 
 
 Through a combination of **undersampling**, **tokenization**, **tdifTransformer** and **feature engineering** the model improved in _precision_, _recall_ and _f1-score_. 
@@ -53,7 +66,7 @@ Through a combination of **undersampling**, **tokenization**, **tdifTransformer*
 ##### **AdaBoostClassifier**
 
 ![adaboost results](https://i.imgur.com/1DzeVXD.png)
-
+</details>
 
 ### Instructions
 ___
