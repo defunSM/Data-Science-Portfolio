@@ -1,5 +1,5 @@
 # Disaster Response Classification
-In an emergency situation such as a diasaster, diasaster response workers may be flooded with new messages requesting aid. This web app is intended to classify these messages into several categories in order to help emergency workers response quicker!
+In an emergency situation such as a diasaster, diasaster response workers may be flooded with new messages requesting aid. This web app is intended to classify those messages into several categories in order to help emergency workers achieve a quicker response rate.
 
 ### Table of Contents
 ---
@@ -104,8 +104,12 @@ As such this project utilizes both a [NLP pipeline](#nlp-pipeline) as we are dea
 ---
 ##### Barplot
 ![](https://github.com/defunSM/Data-Science-Machine-Learning-Portfolio/blob/main/Diasaster%20Response%20Classification/viz/barplot_viz.png)
+Number of samples from each disaster category sorted from lowest to highest.
+
 ##### Word Cloud
 ![](https://github.com/defunSM/Data-Science-Machine-Learning-Portfolio/blob/main/Diasaster%20Response%20Classification/viz/wordcloud.png)
+
+Larger the word the more frequent the word appears in messages.
 
 ---
 ### NLP pipeline
