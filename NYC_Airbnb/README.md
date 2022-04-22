@@ -2,6 +2,8 @@
 ## Description
 An exploratory data analysis of NYC airbnb dataset and creating a classification model in order to predict the borough of a property.
 
+![](https://i.imgur.com/gRVM6OU.png)
+
 ## Table of Contents
 **[Setup](#setup)**<br>
 **[Motivation](#motivation)**<br>
