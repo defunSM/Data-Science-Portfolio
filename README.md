@@ -1,6 +1,7 @@
 # Data-Science-Machine-Learning-Portfolio
 A showcase of projects using data science and machine learning models.
 
+![](https://i.imgur.com/27ikdWd.png)
 
 + [Projects](#projects)
     + [Disaster Response Classification](https://github.com/defunSM/Data-Science-Machine-Learning-Portfolio/tree/main/Diasaster%20Response%20Classification)
