@@ -1,5 +1,4 @@
 # Data-Science-Machine-Learning-Portfolio
-A showcase of projects using data science and machine learning models.
 
 ![](https://i.imgur.com/27ikdWd.png)
 
