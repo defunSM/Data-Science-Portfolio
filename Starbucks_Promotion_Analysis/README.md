@@ -28,7 +28,7 @@ The analysis of the Incremental Response Rate (IRR) and the Net Incremental Reve
 
 # Materials and Methods
 
-The starbucks training dataset containing 80,000+ data points on customers who purchased and didn't purchase the product. Including information on if the customer was exposed to the promotional material. The sample size of treatment and control groups were roughly equal ~40,000 for each group since it was randomized. However upon inspection of the dataset the number of purchases were rather low compared to the size of the total samples. It was found that ~1000 customers purchased the product out of the total sample size ~80,000 which equates to ~0.0125% of customers buying the product.  
+The starbucks training dataset containing 80,000+ data points on customers who purchased and didn't purchase the product. Including information on if the customer was exposed to the promotional material. The sample size of treatment and control groups were roughly equal ~40,000 for each group since it was randomized. However upon inspection of the dataset, the number of purchases were rather low compared to the size of the total samples. It was found that ~1000 customers purchased the product out of the total sample size ~80,000 which equates to ~0.0125% of customers buying the product.  
 
 # Results
 
