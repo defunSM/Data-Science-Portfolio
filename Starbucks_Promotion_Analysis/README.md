@@ -1,6 +1,6 @@
 # Starbucks Promotional Analysis
 
-
+<p align="center"><img src="https://opj.ca/wp-content/uploads/2018/02/New-Starbucks-Logo-1200x969.jpg" width="300" height="300"></p>
 
 
 # Abstract
