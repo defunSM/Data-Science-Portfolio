@@ -14,12 +14,12 @@ A randomized experiment was conducted by Starbucks and the results are stored in
 3. [Introduction](#introduction)
 4. [Materials and Methods](#materials-and-methods)
 5. [Results](#results)
-	5.1 [Correlation Matrix](#correlation-matrix) 
-	5.2 [Hypothesis Test](#hypothesis-test)
-	5.3 [Model](#model)
-6. [Conclusion](#conclusion)
-7. [Discussion](#discussion)
-8. [References](#references)
+6. [Correlation Matrix](#correlation-matrix) 
+7. [Hypothesis Test](#hypothesis-test)
+8. [Model](#model)
+9. [Conclusion](#conclusion)
+10. [Discussion](#discussion)
+11. [References](#references)
 
 # 3. Introduction
 
