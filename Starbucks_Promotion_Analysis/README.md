@@ -14,9 +14,9 @@ A randomized experiment was conducted by Starbucks and the results are stored in
 3. [Introduction](#introduction)
 4. [Materials and Methods](#materials-and-methods)
 5. [Results](#results)
-<br>5.1 [Correlation Matrix](#correlation-matrix) 
-<br>5.2 [Hypothesis Test](#hypothesis-test)
-<br>5.3 [Model](#model)
+<br>5.1. [Correlation Matrix](#correlation-matrix) 
+<br>5.2. [Hypothesis Test](#hypothesis-test)
+<br>5.3. [Model](#model)
 6. [Conclusion](#conclusion)
 7. [Discussion](#discussion)
 8. [References](#references)
@@ -27,7 +27,7 @@ The dataset resulting from the initial starbucks randomized experiment was prepr
 
 In order to investigate if the effect of the promotional material on purchases is statistically significant. A statistical hypothesis test was conducted between the treatment and control group. Since purchase is a binary feature meaning it is either "yes" or "no". It is appropriate to conduct a binomial test to evaluate the success rate between both groups with success being "yes" and failure being "no".
 
-The analysis of the Incremental Response Rate (IRR) and the Net Incremental Revenue (NIR) was conducted in order to investigate if the promotional would yield potential profit. Specifically if the cost of the promotion be made up with purchases by the customer. 
+The analysis of the Incremental Response Rate (IRR) and the Net Incremental Revenue (NIR) was conducted in order to investigate if the promotional would yield potential profit. Specifically if the cost of the promotion be made up with purchases by the customer. A model would than be trained in order to predict which customers would more likely to purchase with the promotion.
 
 # 4. Materials and Methods
 
@@ -37,6 +37,7 @@ The starbucks training dataset containing 80,000+ data points on customers who p
 ### 5.1 Correlation Matrix
 
 ![](https://i.imgur.com/NiJUzjQ.png)
+
 A 0.043 correlation coefficient between promotion and purchase which is higher than the other features. V4 feature seems to affect purchasing decision. Thus leveraging this we can say looking at V4 will be helpful in swaying customers to purchase.
 
 ### 5.2 Hypothesis Test
