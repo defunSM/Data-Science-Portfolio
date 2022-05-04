@@ -14,12 +14,12 @@ A randomized experiment was conducted by Starbucks and the results are stored in
 3. [Introduction](#introduction)
 4. [Materials and Methods](#materials-and-methods)
 5. [Results](#results)
-6. [Correlation Matrix](#correlation-matrix) 
-7. [Hypothesis Test](#hypothesis-test)
-8. [Model](#model)
-9. [Conclusion](#conclusion)
-10. [Discussion](#discussion)
-11. [References](#references)
+	5.1. [Correlation Matrix](#correlation-matrix) 
+	5.2. [Hypothesis Test](#hypothesis-test)
+	5.3. [Model](#model)
+6. [Conclusion](#conclusion)
+7. [Discussion](#discussion)
+8. [References](#references)
 
 # 3. Introduction
 
@@ -62,3 +62,4 @@ While the best model was found to be better then the IRR and NIR of the training
 One way to improve the model is to conduct another randomized experiment targeting customers that have higher V3 as that was found to be highly correlated with purchasing.
 
 # References
+
