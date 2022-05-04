@@ -14,7 +14,7 @@ A randomized experiment was conducted by Starbucks and the results are stored in
 3. [Introduction](#introduction)
 4. [Materials and Methods](#materials-and-methods)
 5. [Results](#results)
-<br>5.1. [Correlation Matrix](#correlation-matrix) 
+<br>5.1. [Correlations](#correlation-matrix) 
 <br>5.2. [Hypothesis Test](#hypothesis-test)
 <br>5.3. [Model](#model)
 6. [Conclusion](#conclusion)
@@ -31,7 +31,11 @@ The analysis of the Incremental Response Rate (IRR) and the Net Incremental Reve
 
 # 4. Materials and Methods
 
-The starbucks training dataset containing 80,000+ data points on customers who purchased and didn't purchase the product. Including information on if the customer was exposed to the promotional material. The sample size of treatment and control groups were roughly equal ~40,000 for each group since it was randomized. However upon inspection of the dataset, the number of purchases were rather low compared to the size of the total samples. It was found that ~1000 customers purchased the product out of the total sample size ~80,000 which equates to ~0.0125% of customers buying the product.  
+The starbucks training dataset containing 80,000+ data points on customers who purchased and didn't purchase the product. Including if the customer was exposed to the promotional material and other information on the customer encoded as V1 to V7. The sample size of treatment and control groups were roughly equal ~40,000 for each group since it was randomized. However upon inspection of the dataset, the number of purchases were rather low compared to the size of the total samples. It was found that ~1000 customers purchased the product out of the total sample size ~80,000 which equates to ~0.0125% of customers buying the product.  
+
+The features of the dataset includes two binary categorical data which are Promotion and purchase. The other features V1 to V7 are numerical values. In order to train the model encoding is required of the categorical data and scaling of the numerical data to improve performance.
+
+The training data also is class imbalanced as there are many customers who did not purchase to those that did. To combat this issue undersampling the training data was implemented.
 
 # 5. Results
 ### 5.1 Correlation Matrix
