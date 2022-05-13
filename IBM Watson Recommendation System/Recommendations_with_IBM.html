@@ -14579,26 +14579,25 @@ body[data-format='mobile'] .jp-OutputArea-child .jp-OutputArea-output {
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h1 id="Recommendations-with-IBM">Recommendations with IBM<a class="anchor-link" href="#Recommendations-with-IBM">&#182;</a></h1><p>In this notebook, you will be putting your recommendation skills to use on real data from the IBM Watson Studio platform.</p>
-<p>You may either submit your notebook through the workspace here, or you may work from your local machine and submit through the next page.  Either way assure that your code passes the project <a href="https://review.udacity.com/#!/rubrics/2322/view">RUBRIC</a>.  <strong>Please save regularly.</strong></p>
-<p>By following the table of contents, you will build out a number of different methods for making recommendations that can be used for different situations.</p>
+<h1 id="Recommendations-with-IBM">Recommendations with IBM<a class="anchor-link" href="#Recommendations-with-IBM">&#182;</a></h1><p>In this notebook, we analyze real interactions between users and articles on the IBM Watson Studio Platform to develop a recommendation system. In efforts to help drive engagement by making article recommendations that users are most likely to engage with.</p>
+<p>In this notebook we explore 3 different types of recommendation systems: Rank Based, Collaborative Filtering and Content Based.</p>
+<p><img src="https://i.imgur.com/XyxLUFF.png" alt=""></p>
 <h2 id="Table-of-Contents">Table of Contents<a class="anchor-link" href="#Table-of-Contents">&#182;</a></h2><p>I. <a href="#Exploratory-Data-Analysis">Exploratory Data Analysis</a><br>
 II. <a href="#Rank">Rank Based Recommendations</a><br>
 III. <a href="#User-User">User-User Based Collaborative Filtering</a><br>
-IV. <a href="#Content-Recs">Content Based Recommendations (EXTRA - NOT REQUIRED)</a><br>
+IV. <a href="#Content-Recs">Content Based Recommendations</a><br>
 V. <a href="#Matrix-Fact">Matrix Factorization</a><br>
-VI. <a href="#conclusions">Extras &amp; Concluding</a></p>
-<p>At the end of the notebook, you will find directions for how to submit your work.  Let's get started by importing the necessary libraries and reading in the data.</p>
+VI. <a href="#conclusions">Conclusions</a></p>
 
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[149]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[55]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
@@ -14614,8 +14613,35 @@ VI. <a href="#conclusions">Extras &amp; Concluding</a></p>
 <span class="n">df_content</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;data/articles_community.csv&#39;</span><span class="p">)</span>
 <span class="k">del</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;Unnamed: 0&#39;</span><span class="p">]</span>
 <span class="k">del</span> <span class="n">df_content</span><span class="p">[</span><span class="s1">&#39;Unnamed: 0&#39;</span><span class="p">]</span>
+</pre></div>
 
-<span class="c1"># Show df to get an idea of the data</span>
+     </div>
+</div>
+</div>
+</div>
+
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<h3 id="Part-I-:-Exploratory-Data-Analysis"><a class="anchor" id="Exploratory-Data-Analysis">Part I : Exploratory Data Analysis</a><a class="anchor-link" href="#Part-I-:-Exploratory-Data-Analysis">&#182;</a></h3><p>Use the dictionary and cells below to provide some insight into the descriptive statistics of the data.</p>
+<p><code>1.</code> What is the distribution of how many articles a user interacts with in the dataset?  Provide a visual and descriptive statistics to assist with giving a look at the number of times each user interacts with an article.</p>
+
+</div>
+</div>
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[56]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Show df to get an idea of the data</span>
 <span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
 </pre></div>
 
@@ -14634,7 +14660,7 @@ VI. <a href="#conclusions">Extras &amp; Concluding</a></p>
 <div class="jp-OutputArea-child">
 
     
-    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[149]:</div>
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[56]:</div>
 
 
 
@@ -14709,7 +14735,7 @@ VI. <a href="#conclusions">Extras &amp; Concluding</a></p>
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[150]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[57]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Show df_content to get an idea of the data</span>
@@ -14731,7 +14757,7 @@ VI. <a href="#conclusions">Extras &amp; Concluding</a></p>
 <div class="jp-OutputArea-child">
 
     
-    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[150]:</div>
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[57]:</div>
 
 
 
@@ -14813,25 +14839,12 @@ VI. <a href="#conclusions">Extras &amp; Concluding</a></p>
 
 </div>
 
-</div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
-<div class="jp-Cell-inputWrapper">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h3 id="Part-I-:-Exploratory-Data-Analysis"><a class="anchor" id="Exploratory-Data-Analysis">Part I : Exploratory Data Analysis</a><a class="anchor-link" href="#Part-I-:-Exploratory-Data-Analysis">&#182;</a></h3><p>Use the dictionary and cells below to provide some insight into the descriptive statistics of the data.</p>
-<p><code>1.</code> What is the distribution of how many articles a user interacts with in the dataset?  Provide a visual and descriptive statistics to assist with giving a look at the number of times each user interacts with an article.</p>
-
-</div>
-</div>
-</div>
 </div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[151]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[58]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
@@ -14852,7 +14865,7 @@ VI. <a href="#conclusions">Extras &amp; Concluding</a></p>
 <div class="jp-OutputArea-child">
 
     
-    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[151]:</div>
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[58]:</div>
 
 
 
@@ -14872,7 +14885,7 @@ VI. <a href="#conclusions">Extras &amp; Concluding</a></p>
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[152]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[59]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">df</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;article_id&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">size</span><span class="p">()</span>
@@ -14893,7 +14906,7 @@ VI. <a href="#conclusions">Extras &amp; Concluding</a></p>
 <div class="jp-OutputArea-child">
 
     
-    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[152]:</div>
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[59]:</div>
 
 
 
@@ -14925,7 +14938,7 @@ Length: 714, dtype: int64</pre>
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[153]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[60]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">user_interactions_per_article</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;article_id&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">size</span><span class="p">()</span>
@@ -14955,13 +14968,13 @@ Length: 714, dtype: int64</pre>
 <div class="jp-OutputArea-child">
 
     
-    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[153]:</div>
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[60]:</div>
 
 
 
 
 <div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain">
-<pre>&lt;seaborn.axisgrid.FacetGrid at 0x7f600d5350f0&gt;</pre>
+<pre>&lt;seaborn.axisgrid.FacetGrid at 0x7fc21b321090&gt;</pre>
 </div>
 
 </div>
@@ -14992,13 +15005,13 @@ class="
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[154]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[61]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Fill in the median and maximum number of user_article interactios below</span>
 
 <span class="n">median_val</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;article_id&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">size</span><span class="p">()</span><span class="o">.</span><span class="n">median</span><span class="p">()</span> <span class="c1"># 50% of individuals interact with ____ number of articles or fewer.</span>
-<span class="n">max_views_by_user</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;article_id&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">size</span><span class="p">())</span><span class="c1"># The maximum number of user-article interactions by any 1 user is ______.</span>
+<span class="n">max_views_by_user</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;article_id&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">size</span><span class="p">())</span> <span class="c1"># The maximum number of user-article interactions by any 1 user is ______.</span>
 
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Median Views per Article: &quot;</span><span class="p">,</span> <span class="n">median_val</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Most views on an Article: &quot;</span><span class="p">,</span> <span class="n">max_views_by_user</span><span class="p">)</span>
@@ -15038,7 +15051,7 @@ Most views on an Article:  937
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[155]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[62]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">df_content</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
@@ -15059,7 +15072,7 @@ Most views on an Article:  937
 <div class="jp-OutputArea-child">
 
     
-    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[155]:</div>
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[62]:</div>
 
 
 
@@ -15086,29 +15099,12 @@ Most views on an Article:  937
 </div>
 </div>
 </div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
-<div class="jp-Cell-inputWrapper">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[156]:</div>
-<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
-     <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Find and explore duplicate articles</span>
-<span class="c1">#df_content = df_content.drop_duplicates(subset=[&#39;doc_body&#39;])</span>
-</pre></div>
-
-     </div>
-</div>
-</div>
-</div>
-
 </div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[157]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[63]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Remove any rows that have the same article_id - only keep the first</span>
@@ -15131,7 +15127,7 @@ Most views on an Article:  937
 <div class="jp-OutputArea-child">
 
     
-    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[157]:</div>
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[63]:</div>
 
 
 
@@ -15167,7 +15163,7 @@ Most views on an Article:  937
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[158]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[64]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># The number of unique articles that have an interaction with a user</span>
@@ -15200,7 +15196,7 @@ Most views on an Article:  937
 <div class="jp-OutputArea-child">
 
     
-    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[158]:</div>
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[64]:</div>
 
 
 
@@ -15300,7 +15296,7 @@ Most views on an Article:  937
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[159]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[65]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Number of unique articles on the IBM platform</span>
@@ -15341,7 +15337,7 @@ Most views on an Article:  937
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[160]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[66]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">unique_users</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;email&#39;</span><span class="p">]))</span><span class="o">-</span><span class="mi">1</span>
@@ -15381,7 +15377,7 @@ Most views on an Article:  937
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[161]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[67]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Number of user article interactions</span>
@@ -15422,7 +15418,7 @@ Most views on an Article:  937
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[162]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[68]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">unique_articles</span> <span class="o">=</span> <span class="mi">714</span> <span class="c1"># The number of unique articles that have at least one interaction</span>
@@ -15443,7 +15439,7 @@ Most views on an Article:  937
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p><code>4.</code> Use the cells below to find the most viewed <strong>article_id</strong>, as well as how often it was viewed.  After talking to the company leaders, the <code>email_mapper</code> function was deemed a reasonable way to map users to ids.  There were a small number of null values, and it was found that all of these null values likely belonged to a single user (which is how they are stored using the function below).</p>
+<p><code>4.</code> Using the cells below to find the most viewed <strong>article_id</strong>, as well as how often it was viewed.  After talking to the company leaders, the <code>email_mapper</code> function was deemed a reasonable way to map users to ids.  There were a small number of null values, and it was found that all of these null values likely belonged to a single user (which is how they are stored using the function below).</p>
 
 </div>
 </div>
@@ -15453,7 +15449,7 @@ Most views on an Article:  937
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[163]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[69]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">df_unique_views</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">by</span><span class="o">=</span><span class="s2">&quot;unique_views&quot;</span><span class="p">)</span>
@@ -15474,7 +15470,7 @@ Most views on an Article:  937
 <div class="jp-OutputArea-child">
 
     
-    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[163]:</div>
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[69]:</div>
 
 
 
@@ -15574,7 +15570,7 @@ Most views on an Article:  937
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[164]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[70]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">most_viewed_article_id</span> <span class="o">=</span> <span class="s1">&#39;1429.0&#39;</span> <span class="c1"># The most viewed article in the dataset as a string with one value following the decimal </span>
@@ -15591,11 +15587,10 @@ Most views on an Article:  937
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[165]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[71]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">## No need to change the code here - this will be helpful for later parts of the notebook</span>
-<span class="c1"># Run this cell to map the user email to a user_id column and remove the email column</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Map the user email to a user_id column and remove the email column</span>
 
 <span class="k">def</span> <span class="nf">email_mapper</span><span class="p">():</span>
     <span class="n">coded_dict</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
@@ -15633,7 +15628,7 @@ Most views on an Article:  937
 <div class="jp-OutputArea-child">
 
     
-    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[165]:</div>
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[71]:</div>
 
 
 
@@ -15708,7 +15703,7 @@ Most views on an Article:  937
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[166]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[72]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Median value of interactions</span>
@@ -15755,7 +15750,7 @@ Most views on an Article:  937
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[167]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[73]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Max number of user article interactions by any 1 user is</span>
@@ -15796,7 +15791,7 @@ Most views on an Article:  937
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[168]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[74]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1">## If you stored all your results in the variable names above, </span>
@@ -15852,7 +15847,7 @@ Most views on an Article:  937
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h3 id="Part-II:-Rank-Based-Recommendations"><a class="anchor" id="Rank">Part II: Rank-Based Recommendations</a><a class="anchor-link" href="#Part-II:-Rank-Based-Recommendations">&#182;</a></h3><p>Unlike in the earlier lessons, we don't actually have ratings for whether a user liked an article or not.  We only know that a user has interacted with an article.  In these cases, the popularity of an article can really only be based on how often an article was interacted with.</p>
+<h3 id="Part-II:-Rank-Based-Recommendations"><a class="anchor" id="Rank">Part II: Rank-Based Recommendations</a><a class="anchor-link" href="#Part-II:-Rank-Based-Recommendations">&#182;</a></h3><p>We don't actually have ratings for whether a user liked an article or not.  We only know that a user has interacted with an article.  In these cases, the popularity of an article can really only be based on how often an article was interacted with.</p>
 <p><code>1.</code> Fill in the function below to return the <strong>n</strong> top articles ordered with most interactions as the top. Test your function using the tests below.</p>
 
 </div>
@@ -15863,7 +15858,7 @@ Most views on an Article:  937
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[169]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[75]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">get_top_articles</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">df</span><span class="o">=</span><span class="n">df</span><span class="p">):</span>
@@ -15895,11 +15890,12 @@ Most views on an Article:  937
 <span class="sd">    top_articles - (list) A list of the top &#39;n&#39; article titles </span>
 <span class="sd">    </span>
 <span class="sd">    &#39;&#39;&#39;</span>
-    <span class="c1"># Your code here</span>
+    <span class="c1"># Counting the number of times an article appears and dropping duplicates</span>
     <span class="n">df_views</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">melt</span><span class="p">(</span><span class="n">id_vars</span><span class="o">=</span><span class="s2">&quot;article_id&quot;</span><span class="p">,</span> <span class="n">value_vars</span><span class="o">=</span><span class="s2">&quot;title&quot;</span><span class="p">)</span>
     <span class="n">df_views</span><span class="p">[</span><span class="s1">&#39;count&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df_views</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;value&#39;</span><span class="p">)[</span><span class="s1">&#39;value&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="s1">&#39;count&#39;</span><span class="p">)</span>
     <span class="n">df_views</span> <span class="o">=</span> <span class="n">df_views</span><span class="o">.</span><span class="n">drop_duplicates</span><span class="p">()</span>
     
+    <span class="c1"># Sorting top to bottom # of views</span>
     <span class="n">top_articles</span> <span class="o">=</span> <span class="n">df_views</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">by</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;count&#39;</span><span class="p">],</span> <span class="n">ascending</span><span class="o">=</span><span class="kc">False</span><span class="p">)[:</span><span class="n">n</span><span class="p">][</span><span class="s1">&#39;article_id&#39;</span><span class="p">]</span>
  
  
@@ -15916,7 +15912,7 @@ Most views on an Article:  937
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[170]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[76]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">get_top_articles</span><span class="p">(</span><span class="mi">10</span><span class="p">))</span>
@@ -15977,7 +15973,7 @@ Name: article_id, dtype: float64
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[171]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[77]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Test your function by returning the top 5, 10, and 20 articles</span>
@@ -16049,7 +16045,7 @@ Your top_20 looks like the solution list! Nice job.
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[172]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[78]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># create the user-article matrix with 1&#39;s and 0&#39;s</span>
@@ -16086,10 +16082,10 @@ Your top_20 looks like the solution list! Nice job.
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[173]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[79]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">## Tests: You should just need to run this cell.  Don&#39;t change the code.</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">## Tests: </span>
 <span class="k">assert</span> <span class="n">user_item</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="mi">5149</span><span class="p">,</span> <span class="s2">&quot;Oops!  The number of users in the user-article matrix doesn&#39;t look right.&quot;</span>
 <span class="k">assert</span> <span class="n">user_item</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="mi">714</span><span class="p">,</span> <span class="s2">&quot;Oops!  The number of articles in the user-article matrix doesn&#39;t look right.&quot;</span>
 <span class="k">assert</span> <span class="n">user_item</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)[</span><span class="mi">1</span><span class="p">]</span> <span class="o">==</span> <span class="mi">36</span><span class="p">,</span> <span class="s2">&quot;Oops!  The number of articles seen by user 1 doesn&#39;t look right.&quot;</span>
@@ -16142,7 +16138,7 @@ Your top_20 looks like the solution list! Nice job.
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[174]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[80]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">find_similar_users</span><span class="p">(</span><span class="n">user_id</span><span class="p">,</span> <span class="n">user_item</span><span class="o">=</span><span class="n">user_item</span><span class="p">):</span>
@@ -16190,7 +16186,7 @@ Your top_20 looks like the solution list! Nice job.
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[175]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[81]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Do a spot check of your function</span>
@@ -16246,7 +16242,7 @@ The 3 most similar users to user 46 are: [4201, 23, 3782]
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[176]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[82]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">get_article_names</span><span class="p">(</span><span class="n">article_ids</span><span class="p">,</span> <span class="n">df</span><span class="o">=</span><span class="n">df</span><span class="p">):</span>
@@ -16353,7 +16349,7 @@ The 3 most similar users to user 46 are: [4201, 23, 3782]
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[177]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[83]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Check Results</span>
@@ -16375,7 +16371,7 @@ The 3 most similar users to user 46 are: [4201, 23, 3782]
 <div class="jp-OutputArea-child">
 
     
-    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[177]:</div>
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[83]:</div>
 
 
 
@@ -16404,7 +16400,7 @@ The 3 most similar users to user 46 are: [4201, 23, 3782]
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[178]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[84]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Test your functions here - No need to change this code - just run this cell</span>
@@ -16468,7 +16464,7 @@ The 3 most similar users to user 46 are: [4201, 23, 3782]
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[179]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[85]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">get_top_sorted_users</span><span class="p">(</span><span class="n">user_id</span><span class="p">,</span> <span class="n">df</span><span class="o">=</span><span class="n">df</span><span class="p">,</span> <span class="n">user_item</span><span class="o">=</span><span class="n">user_item</span><span class="p">):</span>
@@ -16575,7 +16571,7 @@ The 3 most similar users to user 46 are: [4201, 23, 3782]
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[180]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[86]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Quick spot check - don&#39;t change this code - just use it to test your functions</span>
@@ -16636,13 +16632,13 @@ The top 10 recommendations for user 20 are the following article names:
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[181]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[87]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1">### Tests with a dictionary of results</span>
 
 <span class="n">user1_most_sim</span> <span class="o">=</span> <span class="n">get_top_sorted_users</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="mi">0</span><span class="p">][</span><span class="s1">&#39;user_id&#39;</span><span class="p">]</span> <span class="c1"># Find the user that is most similar to user 1 </span>
-<span class="n">user131_10th_sim</span> <span class="o">=</span> <span class="n">get_top_sorted_users</span><span class="p">(</span><span class="mi">131</span><span class="p">)</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="mi">9</span><span class="p">][</span><span class="s1">&#39;user_id&#39;</span><span class="p">]</span><span class="c1"># Find the 10th most similar user to user 131</span>
+<span class="n">user131_10th_sim</span> <span class="o">=</span> <span class="n">get_top_sorted_users</span><span class="p">(</span><span class="mi">131</span><span class="p">)</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="mi">9</span><span class="p">][</span><span class="s1">&#39;user_id&#39;</span><span class="p">]</span> <span class="c1"># Find the 10th most similar user to user 131</span>
 </pre></div>
 
      </div>
@@ -16655,7 +16651,7 @@ The top 10 recommendations for user 20 are the following article names:
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[182]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[88]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1">## Dictionary Test Here</span>
@@ -16714,7 +16710,8 @@ The top 10 recommendations for user 20 are the following article names:
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p>As a new user there are no similarity score since user hasn't yet seen any articles yet. Therefore we can start off with the articles that have the most interactions.</p>
+<p>As a new user there are no similarity score since user hasn't yet seen any articles yet. Therefore we can start off with the articles that have the most interactions. We have already developed a function get_top_article_ids for a new user as well as use it for users that haven't yet seen many articles yet as it will be difficult to gauge their similarity.</p>
+<p>Therefore the rank based approach to recommendation would be more beneficial than the collaborative filtering method due to the cold start problem of not being able to know what articles the user would like to see.</p>
 
 </div>
 </div>
@@ -16736,7 +16733,7 @@ The top 10 recommendations for user 20 are the following article names:
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[183]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[89]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">new_user</span> <span class="o">=</span> <span class="s1">&#39;0.0&#39;</span>
@@ -16756,7 +16753,7 @@ The top 10 recommendations for user 20 are the following article names:
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[184]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[90]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="k">assert</span> <span class="nb">set</span><span class="p">(</span><span class="n">new_user_recs</span><span class="p">)</span> <span class="o">==</span> <span class="nb">set</span><span class="p">([</span><span class="s1">&#39;1314.0&#39;</span><span class="p">,</span><span class="s1">&#39;1429.0&#39;</span><span class="p">,</span><span class="s1">&#39;1293.0&#39;</span><span class="p">,</span><span class="s1">&#39;1427.0&#39;</span><span class="p">,</span><span class="s1">&#39;1162.0&#39;</span><span class="p">,</span><span class="s1">&#39;1364.0&#39;</span><span class="p">,</span><span class="s1">&#39;1304.0&#39;</span><span class="p">,</span><span class="s1">&#39;1170.0&#39;</span><span class="p">,</span><span class="s1">&#39;1431.0&#39;</span><span class="p">,</span><span class="s1">&#39;1330.0&#39;</span><span class="p">]),</span> <span class="s2">&quot;Oops!  It makes sense that in this case we would want to recommend the most popular articles, because we don&#39;t know anything about these users.&quot;</span>
@@ -16810,7 +16807,7 @@ The top 10 recommendations for user 20 are the following article names:
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[185]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[91]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">make_content_recs</span><span class="p">():</span>
@@ -16868,7 +16865,7 @@ The top 10 recommendations for user 20 are the following article names:
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[186]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[92]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># make recommendations for a brand new user</span>
@@ -16889,8 +16886,7 @@ The top 10 recommendations for user 20 are the following article names:
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h3 id="Part-V:-Matrix-Factorization"><a class="anchor" id="Matrix-Fact">Part V: Matrix Factorization</a><a class="anchor-link" href="#Part-V:-Matrix-Factorization">&#182;</a></h3><p>In this part of the notebook, you will build use matrix factorization to make article recommendations to the users on the IBM Watson Studio platform.</p>
-<p><code>1.</code> You should have already created a <strong>user_item</strong> matrix above in <strong>question 1</strong> of <strong>Part III</strong> above.  This first question here will just require that you run the cells to get things set up for the rest of <strong>Part V</strong> of the notebook.</p>
+<h3 id="Part-V:-Matrix-Factorization"><a class="anchor" id="Matrix-Fact">Part V: Matrix Factorization</a><a class="anchor-link" href="#Part-V:-Matrix-Factorization">&#182;</a></h3><p><code>1.</code> <strong>user_item</strong> matrix was created above in <strong>question 1</strong> of <strong>Part III</strong> above and being loaded again.  This first question here will just require that you run the cells to get things set up for the rest of <strong>Part V</strong> of the notebook.</p>
 
 </div>
 </div>
@@ -16900,7 +16896,7 @@ The top 10 recommendations for user 20 are the following article names:
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[187]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[93]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Load the matrix here</span>
@@ -16917,7 +16913,7 @@ The top 10 recommendations for user 20 are the following article names:
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[188]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[94]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># quick look at the matrix</span>
@@ -16939,7 +16935,7 @@ The top 10 recommendations for user 20 are the following article names:
 <div class="jp-OutputArea-child">
 
     
-    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[188]:</div>
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[94]:</div>
 
 
 
@@ -17159,12 +17155,10 @@ The top 10 recommendations for user 20 are the following article names:
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[189]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[95]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Perform SVD on the User-Item Matrix Here</span>
-
-<span class="c1"># use the built in to get the three matrices</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Performing SVD on the User-Item Matrix </span>
 <span class="n">u</span><span class="p">,</span> <span class="n">s</span><span class="p">,</span> <span class="n">vt</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">svd</span><span class="p">(</span><span class="n">user_item_matrix</span><span class="p">)</span>
 </pre></div>
 
@@ -17192,7 +17186,7 @@ The top 10 recommendations for user 20 are the following article names:
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p><code>3.</code> Now for the tricky part, how do we choose the number of latent features to use?  Running the below cell, you can see that as the number of latent features increases, we obtain a lower error rate on making predictions for the 1 and 0 values in the user-item matrix.  Run the cell below to get an idea of how the accuracy improves as we increase the number of latent features.</p>
+<p><code>3.</code> Running the below cell, you can see that as the number of latent features increases, we obtain a lower error rate on making predictions for the 1 and 0 values in the user-item matrix.  Run the cell below to get an idea of how the accuracy improves as we increase the number of latent features.</p>
 
 </div>
 </div>
@@ -17202,7 +17196,7 @@ The top 10 recommendations for user 20 are the following article names:
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[190]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[96]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">num_latent_feats</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">700</span><span class="o">+</span><span class="mi">10</span><span class="p">,</span><span class="mi">20</span><span class="p">)</span>
@@ -17244,7 +17238,7 @@ The top 10 recommendations for user 20 are the following article names:
 <div class="jp-OutputArea-child">
 
     
-    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[190]:</div>
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[96]:</div>
 
 
 
@@ -17300,7 +17294,7 @@ class="
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[191]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[97]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">df_train</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">40000</span><span class="p">)</span>
@@ -17344,7 +17338,7 @@ class="
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[192]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[98]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Number of users we can make predictions for the test set</span>
@@ -17387,7 +17381,7 @@ class="
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[193]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[99]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># number of users that we can make predictions for giving us the amount we can&#39;t predict</span>
@@ -17427,7 +17421,7 @@ class="
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[194]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[100]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Number of articles we can make predictions for in the test test</span>
@@ -17470,7 +17464,7 @@ class="
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[195]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[101]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># articles in the test set we aren&#39;t able to make predictions for (substracting by 574 because they are common)</span>
@@ -17510,7 +17504,7 @@ class="
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[196]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[102]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Replace the values in the dictionary below</span>
@@ -17565,8 +17559,7 @@ class="
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p><code>5.</code> Now use the <strong>user_item_train</strong> dataset from above to find U, S, and V transpose using SVD. Then find the subset of rows in the <strong>user_item_test</strong> dataset that you can predict using this matrix decomposition with different numbers of latent features to see how many features makes sense to keep based on the accuracy on the test data. This will require combining what was done in questions <code>2</code> - <code>4</code>.</p>
-<p>Use the cells below to explore how well SVD works towards making predictions for recommendations on the test data.</p>
+<p><code>5.</code> <strong>user_item_train</strong> dataset from above to find U, S, and V transpose using SVD. Then find the subset of rows in the <strong>user_item_test</strong> dataset that you can predict using this matrix decomposition with different numbers of latent features to see how many features makes sense to keep based on the accuracy on the test data. This will require combining what was done in questions <code>2</code> - <code>4</code>.</p>
 
 </div>
 </div>
@@ -17576,7 +17569,7 @@ class="
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[197]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[103]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># fit SVD on the user_item_train matrix</span>
@@ -17594,7 +17587,7 @@ class="
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[198]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[104]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Creating a boolean list of which ids and articles are present in test_idx and user_item_train</span>
@@ -17612,7 +17605,7 @@ class="
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[199]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[105]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Subset of the user_item_test that were found to be common for articles and users</span>
@@ -17627,12 +17620,12 @@ class="
 </div>
 </div>
 
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[216]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[106]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">num_latent_feats</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">700</span><span class="o">+</span><span class="mi">10</span><span class="p">,</span><span class="mi">20</span><span class="p">)</span>
@@ -17680,48 +17673,6 @@ class="
 </div>
 </div>
 
-<div class="jp-Cell-outputWrapper">
-<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
-</div>
-
-
-<div class="jp-OutputArea jp-Cell-outputArea">
-
-<div class="jp-OutputArea-child">
-
-    
-    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[216]:</div>
-
-
-
-
-<div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain">
-<pre>&lt;matplotlib.legend.Legend at 0x7f6023a92860&gt;</pre>
-</div>
-
-</div>
-
-<div class="jp-OutputArea-child">
-
-    
-    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
-
-
-
-
-<div class="jp-RenderedImage jp-OutputArea-output ">
-<img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAiMAAAFaCAYAAADM710lAAAAOXRFWHRTb2Z0d2FyZQBNYXRwbG90bGliIHZlcnNpb24zLjUuMSwgaHR0cHM6Ly9tYXRwbG90bGliLm9yZy/YYfK9AAAACXBIWXMAAAsTAAALEwEAmpwYAABTDklEQVR4nO3dd3wUdf7H8ddsSe8JBJAOBpAqYDw8QUVELxqCgAIC3inG8xRBRDw4PFQUK8qB9+MsdzaaAiLFwllAOMUCCkZRQ+8kBEglZdv8/ghZiZSEwLIp7+fjwSM7Mzuzn/lkSd757hTDNE0TERERET+x+LsAERERqdsURkRERMSvFEZERETErxRGRERExK8URkRERMSvFEZERETErxRGRCpp7ty5XHzxxRQXF/u7lPNq7969tGnThnfffdc7b8SIEWzbtu2st/3CCy8wf/78s97O6Wzbto1+/frRv39/CgoKvPP37t3LzTffXOntvP7667hcrirVkJeXx8KFC0+67Ouvv+aSSy4hJSWFlJQUJk2adMbb//rrr/nhhx+qVJtIdaAwIlJJK1asoE2bNnz22Wc+2b5pmng8Hp9s+2zVq1ePV199lep0WSK3212p533yyScMGDCAJUuWEBYWVuXXe/PNNyv9mr91ujACcPnll7N06VKWLl3K1KlTz3j733zzDT/++OMZrVPVfRHxBYURkUrIysri0KFDjB49mhUrVnjnZ2Zmcuedd9KvXz8GDBjAgQMHcDqdTJkyheTkZJKTk1m5cuUJf4VPmDCBNWvWAHDZZZfx8MMPk5yczIEDB/j73//OgAEDuP7665k7d653nU8//ZSUlBT69evHpEmT2LZtG8OGDfMu/+STT5g8eXK5ut98803+7//+zzv9zDPPsGTJEtLT0xkwYAApKSn079+fvLy80+5/o0aNaNGiBatWrTph2e9//3vv4+NHOnr37s306dNJTk7m9ttv59tvv2Xo0KH07du33F/xaWlpDBo0iGuvvZaVK1cC4HK5ePzxxxk4cCApKSne+S+88AITJ05k8ODBPPvss+XqOHLkCHfccQfJycmMHDmSQ4cOsXbtWt58801ee+017rnnntPuY5mZM2cycOBAbrjhBp5//nmgdFTs4MGD3HTTTdx3330ALFq0iIEDB9KvXz/++c9/AqUjFCNHjuSuu+6ib9++/Otf/wJg+vTpbN68mZSUFP79739XWMOp9n/Dhg0MHjyY/v37c+utt3Lw4EEOHDjAW2+9xYsvvkhKSgrbt28vN3L19ddfM3bsWKD0fffII48wcOBA3njjDdLS0rjlllu48cYbGT16NEVFRRw9epSRI0d6379ff/11pfomclZMEanQnDlzzOeff950Op3mVVddZRYWFpqmaZr33nuv+c4775imaZpFRUVmUVGROXv2bHPChAmmx+MxPR6PmZOTY+7Zs8e86aabvNv761//aq5evdo0TdNMSEgw16xZ412WnZ1tmqZpOhwOc8CAAebhw4fNrKwss0+fPmZmZma55wwePNjcs2ePaZqmOWrUKHP9+vXl6s7IyDD79+/vnb722mvN3Nxcc8qUKeaiRYtM0zTNwsJC0+l0nnLfy2pPS0szhwwZYpqmaQ4fPtzcunWraZqmedlll3mfO3PmTHPevHmmaZrmVVddZS5btsw0TdO8++67zXvuucd0u93mJ598Yo4dO9b7/Jtuusl0OBxmRkaG2bt3b7O4uNicN2+e+dprr5mmaZr5+flmUlKS6XA4zJkzZ5q33HKL6XA4Tqjz4YcfNl999VXv9+tvf/vbCTWdbL9+q6y3brfbvPPOO82ff/7Zuz/FxcWmaZrmli1bzNGjR5sul8t0u93mn//8ZzMtLc386quvzN/97nfmkSNHzMLCQrNXr17m0aNHT/lapmmaX331ldm9e3ezX79+Zr9+/cylS5eecv/z8/NNl8tlmqZpvv/+++bUqVNPuo/Hf3+++uor87777jNNs/R9d//995sej8csKSkxhw0bZubk5JimaZqvvPKK+e9//9tcsWKF+eCDD3p7kJ+ff9K6Rc4lm7/DkEhN8OGHH/LQQw9hs9no0aMHq1ev5rrrrmPDhg3MmDEDgKCgIAC++uor7rjjDgzDACAyMpL8/PxTbjs0NJSePXt6p9977z0WLVqE2+0mIyODXbt2ceTIEXr06EH9+vUBiIqKAqB///4sW7aMYcOGsX37drp161Zu2/Hx8QQFBbFr1y7y8/Np0qQJERERdOnShX/9618cOXKEpKQkLrjgggp70LFjRwICAvj2228r3berrroKgISEBKKjo7FYLCQkJPDKK694n3PNNddgt9uJj4+nZcuWbN++nbVr17J161bvcSpHjx7l4MGDAPTp0we73X7Ca23YsIF7770XgJSUFObMmVPpOo/35Zdf8u9//xuHw8Hhw4fZunUrbdu2PeE5GzduZMCAAQAUFhaya9cu6tWrR9euXYmOjgagcePGHDx4EJvt9D9qL7/8cqZPn+6dvvfee0+5/w888AD79u3D5XLRqFGjM96/a6+9FsMw2LFjB+np6dx6660AOJ1OevToQe/evXnqqad49tlnufbaa+nUqdMZv4bImVIYEalAVlYW33//PXfffTcAJSUlFBQUcN1111V6G1artdzxIA6Hw/s4ODjY+3jPnj28/fbbzJ8/n7CwMP785z+Xe+5vXX/99QwfPpyoqKhT1nPttdfy3//+l/z8fK699loAkpOT6dixI6tWreLWW2/l5ZdfplWrVhXuR2pqarkgAXhD12/3C/CGBovF4n1sGEa5Xhy/vmEYGIaBaZpMnTqVrl27nlBDWejzhZKSEp566ikWL15MbGwsU6ZMOWn/TdNk6NCh3HXXXeXmf/311wQEBHinLRYLbre7wjBysu2fbP//+te/0rdvXwYMGMAPP/zAM888c9L1LRaL9/ie39Zf1j/TNOnYsSOvvvrqCeu/8847fPbZZ0yZMoWhQ4cycODAM6pf5EzpmBGRCvz3v/9l+PDhrFy5kpUrV7J69Wo2bNhAUVERXbt29f71WlJSQnFxMT169ODtt9/GNE1M0yQvL4/Y2FgyMjIoLCwkLy+P9evXn/S1jh49SmhoKKGhoezdu5dvvvkGgC5duvDll196/zrOyckBIDw8nFatWjFr1ixSUlJOus3rrruOjz/+mE8++YQ+ffoApaGnWbNm3HbbbSQmJrJjx45K9eLyyy/n4MGD7Ny50zsvODiYjIwMHA4HX3zxRaW2c7xPPvkEp9NJZmYm27dvp0WLFvTo0YP58+d7Q8vPP/9c4XYuvvhiPvjgAwCWL19+wihRZZSUlGCxWIiIiCAnJ6fcMTKhoaEcPXoUgN/97ne8//773mNtMjIyyM7OPuV2j1+3Mk61/wUFBdSrVw+g3NlNv91+o0aNvOuUHW/yWy1btmTv3r2kp6cDv47uZGZmEhoayoABAxg2bBi//PJLpesWqSqNjIhUYMWKFd4DAAFsNhuJiYl89tlnTJo0iUmTJvHaa69ht9uZNWsWgwcPZtu2bdxwww1YrVbuv/9+rrzySv74xz+SkpJC06ZNTxj2L9O2bVuaNGnCddddR9OmTb1/GcfGxjJx4kTuuOMOADp37sxjjz0GQFJSEvv376dp06Yn3WaDBg2wWq00bNjQ+/HOBx98wLJly7DZbDRr1oyePXuSmZnJQw89dMLIx2+NHDmS+++/3zt97733Mnz4cBo0aECLFi0q19TjtGjRgqFDh5Kfn8/EiRMJDAxkyJAh7N27l5SUFDweDy1atPAeJHoq9957L3/9619ZsGAB9erVO+WowfF++uknevXq5Z1++eWXuf7660lKSqJBgwZ06dLFu+ymm27illtuoW3btvzjH/9g5MiRDB8+HNM0CQ0N9R7sejLR0dG0adOG5ORkUlJSvN/HUznV/t9+++387W9/IyQkpNyBw1dddRWjR4/mvffe4/nnn+dPf/oTY8eO5bXXXjvp6BJAQEAA06ZN4+GHH6awsBDTNBk/fjyGYfDMM89gsVgIDg7m6aefrrCPImfLMM1qdK6eiJyxadOm0axZM2666SZ/lyIiUiUKIyI12B133EFBQQGvv/66T4+lEBHxJYURERER8SsdwCoiIiJ+pTAiIiIifqUwIiIiIn6lMCIiIiJ+VeuvM3LgwIEqrRcbG8vhw4fPcTU1i3qgHoB6AOoBqAd1ff/h7HvQsGHDUy7TyIiIiIj4lcKIiIiI+JXCiIiIiPiVwoiIiIj4lcKIiIiI+JXCiIiIiPiVwoiIiIj4lcKIiIiI+JXPwojT6WTIkCF0796dFStWnLB81apVDB48mCFDhpCWlgaAx+Ph4Ycf5pZbbuG+++6juLgYgN27dzNixAiGDBnCggULfFWyiIiI+IHPwojNZmPmzJn88Y9/PGGZ2+1mxowZ/Oc//2HGjBk8+eSTAKxZswaLxcK8efPo0KED77zzDgDTpk1j/PjxzJ07l4ULF5KTk+OrskVEROQ889nl4A3DoH79+iddtnPnTpo3b05YWBhhYWG4XC5KSkpYv349V155JQBXXXUV//znPxk2bBg7d+6kU6dOACQmJpKWlkavXr18VbqISJ1hmiamCZ6yrx4Tk1+ny5ZbAkrIKXCUe65pmnjK1jn22DRNPJ7S5xy/TY954jZ/Xec38zh+mnLbBvCYgAkmxz2ndAbmceuW7l/pPMzS/fp1v38zv2z6JP0BCAk5QmFh4UmWn6Kvv1m/onW89eJ9UG47Jy3Ou+g0C6ugZ6f6NIwNPqfbrIhf7k2Tm5tLRESEdzoiIoKcnBxyc3OJjIwEIDw8nNzcXKD8NzMiIsI7vzJiY2OrVKPNZqvyurWFeqAeQN3rgWmauD0mLrcHt7v0a+5RF25LyLF5nmPLjz3HY5bOc5u4PKVfvet7zNJptwdX2fM8Jh6P6d2Gx3PsecfNL3veifNP/nzPCc/99XXKwoL3n/nbr77po2GAxTBKv1oMLIbh/Vo2zzAMLEbpH6/HP790/vGPSzdoMaD0YekyKFsGBgaG5dhX49cajNKF3vV+nV/64Nim4dh6xkl3Biw5+XhMz7H1jd8uPumEwa+vd7L+/PZ5v/ly4uuctLhyWzgnQkLDiY2NPGG+L38W+CWMREZGkp+f753Oz88nKiqKiIgI8vLyvPPKgsnx35Dj51dGVW/qo5siqQegHkD16IHHNHG6PDicHpyu0n+OY/+cLhOHs+zxsfnOsq/u4x57KHF6cLjcxz0+9lynG6fLxHXsF3ZlWSwG1rJ/1uMel00bJ863/OaxxcKv848932KULrfbyn6RW36zjoHVgncdy3HbtVjAahgY3gDAcUGg/GPjN/MM+HXZcWHAMCA2JpqcnJzjQkL5EFH2WscHjNqkOvw/OH9cJ91XX94ozy9hpFmzZuzcuZPCwkKOHj2K1WolMDCQSy65hDVr1tCrVy/WrFlD9+7dAWjevDmbNm2ibdu2rFu3jjvuuMMfZYvISZimidNlUuJ0U+LwlH51/uar49gvf6fbGyLKgoU3LLg85QLH8c9zuU8eECwGBNgt2G0WAo79sx+bDrRbCLRbS+fbLYQF24iJsBBw3LxAu8X72G61YCsLDlaLN1DYLAZxcTHk5eacECxq2y/c04mNDAbXiR9TiJwLPg0jY8aM4ccffyQkJIS0tDSioqLo06cPLVu2ZNSoUdx2220YhsHEiRMB6NWrFytXruSWW26hXr16PPXUUwCMGzeOSZMm4XK5uPHGG4mKivJl2SJ1gttjUljsorDETVGxiyKHm2KHh2KHm6ISN8WO0n9YMsjOO1o6fWx+2XMdx4LGb6NCaUiwEhRQ9kvf+ms4OC48hATaiAr7ddp+LBh4A8LxIcNWfr7dZmCznp+rE8REBGE67efltUTqIsM82dE1tciBAweqtF7dGpI7OfWgZvTA5faQX+iioMh57KuLwmIXR0vcpWHjWOA4WuyisPjYvBIXxQ6PdxsGEBhQGh6CA6wEBVoJCrASHGAlMiIEw3SVzvcusxAUYCXQbiXIXjraEGi3EBhQGjhs1to1alAT3ge+Vtd7UNf3H2rhxzQicmqmaXK02EVOgZPcAgd5vwka+YVO8otcFBz7WlTi9q4bFGAlLNhGaJCNkCCr92t8dBAhQTZCg6yEBJbOCwmyEXrscVCgFcspwoN+CIuIrymMiJxHTpeH3AIn2QUOcsr+5TvJOeogp8BJdr6D3KMOnK5jpxMGWQkPthMeYiM8xE5YsI0L6oUQHmwjLMTmXRYWXLrMbtNFlUWk5lEYETlHPKZJfqGTw3kOjuQ5OJJXwpH8Y4/zSziS56CgyAWUnj0RFWYnKiyg9F+4nWbxocem7USFBxAVGkCAXeFCRGo/hRGRSnJ7TLLzHGTlFnMot+RYyPg1dGTnO3C5TSwGRIUFEBMRQExEIA1igrioeQQx4QHe8BEWYjvlxyIiInWNwojIMaZpUljsLg0bOSVk5ZZQUHKAvZm5ZOWUcCSvBI8JgXYLsZGBxEYEEBMeyEXNI4mJCCA2IpCY8AAiwwKwWhQ0REQqS2FE6pwSh5uMI8UcOFLEgcNFZB4pJiu3hEO5JRSVuDEMiAkPIDYykMbxkSQ0ieD3HQKJiwqkXmQgYcG2WnWmiIiIvymMSK1VUOTkwOFiMo4Usf9wERmHizlwuIgj+Q4MIC4qkIYxwTSICaJds0hv2IiJCPBev0JnkoiI+J7CiNR4xQ43+7IK2ZNVyL6ssuBRRH6RC5vVoH50EA1jgmnRMJTLOsTRMDaY+OggnXkiIlJNKIxIjWGaJjkFTvYcLA0eew4eZW9WIVnZJVgsBg1jg2lcL5iOLSK5pnsDGsYGExcZqOM3RESqOYURqZY8HpP9h4vYc7CQvVmF3gBytMhFSJCVJvVCaFI/hE4to2hSP5SGsUHn7dLgIiJybimMSLXgcHrYkVHA1n0FbN2bz7b9BRQ73NSPCqRxvRDaNAnn6m7xNKkXQnR4gA4gFRGpRRRGxC/yC51s218aPLbuy2dXZiEWC7RoEEbrxqXBo2WjMEIC9RYVEant9JNezousnOLSUY99+Wzdm8+BI8WEBllpfUE4XRNiuPmqZjSND9FHLSIidZDCiPiEy+1hy958ftieQ9r2HA5mlxAXGciFF4TRp3sDWl8QTnxMkK5CKiIiCiNy7uQddfLjjtLw8dPOXNweaNc0gmu6N6Rji0hiIgL9XaKIiFRDCiNSZaZpsudgIWnbc/hhew47DxwlOjyAji2jSL2hNW2aROhGbyIiUiGFETkjTpeHn3blkratNIDkHnXSslEYXVpHM6JvCy6IC9aZLiIickYURqRCTpeHTTtzWZ9+hLRt2RiGQYcWkQzo1YT2zSMJD7H7u0QREanBFEbkpJwuD+t+ymTV+l18fyyAXNw6mtQbWtOuWYTOehERkXNGYUS8ykZAvt18hO+3ZmOxWOjcKoo7rm/NRc0VQERExDcURuq4smNAvk0/wsatOQBc3Lo0gFzetTl5uTl+rU9ERGo/hZE66lBuCau+y+TzH7MwTejSOoo7rm9Ju2aR3rvZ2m1WP1cpIiJ1gcJIHbNtfz4fr89gw5ZsWjYK49a+LejUKsobQERERM43hZE6wOX28N2WbD79NoNdmYV0T4hm4i0X0bxhmL9LExERURipzQqLXfwvLYuVGzIpcbjp1bk+d/W7kOjwAH+XJiIi4qUwUgsdzC7m0+8yWPvjISLD7PwhsSE92scRGKBjQEREpPpRGKlF0vfk8cn6DNK25dCmaQSpN7SiQ8so3YxORESqNYWRWmBvViGLVu8mfXc+ie1ieejWDjSpH+LvskRERCrFp2FkwYIFLF68GLvdzhNPPEGTJk28y+bOncuyZcuw2+1MnDiR9u3bk5WVxYQJE3A4HLRp04ZJkyZhGAYjRozA6XRit9vp2bMnd955py/LrjFyChws+2Ifa3/MolubGB4b2Ym4SN0ZV0REahafhZGcnBwWLlzI/Pnz+emnn5g2bRozZswA4NChQyxfvpx58+aRnZ3N2LFjmT17Ni+99BK33HILV199NU8++ST/+9//6NWrFwCzZs0iJibGV+XWKCUONx+tz+CjdQdoXC+EB2+5iJY6M0ZERGoon11cIi0tjcTERGw2G506dWLHjh3eZfv27aN169ZYrVbi4uLIzMzE4XCwc+dOOnToAMBFF13EunXrvOuMGjWKkSNH8vPPP/uq5GrP4zH54ocs/v5qGl9uOsSfrmvJg0PbKYiIiEiN5rORkdzcXCIjI73Tpml6Hzdt2pRNmzZRVFRERkYG+/fvJzc3l4SEBD7//HMGDhzI2rVrCQws/chhxowZxMTEsGXLFsaPH8+SJUt8VXa19dOuXBZ9tocj+SVc/7sLuLJLfV2oTEREagWfhZGIiAjS09O90xbLr784o6OjSU1NJTU1lUaNGpGQkEB0dDR//vOfmTJlCsuXL6d58+bExcUBeD+eufDCC7HZbBQXFxMUFFSpOmJjY6tUv81mq/K659LuzHxmf5hO2tZDXPe7Zgzq3YrwkPNznZDq0gN/Ug/UA1APQD2o6/sPvu2Bz8JI586dmTVrFm63m19++YVmzZqVW56UlERSUhK7d+9m5syZ2Gw2IiMjee655wCYPHkyffr0AaCgoICwsDCysrIoKiqqdBABOHz4cJXqj42NrfK650LeUSfL1u7l87QsurSO5pE/daR+dBCOonwOF52fGvzdg+pAPVAPQD0A9aCu7z+cfQ8aNmx4ymU+CyNRUVH079+fYcOGYbPZmDp1KosXL6Zx48YkJiYybtw4srKyiIyMZPLkyQB88cUXvPjiixiGQVJSEm3btsXj8XDrrbcSFBSE2+3moYce8lXJ1YLHY/LZxkyWfL6XhrHBPDCkHa0vCPd3WSIiIj5jmMcfzFELHThwoErr+SMF7zlYyOyPdpCVW8JNVzShR/s4DD9esEx/CagHoB6AegDqQV3ff6ihIyNSeSVON8vX7uOTbzO5tF0s9w5IIDzE7u+yREREzguFET/btCOHuZ/swmLAmIEJtGsWWfFKIiIitYjCiJ/kHXWyYNUuvt2czbWJDUm6tBEBdp2qKyIidY/CyHlmmiZf/HiIRat30zAmmL/f2p5GcbqPjIiI1F0KI+fRgcNFzPl4J3uzChnQswk9O9fTHXVFRKTOUxg5D5wuDx9+vZ8V3xygc6toHr2tI1Fh5+fCZSIiItWdwoiPHcot4YV30ilxerirX2s6tYr2d0kiIiLVisKIDx3KLeG5t3+mcb0QRl7fiqAAq79LEhERqXYURnykLIg0qR/KncmtsFl1poyIiMjJKIz4QFkQaRofSuoNCiIiIiKno9+S59ihnBKmvaUgIiIiUlkaGTmHsnKKee7tX2jWQEFERESksvTb8hzJyilmmoKIiIjIGdPIyDlQFkRaNAjlDgURERGRM6IwcpYOHvtopkXDUO64XkFERETkTCmMnIWyINKyYRgjr2+pICIiIlIFCiNVdDC7mOcWKIiIiIicLYWRKigLIq0ahTHy+lZYLbrZnYiISFXpz/kzdDC7mGlv/6wgIiIico4ojJwB0zSZ8U46rS8IVxARERE5R/QxzRkwDIPU61vRJD5UQUREROQcURg5Q80bhvm7BBERkVpFH9OIiIiIXymMiIiIiF8pjIiIiIhfKYyIiIiIXymMiIiIiF8pjIiIiIhfKYyIiIiIX/k0jCxYsIAhQ4YwYsQI9uzZU27Z3LlzGTx4MMOHD2fTpk0AZGVlMXLkSEaMGMHjjz+OaZoApKWlMWTIEAYPHsyqVat8WbKIiIicZz4LIzk5OSxcuJA5c+Ywfvx4pk2b5l126NAhli9fzrx58/jHP/7BU089BcBLL73ELbfcwuzZs7Farfzvf/8D4Mknn2TGjBm8+uqrzJgxA7fb7auyRURE5DzzWRhJS0sjMTERm81Gp06d2LFjh3fZvn37aN26NVarlbi4ODIzM3E4HOzcuZMOHToAcNFFF7Fu3TpKSkpwu93Ex8cTGhpK8+bN2blzp6/KFhERkfPMZ5eDz83NJTIy0jtd9pELQNOmTdm0aRNFRUVkZGSwf/9+cnNzSUhI4PPPP2fgwIGsXbuWwMBAcnJyCA8P964bERFBbm5upeuIjY2tUv02m63K69YW6oF6AOoBqAegHtT1/Qff9sBnYSQiIoL09HTvtMXy6yBMdHQ0qamppKam0qhRIxISEoiOjubPf/4zU6ZMYfny5TRv3py4uDgiIyPJz8/3rpufn18u5FTk8OHDVao/Nja2yuvWFuqBegDqAagHoB7U9f2Hs+9Bw4YNT7nMZx/TdO7cmXXr1uF2u9m0aRPNmjUrtzwpKYk5c+YwatQoWrZsic1mIzIykueee47XX38dj8dDnz59CAoKwmq1cvDgQQoLC9m1a9cJ2xIREZGay2cjI1FRUfTv359hw4Zhs9mYOnUqixcvpnHjxiQmJjJu3DiysrKIjIxk8uTJAHzxxRe8+OKLGIZBUlISbdu2BWDChAmMHj0a0zS55557sNl0s2EREZHawjCPP5ijFjpw4ECV1tOQnHoA6gGoB6AegHpQ1/cfaujHNCIiIiKVoTAiIiIifqUwIiIiIn6lMCIiIiJ+pTAiIiIifqUwIiIiIn6lMCIiIiJ+pTAiIiIifqUwIiIiIn6lMCIiIiJ+pTAiIiIifqUwIiIiIn6lMCIiIiJ+pTAiIiIifqUwIiIiIn6lMCIiIiJ+pTAiIiIifqUwIiIiIn6lMCIiIiJ+pTAiIiIifqUwIiIiIn6lMCIiIiJ+pTAiIiIifmXzdwEiIiJVZZomhYWFuFwuTNP02esUFRVRUlLis+3XBL/tgWEYWCwWAgMDCQgIOKttK4yIiEiNZJomeXl5OBwOrFYrFovvBvsdDofPtl1T/LYHHo8Hp9NJcXExgYGBhIeHYxhGlbatMCIiIjVSYWEhDoeD0NBQQkJCfPpaVqsVt9vt09eo7k7Wg7KRqcLCQux2O8HBwVXato4ZERGRGsnlcmG1Wn0eROTUDMMgJCQEq9V6VqNHCiMiIlIjmabp049mpHLKjh05m2N29F0UERERv/LpMSMLFixg8eLF2O12nnjiCZo0aeJdNnfuXJYtW4bdbmfixIm0b9+evLw87rvvPpxOJ4Zh8OyzzxIfH8+ECRPYvHkzoaGhtG3blkmTJvmybBERETmPfBZGcnJyWLhwIfPnz+enn35i2rRpzJgxA4BDhw6xfPly5s2bR3Z2NmPHjmX27NmsWLGCbt26cc8997BkyRLeeustxowZA8Cjjz5Kx44dfVWuiIhInVH2u7Xs97K/+SyMpKWlkZiYiM1mo1OnTuzYscO7bN++fbRu3Rqr1UpcXByZmZk4HA5atmzJzp07AcjPzycmJsa7zpQpUwgKCuLuu++mR48evipbRETEb6688spKPW/+/Pk0bNjQt8WcRz4LI7m5uURGRnqnjz+wpWnTpmzatImioiIyMjLYv38/ubm5JCQkMG3aNJKTk3E4HCxYsACABx98kJiYGDIzM7nttttYvHgxQUFBlaojNja2SvXbbLYqr1tbqAfqAagHoB5A9exBUVGR9xojvmYYxnl5nYceeqjc9MKFC8nIyODee+8tNz82Nvas6pk+fTrAGW3jdD0wDIOAgICq/86t6AkPP/ww/fv35+KLLz6jDUdERJCenu6dPv6I5+joaFJTU0lNTaVRo0YkJCQQHR3NzJkzSU5OZtiwYaxevZpnn32Wxx9/3DtCEh8fz4UXXsi+ffto1apVpeo4fPjwGdVdJjY2tsrr1hbqgXoA6gGoB1A9e1B2NdDzcf2P83WdkT59+pSbXrVqFTk5OSfMh/L7XVxcXOk/0uHX38lnsk+n64FpmpSUlJz2PXK6kZwKz6bp1asXr732GsnJyfzzn/9kz549lSgZOnfuzLp163C73WzatIlmzZqVW56UlMScOXMYNWoULVu2xGaz4fF4iI6OBiAqKoq8vDyg9CMbKL3AzbZt24iPj69UDSIiIrXNmDFjGDlyJD///DOjRo2ib9++zJ8/H4DPP/+cCRMmMHDgQK655hpuueUW3nzzzRNCxJgxY7zHjQBs2LCBK6+8kjVr1vDmm28yaNAgrrnmGu6//3727t3r832qcGTk6quv5uqrryYvL4/333+fYcOG0bhxYwYMGEC/fv1OeT36qKgo+vfvz7Bhw7DZbEydOpXFixfTuHFjEhMTGTduHFlZWURGRjJ58mQARowYwYMPPsj8+fNxOp08/PDDANx///3k5+fjdru5++67CQsLO4ctEBERqVlyc3OZOHEiffr04dprr6V+/foArFixguDgYG666SaCg4PZsGEDr776KkePHuUvf/lLhdudPXs2FouFIUOGkJ+fz9tvv83UqVP517/+5dP9qdQxI/v372fp0qX897//5ZJLLiEpKYmNGzfyxz/+0ZvGTmbo0KEMHTrUO3386Mhzzz13wvPj4+N54403Tpj/yiuvVKZMERGROuHQoUM8+OCDJCUllZv/97//ncDAQO90SkoKzz33HEuXLmXkyJEV3tDO5XLxyiuvYLOVxoOIiAheeOEFtm/fzoUXXnjud+SYCsPI8OHDcbvd3HjjjcyZM8c7KnH11VeTmprqs8JERESqqrDYhcPlOWfbs1iseDxndsxIgM1CSJBvzhMJCgqib9++J8w/PoiU3bunU6dOLF++nN27d9O6devTbjcpKckbRAA6deoEwIEDB/wbRqZMmULLli1PukwjFiIiUt24PSYTXv6eYod/b2wXFGBl+qiuWC1Vu5Pt6dSrV69caCizY8cO/vOf/7BhwwaOHj1abtlvp0+m7OOeMmUDEGXHbvpKhWHktddeY/z48URERACln1M999xzTJkyxaeFiYiIVIXVYvDUnZ2rxciIL4IIcNKPW/Lz8xkzZgyhoaHcdtttNGrUiICAALZs2cJLL72Ex1NxP051r5+zue9MZVQYRn744QdvEAGIjIwkLS3Np0WJiIicjZAgG+fyXr7n69Tes7Fx40by8vJ47LHH6Ny5s3d+RkaGH6uqnErdKO/484azsrJ8npBERETkzJRdkOz439FOp5MlS5b4qaLKq3Bk5N5772Xo0KFcdtllmKbJV199xcSJE89HbSIiIlJJ7du3Jzw8nCeffJKBAwdiGAYfffRRjRhAqNR1Rrp06cL3338PlF4o5fh7xoiIiIj/RUZG8uSTTzJr1iz+85//EB4ezjXXXEPXrl0ZP368v8s7LcOsRGTKyclh165dOBwO77xLLrnEp4WdKwcOHKjSetXx0sfnm3qgHoB6AOoBVM8e5OTkAKUX2fS1mnDMiK+drgeV+V6c7nLwFY6MzJs3j8WLF7Nnzx4uvvhivvnmG7p161ZjwoiIiIhUbxUewDp//nzeeust4uPjefHFF1m2bNkpT/0REREROVMVporAwEBsNhtWq5WioiIaN27M7t27z0dtIiIiUgdU+DHNRRddRF5eHgMHDuTmm28mLCyMjh07no/aREREpA44bRgxTZO//OUvREREMHz4cK644gqOHj1K27Ztz1d9IiIiUsud9mMawzC48847vdNNmjRREBEREZFzqsJjRrp168batWvPRy0iIiJSB1V4zMjHH3/MW2+9RVhYGEFBQd75n3/+uU8LExERkbqhwjDyxRdfnI86REREpI6qMIycagTk8ssvP+fFiIiISN1TYRh5//33vY8dDgfr16+nXbt2CiMiIiJyTlQYRp588sly03l5eYwbN85nBYmIiEjdcsbXdQ8ICGDXrl2+qEVERETqoApHRgYPHoxhGAC43W4yMzO59dZbfV6YiIhIXXPllVdW6nnz588/7V1wK2PXrl2sXLmS66677qy3dbYqDCPPP/+897HVaiU2Nha73e7TokREROqiv/3tb+WmFy1aRGZmJvfcc0+5+VFRUWf9Wrt37+aNN96gS5cu1T+MbNmyhW7duhEeHg5Afn4+a9eu5YorrvB5cSIiInVJ3759y02vXr2a3NzcE+bXNhWGkenTp7N06VLvdHh4ONOnT1cYERER8QOPx8OCBQv44IMPOHDgAOHh4VxxxRWkpqYSEhLifd769et5/fXX2bFjB263m3r16tGrVy9SU1P58MMPefrppwEYO3asd53p06dz8cUXn/d9qjCMeDyeE+a5XC6fFCMiIiKn98wzz/Dpp5/yhz/8gUGDBrF3717effdddu3axXPPPYdhGOzYsYOJEyfSoUMH7rjjDiwWC/v27eOHH34AoHPnzgwaNIhFixYxfPhwmjZtCkCzZs38sk8VhpHExET+9re/MWTIEKD0oJlLL73U54WJiIhIeWlpaaxYsYJHH3203CcUbdu2ZcqUKXzzzTdceumlrF+/noCAAKZNm4bVaj1hO40aNaJz584sWrSIbt26+WU05HgVhpGJEyfy9ttv88orrwDQo0cPBg8e7PPCREREqsosKQS345xtz2OxYnrcZ7aSNQAjMKTi552B1atXExERQefOncnJyfHO79y5MxaLhY0bN3LppZcSFhZGUVER33zzDT169DinNfhChWHk8OHDDBo0iGHDhgFQUlLCoUOHiI+Pr3DjCxYsYPHixdjtdp544gmaNGniXTZ37lyWLVuG3W5n4sSJtG/fnry8PO677z6cTieGYfDss88SHx/P7t27mTRpEk6nkwEDBnDzzTefxS6LiEhtZnrcFC+YDM5i/xZiDyJo2NMYlhNHJqpq79695OXl0b9//5Muz83NBaB37968//77TJw4kdjYWLp160bPnj25/PLLvZfrqE4qDCN333038+fP904bhsE999zDokWLTrteTk4OCxcuZP78+fz0009MmzaNGTNmAHDo0CGWL1/OvHnzyM7OZuzYscyePZsVK1bQrVs37rnnHpYsWcJbb73FmDFjmDZtGuPHj6d9+/YMGTKEvn37npPTmkREpPYxLFaCbp5yTkdGLBYrnqqMjJzDIAKlx3HGxsYyceLEky6Pi4sDIDAwkJkzZ7Jhwwa+/vprvvnmGz766CO6d+/O008/fdKPbvypwjDicrkICAjwTgcEBOBwVPwNTktLIzExEZvNRqdOndixY4d32b59+2jdujVWq5W4uDgyMzNxOBy0bNmSnTt3AqWnEMfExACwc+dOOnXqBJQew5KWlkavXr3OaEdFRKTuKP145Nx9RGKxWjHdZxhGfOCCCy5g48aNdOrUqdzv5pOxWCx069aNbt26eQcWXnrpJTZu3Ei3bt2q1QhJhZeDb9CgAUuWLPFOv/vuuzRo0KDCDefm5hIZGemdNk3T+7hp06Zs2rSJoqIiduzYwf79+8nNzSUhIYHvvvuO5ORk5syZQ79+/U5YNyIiwjsMJSIiUpdcccUVOJ1O5s2bd8Iyh8PB0aNHAU76e7J169be5wEEBQUBUFBQ4KtyK63CkZHHHnuMxx9/nOnTpwPQtWtXbrjhhgo3HBERQXp6unfaYvk190RHR5OamkpqaiqNGjUiISGB6OhoZs6cSXJyMsOGDWP16tU8++yzPP744+XSW35+frmQU5HY2NhKP/d4NputyuvWFuqBegDqAagHUD17UFRUhMPhOC8fORiG4ZePNgzDKPfa3bt354YbbuD111/3XpTUMAz27NnDqlWrmDx5Mt27d2fOnDls3LiRHj160KBBA3JycliyZAn169enS5cuWK1WEhISsFqtvPXWWxQVFWG32+nWrRvR0dGnrOVUPTAMg4CAgKr/zq3oCfXr1+fZZ5/ls88+48MPP+S7777Dbrd7Ry1OpXPnzsyaNQu3280vv/xywrnLSUlJJCUlsXv3bmbOnInNZsPj8XibEBUVRV5eHgDNmzdn06ZNtG3blnXr1nHHHXdUegcPHz5c6eceLzY2tsrr1hbqgXoA6gGoB1A9e1BSUgKU3jfN16xW63l5nd8yTRPTNMu99rhx47jwwgt57733ePHFF7Hb7TRs2JDrr7+eFi1a4Ha76dGjB/v37+eDDz7wflLRuXNnbrvtNoKDg3G73URERPDAAw8we/ZsnnrqKTwez2kvena6HpimSUlJyWnfI6e75LxhHv8ZyHEcDoc3gKSlpdGjRw8+++wzVq9eXel0OH/+fJYuXYrNZmPq1Kl8++23NG7cmMTERMaNG0dWVhaRkZFMnjyZevXqkZmZyYMPPojH48HpdPLwww/Trl07du3axaRJk3C5XPTv3997zZPKOHDgQKWfe7zq+B/vfFMP1ANQD0A9gOrZg7JTW8/HCQ3+CiPVyel6UJnvRZXCyMUXX0zbtm0ZPXo0iYmJWK1WevfuzcqVKytfeTWgMFJ16oF6AOoBqAdQPXugMHJ++TKMnPIA1gceeACbzcbjjz/OP//5T9LT06vVkbciIiJSO5wyjAwbNozZs2fzxhtvEBcXx+OPP05WVhbPPvssGzZsOJ81ioiISC1W4am9cXFx3mCycuVKGjVqxPPPP38+ahMREZE6oMKzaY5XFkzKLg0vIiIicrYqHBkRERER8SWFERERqZEMw8Dj8fi7jDrPNE08Hs9ZneSiMHKGPAVHOMXZ0CIich7ZbDbcbjeFhYX+LqXOMk2TwsJC3G53hffKOZ0zOmakrjNNk5L3nsfWoiu2xBt1qrOIiB+FhITgcrk4evQoxcXF5W47cq4ZhlHn/xD9bQ/KrgxrmiaBgYHee91UhUZGzoBhGARefQeuzWtxffeev8sREanTDMMgIiKCkJAQn9835mz+6q8tftsDi8VCYGAgkZGRREREnNUf6BoZOUOWes0JuOYvOD76P7DasXe5zt8liYjUWYZhEBoa6vPXqY5XoD3ffNkDjYxUgbVBKwL6/BnX9//F+cMn/i5HRESkRlMYqSJrozYEXJ2K69v3cP30mb/LERERqbEURs6CtfFFBPS+Hec37+L65XN/lyMiIlIjKYycJWvTTgRc8SecXy3EteVrf5cjIiJS4+gA1nPA2uJi7B4Xzv/NAasNW8tu/i5JRESkxlAYOUdsrS4BtwvnmjcxLDaszTv7uyQREZEaQR/TnEO2hB7YLx2E47PXcO/Z5O9yREREagSFkXPM1q4n9u79cKx8Bfe+X/xdjoiISLWnMOIDtg69sXVJwvHJS7gztvq7HBERkWpNYcRH7J37YuvYB8dH/8J9cLu/yxEREam2FEZ8yHZxErZ2vXD8dxbunRv9XY6IiEi1pLNpfMgwDGzd+0FwGI7Vr2Pd1RX77wZhBIb4uzQREZFqQyMjPmYYBvYOVxPY70E8OfspWfIk7v3p/i5LRESk2lAYOU8s0Y0IvOEBrK0vxfHf/8Px1SJMl8PfZYmIiPidwsh5ZFht2LvdQOD1Y/Hs3UTJ0qfxZO3yd1kiIiJ+pTDiB5b6LQhMmYClURtK3nsO53fvY3rc/i5LRETEL3QAq58Y9kACetyMu2lHHP+bi3vPjwRc8UcsUQ38XZqIiMh5pZERP7Ne0I6gG/+GJTKekqVP49q0CtP0+LssERGR80ZhpBowAkMIuPJP2HuOwLnxQxwr/omn4Ii/yxIRETkvfPoxzYIFC1i8eDF2u50nnniCJk2aeJfNnTuXZcuWYbfbmThxIu3bt2f58uUsWLAAgIyMDHr37s3EiROZMGECmzdvJjQ0lLZt2zJp0iRflu03tpZdsTZohePzeZS8+wQB19yFtUFrf5clIiLiUz4LIzk5OSxcuJD58+fz008/MW3aNGbMmAHAoUOHWL58OfPmzSM7O5uxY8cye/ZskpOTSU5OBmD06NH07dvXu71HH32Ujh07+qrcasMIiSTgmrtwbXgfx0ezSgNJwwR/lyUiIuIzPvuYJi0tjcTERGw2G506dWLHjh3eZfv27aN169ZYrVbi4uLIzMzE4fj1mhsFBQVs2bKFrl27eudNmTKFESNG8OWXX/qq5GrDMAzsXW/A1vGa0nvb6O6/IiJSi/lsZCQ3N5fIyEjvtGma3sdNmzZl06ZNFBUVkZGRwf79+8nNzaVevXoAfPzxx1x99dUYhgHAgw8+SExMDJmZmdx2220sXryYoKCgStURGxtbpfptNluV1z1n+gwnLyyMvE9fIq7/OIJadD6vL18teuBn6oF6AOoBqAd1ff/Btz3wWRiJiIggPf3Xy55bLL8OwkRHR5OamkpqaiqNGjUiISGB6Oho7/L33nuP8ePHe6djYmIAiI+P58ILL2Tfvn20atWqUnUcPny4SvXHxsZWed1z6sKe2IpLOPTuNAJ6p2Jt0v68vXS16YEfqQfqAagHoB7U9f2Hs+9Bw4YNT7nMZx/TdO7cmXXr1uF2u9m0aRPNmjUrtzwpKYk5c+YwatQoWrZsic1WmosOHz5MVlYWbdu29T43Pz8fgMLCQrZt20Z8fLyvyq6W7B37YO/WD8enr+De/YO/yxERETmnfDYyEhUVRf/+/Rk2bBg2m42pU6eyePFiGjduTGJiIuPGjSMrK4vIyEgmT57sXW/FihVcd9115bZ1//33k5+fj9vt5u677yYsLMxXZVdbtg69wWLBsfLfBFx5O9bm5/cjGxEREV8xzOMP5qiFDhw4UKX1quuQnOvn/+H8ehEBV/wRa4uuFa9wFqprD84n9UA9APUA1IO6vv/g249pdDn4GsbWrmfpCMnqN7CbHmwtu/u7JBERkbOiMFID2dr8HgwLztVvgseDrXWiv0sSERGpMoWRGsqW0KM0kPxvDpgebBf+zt8liYiIVInCSA1mu/BSsFhwrpldGkgSLvN3SSIiImdMYaSGs7W6pHSEZM2xj2zaXu7vkkRERM6IwkgtYGvZDcNiwfHZ63hyMrBfkoJhtfu7LBERkUrx2UXP5PyyNr+YwKT78Oz+gZL3nseTl+XvkkRERCpFYaQWsdRvQWDKXzHCYylZ+jSubev9XZKIiEiFFEZqGSMwhICrRmLvnoLz8zk4/jcX01ni77JEREROSWGkFjIMA1u7ngTe8ACeg9spWf4snuz9/i5LRETkpBRGajFLbGMC+z2IpV4zSpY9i+uXz6nlV/8XEZEaSGfT1HKGPZCAniNwNWyDc+1beA5sxv77oRgBwf4uTUREBNDISJ1ha51IYMpf8eQepGTp03iydvm7JBEREUBhpE6xRMYTeMM4LI0vouT953H+8Cmm6fF3WSIiUsfpY5o6xrDZCehxM+6GbXB8PgdPxmYCrrwdwx7o79JERKSO0shIHWVt3pnA/hMxC47g+OQlTJfD3yWJiEgdpTBSh1nCYgi87l7Mwlwcn76C6Xb6uyQREamDFEbqOCM4ojSQ5GXhWPkfTLfL3yWJiEgdozAiGKFRBPxhNGb2fhyr38D0uP1dkoiI1CEKIwKUfmQTcN29eA7uwLlmNqZHZ9mIiMj5oTAiXpaIegT+4V7cB9JxfjFfp/2KiMh5oTAi5Vgi4wm8bjTuPT+Q88lruny8iIj4nMKInMAS3ZDAa0dR+POXOL9ZrEAiIiI+pTAiJ2WJbUy9mybi3vwlrm+XKZCIiIjPKIzIKQU0bEVA37/g+mk1ro0r/F2OiIjUUgojclrW+FYEXHMXrrSPcKZ97O9yRESkFlIYkQpZGyYQ0OdOXBvex7Vplb/LERGRWkZhRCrFekE7Aq4aiXPdEly//M/f5YiISC2iMCKVZm3akYAr/4Tzy4WUfPwinuwD/i5JRERqAZ+GkQULFjBkyBBGjBjBnj17yi2bO3cugwcPZvjw4WzatAmA5cuXM2LECEaMGME111zDk08+CcDu3bsZMWIEQ4YMYcGCBb4sWSpgbX4xgQMmgdVGyZIncXw+F/Notr/LEhGRGsxnYSQnJ4eFCxcyZ84cxo8fz7Rp07zLDh06xPLly5k3bx7/+Mc/eOqppwBITk5m9uzZzJ49m3bt2tG3b18Apk2bxvjx45k7dy4LFy4kJyfHV2VLJVgi4wnsfQeB14/FzD1I8aIpONcvxSwp9HdpIiJSA/ksjKSlpZGYmIjNZqNTp07s2LHDu2zfvn20bt0aq9VKXFwcmZmZOBwO7/KCggK2bNlC165dAdi5cyedOnXCarWSmJhIWlqar8qWM2Cp34KApPsIuOp23Lt/pHjRIzh//BTT7fR3aSIiUoPYfLXh3NxcIiMjvdPHXzSradOmbNq0iaKiIjIyMti/fz+5ubnUq1cPgI8//pirr74awzBOWDciIoLc3NxK1xEbG1ul+m02W5XXrS0q3YO4KzE796Jw0xryvliI85f/EXH5zYRc9HsMo2YflqT3gXoA6gGoB3V9/8G3PfBZGImIiCA9Pd07bbH8+kspOjqa1NRUUlNTadSoEQkJCURHR3uXv/fee4wfP947XRZKAPLz88uFnIocPny4SvXHxsZWed3a4ox70Kgj9hvb4PppNdmfvEbOV0uxd0/BckG7ct/DmkTvA/UA1ANQD+r6/sPZ96Bhw4anXOazP1s7d+7MunXrcLvdbNq0iWbNmpVbnpSUxJw5cxg1ahQtW7bEZivNRYcPHyYrK4u2bdt6n9u8eXM2bdqE2+1m3bp1dOrUyVdly1kybAHYO11D0E2PYG3UFsenL+NY8QKerF3+Lk1ERKopn42MREVF0b9/f4YNG4bNZmPq1KksXryYxo0bk5iYyLhx48jKyiIyMpLJkyd711uxYgXXXXdduW2NGzeOSZMm4XK5uPHGG4mKivJV2XKOGIGh2BNvxHrRFbi+e5+S96ZhaZCArcNVWBpfVOM/vhERkXPHMGv5HdAOHKjatTA0JHdue+DJPYjrp89wb/kKIzQaW/srsba+FMMWcE627yt6H6gHoB6AelDX9x98+zGNz0ZGRI5niaxPQI+bMbtejyt9Lc6N/8X57XJsbS7HdlEvjJAof5coIiJ+ojAi55URGIq90zXYOvTGvWMDrk0rcf34KdYWXbG1740lrom/SxQRkfNMYUT8wrBYsbXqjrVlNzyZ23FtWknJ8mewxLcqDSVNOmBYdFyJiEhdoDAifmUYBtYGrbA2aIUn7xCunz7DsfoNjODw0uNKWiViBIb4u0wREfEhhRGpNiwRcQT8blDpcSWb1+L6cRXOdUuxtrgYa8JlWOJb1djrlYiIyKkpjEi1YwQEY+9wNbb2V+HZvxn35rU4VryAER6HNeEybK0TMYLD/V2miIicIwojUm0ZhgXrBW2xXtAWsygf19ZvcG9ei+vbZVibdsLa5jIsjdromiUiIjWcwojUCEZwOPaOV2Pr0BtP5nbcm7/A8cnLGMERWBN6YLvwdxihUf4uU0REqkBhRGqU4w94NS8dhHv7elzpa3FteB9L4/bY2lyGpXF7DIvV36WKiEglKYxIjWUEhmBr1wtr256Yh3fjSl+LY/WbYAvAduHvSg96jYjzd5kiIlIBhRGp8QzDwIhrRkBcM8zEAbh3fFd6bEnax1gaJWBNuAxrs04YVru/SxURkZNQGJFaxbAHYkvogS2hB57s/aWXnv/ybZxfLcTWKrH0oNeoBv4uU0REjqMwIrWWJbpR6XVLuqfg3vV96WjJ4sex1G+Jtc1lWFt0rfY36hMRqQsURqTWM2x2bK26Y2vVHU9eFu7Na3GuX4rzq0VYW11SetBrrO6JIyLiLwojUqdYIuph6Z6CresNePb8iCt9LSXLnsGIaYytzWVYW3bHCAj2d5kiInWKwojUSYbFirVZZ6zNOuMpyMa95Utc33+E85t3sbboWnpsSb0W/i5TRKROUBiROs8SFo3l4iRsna/Ds/8XXOlf4Hj/HxiR8eRf3AezYXuMoDB/lykiUmspjIgcY1gsWBtfhLXxRZhFebi2fM3RDR/jWj0fa/POpdctaXihLj8vInKOKYyInIQRHIG90zXEXDmYrE1f4U5fi+Pjf2GERJXerO/CRIyQKH+XKSJSKyiMiJyGYRhYGyZgbZiAWXIU99Z1uDZ/gevbZRhhsRixjbHENcUS2wRLbBPdTVhEpAoURkQqyQgMxdb+SqwXXYGZm4nn8B7MQ3vw7PsFV9rH4CzGCI3COBZMLLFNsMQ10QiKiEgFFEZEzpBhGBhRDUqv5NrqEgBM04OZfxjPoT2Yh3fjydyG66fPoKQQgiNKg0m9ZlgbX4QR11THnYiIHEdhROQcMAwLRkQ9LBH1oGVXAEzTxDyajXloN57De/Ac2IJr4woIDMXa5CKsjTtguaCtrmsiInWewoiIjxiGgREWA2ExWJt3AcB0FOHZ9zPuPT/i+PJtKCnE0qA11iYdsDRpjyUy3r9Fi4j4gcKIyHlkBASXXlStRVdMjwfz0C7cezbh2voN5jeLS0dXmnQoDSfxrTCs+i8qIrWfftKJ+IlhsWDUb4Glfgvs3W7APJqNe8+m0lGTj18EixVLw4TSs3WOnbGjs3VEpDZSGBGpJozQaGxtL8fW9nJMlwPPgS14DqTjObAZ14+fgqMIQqKwxJU/W4fgSAzD8Hf5IiJVpjAiUg0ZtgCsTdpjbdIe+PVsHfPwHjyH9uDJ3H7c2TrhWGKPu9ZJbGOMsGidsSMiNYZPw8iCBQtYvHgxdrudJ554giZNfr1N+9y5c1m2bBl2u52JEyfSvn3pD92FCxfy/vvv43a7ueuuu/j973/PiBEjcDqd2O12evbsyZ133unLskWqnbKzdYioh7XFb8/W2YPn8G48h3fjSv8CivPBasMIr4cRWR9LRH2MyPqlx6NE1oegcI2kiEi14rMwkpOTw8KFC5k/fz4//fQT06ZNY8aMGQAcOnSI5cuXM2/ePLKzsxk7diyzZ88mPT2dH374gddff/2E7c2aNYuYmBhflStS45Q/W6czUBpQKM7Hk3sQMy8LM/cgnryDmHt+xMzPArcL7EHHQko9jGNBxRLZACO6AYbV7ue9EpG6yGdhJC0tjcTERGw2G506dWLHjh3eZfv27aN169ZYrVbi4uLIzMzE4XDw8ccfY7FY+NOf/kRsbCyTJ08mMjISgFGjRhEcHMwDDzxAu3btfFW2SI1mGAYER2ANjoAGrcstMz2e0pGUvIPHQkoWnqxdmNvWYRYcBsOCEd3w1+NRYptixDTy056ISF3iszCSm5vrDRJw7C+2Y5o2bcqmTZsoKioiIyOD/fv3k5uby8GDBykpKeH1119n4cKFvPzyy4wfP54ZM2YQExPDli1bGD9+PEuWLPFV2SK1lmGxYITHQngsXFA+0JvOEjzZ+4595LMHV/oXmNmLAMiIvQAzqmFpOIltgiW2MYY90B+7ICK1lM/CSEREBOnp6d5pi+XXg+mio6NJTU0lNTWVRo0akZCQQHR0NBERESQkJADQs2dPPvroIwDvxzMXXnghNpuN4uJigoKCKlVHbGxsleq32WxVXre2UA/qWA8aNAIu8U6aLgfOrD24D+2meP82HDu/xbF+Cbjd2GIaYotpdOYHyVqtWEOjsIZGYQmLxhoWXTodFoURGFptj2WpU++DU6jrPajr+w++7YHPwkjnzp2ZNWsWbrebX375hWbNmpVbnpSURFJSErt372bmzJnYbDYuueQS1q5dS79+/fjxxx9p2rQpAAUFBYSFhZGVlUVRUVGlgwjA4cOHq1R/bGxsldetLdQD9YCAKGI7tqKwUSdsgNXtwszJKD1YNu/QGW/OdDsh+yDmvq2YhbmYRXngLC5daLVjBEdghERASOSxx5EYgaFnXrfV9uv6wREQFHpWZxfV+fcB6kFd3384+x40bNjwlMt8FkaioqLo378/w4YNw2azMXXqVBYvXkzjxo1JTExk3LhxZGVlERkZyeTJk4HS0ZDVq1czYsQIrFYrTz/9NB6Ph1tvvZWgoCDcbjcPPfSQr0oWkQoYVhtGbGMssY3P2TZNZwlmUV5pOCnMg6Jc72NPbiZmSeGZb9TtLN2W49i6FmtpKCkLKCERGMGR5R4TGAKnGJlx2Tx4CnKqvpO1QF3vQV3afyM0+ryPUhrm8Qdz1EIHDhyo0npKweoBqAdQs3tgupyYRceHnDzviExZ4DGLcqG4wN+lilQb9iv/hK1l9xPm18iRERERfzNsdozwOAiPO+3zTI+79Aq3pxAdHU12dva5Lq9Gqes9qFP7X5WPRs+SwoiI1HmGxQpBYadcbg2JwChynseKqp+63oO6vv++putFi4iIiF8pjIiIiIhfKYyIiIiIXymMiIiIiF8pjIiIiIhfKYyIiIiIXymMiIiIiF8pjIiIiIhfKYyIiIiIXymMiIiIiF8pjIiIiIhf1fq79oqIiEj1ppERERER8SuFEREREfErhRERERHxK4URERER8SuFEREREfErhRERERHxK4URERER8SuFkZNYsGABQ4YMYcSIEezZs8ff5fiU0+lkyJAhdO/enRUrVgBw5MgR7rjjDoYOHcoLL7zgfe6qVasYPHgwQ4YMIS0tzV8ln1MbNmxg8ODBDB8+nDvvvJO8vLw6tf8Ahw4dYsiQIQwfPpyhQ4eyefNmiouLue+++7jlllt4+OGH8Xg8AKSlpTFkyBAGDx7MqlWr/Fz5ubd+/XratGnDkSNH6tz7AKBLly6MGDGCESNGsGbNmjr5PkhLS+P2229nxIgR/Pvf/65z74OtW7d63wMDBgzgxhtvPD/vA1PKyc7ONgcNGmQ6nU7z+++/N0ePHu3vknzK4/GYmZmZ5syZM80PP/zQNE3TfOqpp8wPPvjANE3TTE1NNbds2WK6XC4zJSXFzM/PNzMyMswhQ4b4s+xzJiMjwywsLDRN0zTnzZtnzpo1q07tv2mapsvlMt1ut2mapvnVV1+Z48aNM+fMmWO+8sorpmma5iOPPGJ+9tlnpmma5pAhQ8yMjAyzoKDATElJMV0ul9/q9oVRo0aZAwYMMA8fPlzn3gemaZrXX399uem69j4oKSkxU1NTvT8TTLNu/Tz8rTlz5pizZs06L+8DjYz8RlpaGomJidhsNjp16sSOHTv8XZJPGYZB/fr1y8377rvvuOqqqwC48sorWbduHTt37qR58+aEhYURHx+Py+WipKTEHyWfU/Hx8QQHBwNgt9uxWq11av8BrFYrFkvpj4L8/Hzatm3L+vXrT+hBSUkJbreb+Ph4QkNDad68OTt37vRj5efWqlWr6NatGyEhIUDd+n9Q5sCBAwwbNoxx48aRnZ1d594HGzduJCgoiNGjR3P77bfzyy+/1Mn3QZn33nuPG2644by8DxRGfiM3N5fIyEjvtFkHr5ZfWFhIUFAQABEREeTm5pKbm0tERIT3OREREeTk5PipwnMvOzubefPmMWjQoDq5/1u3bmXIkCE89thjJCYmltvfsh7k5OQQHh7uXadsfm3g8XiYN28eQ4cO9c6ri++Djz/+mLlz59KjRw+mT59e594HBw8eZOvWrcyYMYNJkybx6KOP1sn3AcDevXvxeDw0adLkvLwPFEZ+IyIigry8PO902V+MdUlwcLA35efn5xMZGUlkZCT5+fne5+Tn5xMVFeWnCs+toqIixowZw0MPPURMTEyd23+A1q1b89Zbb/HSSy/x2GOPlft/cLoeHB/ca7Lly5fTu3dvAgMDvfPq4vsgJiYGgOuvv56ff/65zr0PIiIi6Nq1KyEhIbRq1YqCgoI6+T4A+OCDD0hKSgI4L++DuvebtgKdO3dm3bp1uN1uNm3aRLNmzfxd0nnXrVs3Vq9eDcCaNWvo3r07zZo1Y+fOnRQWFpKVlYXVai33g7umcrlcjB07lhEjRtC1a1egbu0/gMPh8D4ODw8nKCiISy65hDVr1gC/9iAoKAir1crBgwcpLCxk165dteb/x+bNm/nvf//LyJEjSU9P54EHHqhz74PCwkLcbjcA33zzDc2aNatz74POnTuzY8cOPB4PWVlZBAQE1Ln3QZnjw8j5eB/orr0nMX/+fJYuXYrNZmPq1Km15j/aqYwZM4Yff/yRkJAQevbsyR133MGDDz7I0aNH+d3vfseYMWMA+PTTT3n55ZcxDIOJEyfSuXNnP1d+9pYsWcLjjz9Ou3btALjiiisYMGBAndl/KD2j6LnnnsMwDAAmTJhAy5YtmTBhAocOHaJVq1Y88sgjWCwWvv/+e5588klM0+TOO+/k6quv9nP1596IESOYMWMGQJ16H/z444889NBDhIWFERAQwOOPP050dHSdex8sWrSIxYsX43K5GD9+PK1atapT7wOALVu2MHXqVF5//XWgdPTY1+8DhRERERHxK31MIyIiIn6lMCIiIiJ+pTAiIiIifqUwIiIiIn6lMCIiIiJ+pTAiUgO0adOGf/7zn97pCRMmeM/7PxuLFy9m2rRpZ72d0zl8+DCDBg2if//+bN++vdyy3//+95XezuLFizly5EiV6/jPf/5z0vl79+6lS5cupKSkkJKSQmpq6hlv++eff2bt2rVVrk2krlMYEakBwsLCePfddykqKvJ3KV5lF8iqyJdffsnFF1/MkiVLaNmyZZVf79133yU7O7vK67/66qunXJaQkMDSpUtZunQpr7zyyhlvuyphpLL9E6kLFEZEaoCgoCD69u3LokWLTljWu3dv7+Wqjx/pGDFiBE899RT9+/dn4MCB/PDDD/zxj3/k6quv5rPPPvOuv3v3boYOHcq1117LW2+95Z3/r3/9i4EDB5KcnMyCBQu82x89ejTDhw/nwQcfLFdHUVER999/P8nJyQwZMoQdO3awdetWpk2bxvvvv89NN91UqX2dP3++93UnTpyIx+Ph448/5scff2TUqFHccsstAHz22WfcfPPNpKSkMHnyZDweD3v37uXGG29k3LhxXHfddTz88MMATJ8+nZycHFJSUnjiiScqVcfJ9r+sVzfeeCODBw9m27ZtuN1uZs6cyeLFi0lJSeGrr74qN3K1d+9ebr75ZgBeeOEFJk6cyODBg3n22WfZuXMnt912GwMGDGDkyJEcOnQIt9vNAw88wPXXX09ycjLLly+vVL0iNZnN3wWISOX86U9/4tZbby13M7eKREVFsWTJEp544gkee+wxZs+ezY4dO3j44Ye58sorgdIrby5btgyAgQMHctVVV5Gens6RI0d45513cDgcDBs2zPv89PR03nnnHcLCwsq91pw5c4iJiWH58uWsXr2aRx99lNdff53Ro0ezfft2HnjggUrV/Ic//MG7j4888ggrV67kmmuuoUOHDjzyyCO0atWKI0eO8MYbbzB79mwCAwN59NFH+eijj+jQoQNbt25l+vTpNGnShAEDBrBz507Gjh3LokWLWLp06Ulfc/PmzaSkpACQnJxMQkLCSfe/Xr16vPHGGwQEBJCWlsbzzz/P//3f/52wj0uWLDnl/u3evZs5c+Zgt9u5/fbbefzxx7ngggv48MMPmTVrFgMGDCAjI4P3338foNz9P0RqK4URkRoiPj6ebt268cEHH1R6nbIAkZCQgGEYBAYGkpCQwP79+73P6dWrlzdY9OjRgx9++IH169ezatUqvvnmG6D0F+Lu3bsB6Nmz5wlBBEovK3/XXXcBpZfVf+ihh6q0n7/88gv/+Mc/OHr0KHl5eTRs2JA+ffqUe87GjRtJT0/3jjgUFxfTqFEjOnToQKtWrWjevDlQeqzNvn37vNOnkpCQ4B39AHjqqadOuv8XXnghU6ZMIT09HYvFUqXbxvfp0we73U5BQQHfffcdd999N4D3DqlNmjRh//79PPbYY/Tp04cePXqc8WuI1DQKIyI1yMiRIxk3bhxt27b1zrNYLHg8HqD8Te8A7Ha79znHPy57PuC9J83xj03TZMyYMSQnJ5fb3u7du723U/eVv//977zyyis0b96c//znPxQWFp7wHNM0ufrqq3nsscfKzd+7dy8BAQHeaYvFUqVjM061/zNnzqRFixZMmzaN7OxsBg0adNL1LRYLZXfa+O33pKx/pmkSHx9/0tGaZcuWsWbNGl555RXWr1/Pvffee8b7IFKT6JgRkRqkVatWXHDBBXz55ZfeeY0aNeLnn3/G4/GUOxakstasWUNBQQEFBQV8+eWXdOzYkcsuu4xFixZ5//Lfvn17haMAF198sXfUZs2aNbRu3fqMa4HSY09iYmIoKSkpNwoUGhrK0aNHAejSpQtffvklGRkZAGRnZ3sfn4phGOVC2Omcav8LCgqIi4vDMAzefffdk9YGv35PAFauXHnS1wgPDyciIoLPP/8cAKfTybZt27xnDCUlJXHXXXd5tyNSm2lkRKSGSU1NZfDgwd7pv/zlL/z1r38lOjq63IhJZbVv357U1FSOHDnCbbfdRnx8PPHx8WzevJlBgwZhmiYxMTG8+OKLp93O8OHDmTRpEsnJyYSGhvLkk09W+NpHjhyhV69e3unHHnuMu+66ixtvvJG4uDguuugi77Ibb7yRBx98kJiYGObNm8fkyZO5++67cTqd2O12HnvsMSIjI0/5Wv369SM5OZnf//73/O1vfzttXVdcccVJ93/IkCGMGTOG+fPnl7tD6aWXXsrLL79M//79mTBhAjfddBN/+ctfWLFixWlPX542bRqPPPIIzzzzDG63m5EjR9KuXTsmTpyIaZpYrVYmT55cYR9FajrdtVdERET8Sh/TiIiIiF8pjIiIiIhfKYyIiIiIXymMiIiIiF8pjIiIiIhfKYyIiIiIXymMiIiIiF8pjIiIiIhf/T+MCoQ8lWmGTgAAAABJRU5ErkJggg=="
-class="
-"
->
-</div>
-
-</div>
-
-</div>
-
-</div>
-
 </div>
 <div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
 <div class="jp-Cell-inputWrapper">
@@ -17754,15 +17705,9 @@ class="
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<p><a id='conclusions'></a></p>
-<h3 id="Extras">Extras<a class="anchor-link" href="#Extras">&#182;</a></h3><p>Using your workbook, you could now save your recommendations for each user, develop a class to make new predictions and update your results, and make a flask app to deploy your results.  These tasks are beyond what is required for this project.  However, from what you learned in the lessons, you certainly capable of taking these tasks on to improve upon your work here!</p>
-<h2 id="Conclusion">Conclusion<a class="anchor-link" href="#Conclusion">&#182;</a></h2><blockquote><p>Congratulations!  You have reached the end of the Recommendations with IBM project!</p>
-<p><strong>Tip</strong>: Once you are satisfied with your work here, check over your report to make sure that it is satisfies all the areas of the <a href="https://review.udacity.com/#!/rubrics/2322/view">rubric</a>. You should also probably remove all of the "Tips" like this one so that the presentation is as polished as possible.</p>
-</blockquote>
-<h2 id="Directions-to-Submit">Directions to Submit<a class="anchor-link" href="#Directions-to-Submit">&#182;</a></h2><blockquote><p>Before you submit your project, you need to create a .html or .pdf version of this notebook in the workspace here. To do that, run the code cell below. If it worked correctly, you should get a return code of 0, and you should see the generated .html file in the workspace directory (click on the orange Jupyter icon in the upper left).</p>
-<p>Alternatively, you can download this report as .html via the <strong>File</strong> &gt; <strong>Download as</strong> submenu, and then manually upload it into the workspace directory by clicking on the orange Jupyter icon in the upper left, then using the Upload button.</p>
-<p>Once you've done this, you can submit your project by clicking on the "Submit Project" button in the lower right here. This will create and submit a zip file with this .ipynb doc and the .html or .pdf version you created. Congratulations!</p>
-</blockquote>
+<h2 id="-Conclusions-"><a class="anchor" id="conclusions"> Conclusions </a><a class="anchor-link" href="#-Conclusions-">&#182;</a></h2><p>Exploring the dataset we have found that there are 714 unique articles with a median view of 25 per article. One of the major issues when developing a recommendation system is the cold start problem. This is when we do not have any information on new users to be able to provide recommendations through collaborative filtering based systems. One way around this is to use a rank based recommendation system and show articles that have the most unique user interactions as those articles.</p>
+<p>The rank based recommendations are useful to new users that have no interactions. This can be a useful as a starting recommendation and than if there is engagement and there are user and article interactions switch to the collaborative filtering based recommendation system. In order to further improve rank based recommendations we could also implement thumbs up or thumbs down system to check if users actually enjoyed the recommendation since just engagement alone doesn't mean they liked the article.</p>
+<p>SVD can help predict the training model but accuracy drops when increasing the number of latent factors in the model. Thus this is an indication of overfitting to the training set. Further attempts can be made to remedy this by having more user interactions that are present in both the training and the test data so we can make predictions as there are only 20 common users.</p>
 
 </div>
 </div>
@@ -17772,10 +17717,11 @@ class="
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[217]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">subprocess</span> <span class="kn">import</span> <span class="n">call</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Converting notebook to html</span>
+<span class="kn">from</span> <span class="nn">subprocess</span> <span class="kn">import</span> <span class="n">call</span>
 <span class="n">call</span><span class="p">([</span><span class="s1">&#39;python&#39;</span><span class="p">,</span> <span class="s1">&#39;-m&#39;</span><span class="p">,</span> <span class="s1">&#39;nbconvert&#39;</span><span class="p">,</span> <span class="s1">&#39;Recommendations_with_IBM.ipynb&#39;</span><span class="p">,</span> <span class="s1">&#39;--to&#39;</span><span class="p">,</span> <span class="s1">&#39;html&#39;</span><span class="p">])</span>
 </pre></div>
 
@@ -17798,23 +17744,8 @@ class="
 
 
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr">
-<pre>Traceback (most recent call last):
-  File &#34;/usr/lib/python3.10/runpy.py&#34;, line 196, in _run_module_as_main
-    return _run_code(code, main_globals, None,
-  File &#34;/usr/lib/python3.10/runpy.py&#34;, line 86, in _run_code
-    exec(code, run_globals)
-  File &#34;/home/salman1567/.local/lib/python3.10/site-packages/nbconvert/__main__.py&#34;, line 3, in &lt;module&gt;
-    main()
-  File &#34;/home/salman1567/.local/lib/python3.10/site-packages/jupyter_core/application.py&#34;, line 264, in launch_instance
-    return super(JupyterApp, cls).launch_instance(argv=argv, **kwargs)
-  File &#34;/home/salman1567/.local/lib/python3.10/site-packages/traitlets/config/application.py&#34;, line 846, in launch_instance
-    app.start()
-  File &#34;/home/salman1567/.local/lib/python3.10/site-packages/nbconvert/nbconvertapp.py&#34;, line 414, in start
-    self.convert_notebooks()
-  File &#34;/home/salman1567/.local/lib/python3.10/site-packages/nbconvert/nbconvertapp.py&#34;, line 576, in convert_notebooks
-    raise ValueError(
-ValueError: Please specify an output format with &#39;--to &lt;format&gt;&#39;.
-The following formats are available: [&#39;asciidoc&#39;, &#39;custom&#39;, &#39;html&#39;, &#39;latex&#39;, &#39;markdown&#39;, &#39;notebook&#39;, &#39;pdf&#39;, &#39;python&#39;, &#39;rst&#39;, &#39;script&#39;, &#39;slides&#39;, &#39;webpdf&#39;]
+<pre>[NbConvertApp] Converting notebook Recommendations_with_IBM.ipynb to html
+[NbConvertApp] Writing 814890 bytes to Recommendations_with_IBM.html
 </pre>
 </div>
 </div>
@@ -17822,13 +17753,13 @@ The following formats are available: [&#39;asciidoc&#39;, &#39;custom&#39;, &#39
 <div class="jp-OutputArea-child">
 
     
-    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[217]:</div>
+    <div class="jp-OutputPrompt jp-OutputArea-prompt">Out[&nbsp;]:</div>
 
 
 
 
 <div class="jp-RenderedText jp-OutputArea-output jp-OutputArea-executeResult" data-mime-type="text/plain">
-<pre>1</pre>
+<pre>0</pre>
 </div>
 
 </div>
