@@ -1,4 +1,0 @@
-# Ignoring environmental variables
-
-.env
-/env

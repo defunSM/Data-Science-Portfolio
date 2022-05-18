@@ -1,7 +1,8 @@
 Eve Online PI Price Forcaster
 ==============================
 
-Using Machine Learning Techniques to forecast future commodity prices in Eve Online in order to create recommendations on which commodities are most profitable.
+In Eve Online there are raw materials that can be extracted from planets. These raw materials are then refined into other various refined goods often sold in the markets. 
+This project is an attempt to use machine learning techniques to try to predict/forcast the future price of these goods. Ultimately to decide which raw materials players should invest time in extracting and when to sell for the most profit as players sell in bulk. 
 
 Project Organization
 ------------
@@ -53,5 +54,17 @@ Project Organization
 
 
 --------
+# Table of Contents
+1. [Setup Instructions](#setup-instructions)
+2. [Data Collection](#data-collection)
+
+# 1. Setup Instructions
+
+# 2. Data Collection
+![](docs/ERD.svg)
+
+
+
+
 
 <p><small>Project based on the <a target="_blank" href="https://drivendata.github.io/cookiecutter-data-science/">cookiecutter data science project template</a>. #cookiecutterdatascience</small></p>
