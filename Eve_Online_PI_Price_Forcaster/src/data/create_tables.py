@@ -42,6 +42,9 @@ def create_tables():
         cur.close()
         # commit the changes
         conn.commit()
+        
+        print("Table created successfully")
+        
     except (Exception, psycopg2.DatabaseError) as error:
         print(error)
     finally:
