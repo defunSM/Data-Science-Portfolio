@@ -3,7 +3,7 @@
 
 # ## Imports
 
-# In[1]:
+# In[24]:
 
 
 import psycopg2
@@ -34,13 +34,13 @@ DATABASE_PORT = os.environ.get("DATABASE_PORT")
 """---------------------- filepath and id constants --------------------------"""
 
 # Filepath that contains the items that we are interested in forcasting
-FILENAME = '../src/data/items.txt'
+FILENAME = 'src/data/items.txt'
 
 # region ids that will be used in the function collect_data 
 REGIONS = [0, 30000142, 30000144, 60003760, 60008494, 60011866, 60004588, 60005686]
 
 
-# In[2]:
+# In[25]:
 
 
 #!/usr/bin/python
@@ -98,7 +98,7 @@ def create_tables():
             conn.close()
 
 
-# In[3]:
+# In[26]:
 
 
 #create_tables()
@@ -111,7 +111,7 @@ def create_tables():
 
 # ## Data Collection
 
-# In[4]:
+# In[27]:
 
 
 def get_raw_material_names():
@@ -167,13 +167,16 @@ def fetch_data(region_id, item_id):
 
     Args:
         region_id (int): id that is assigned to each major market region.
-        item_id (int): id that is assigned to each raw material.
+        item_id (int, list): id or list of ids that is/are assigned to each raw material.
 
     Returns:
         dict: JSON Data from https://market.fuzzwork.co.uk/aggregates/?region=30000142&types=9828
     """
     
-    api_url = "https://market.fuzzwork.co.uk/aggregates/?region=" + str(region_id) + "&types=" + str(item_id)
+    # Formating so that it'll be accepted by the API endpoint
+    item_id = str(item_id).strip('[]').replace(" ", "")
+    
+    api_url = "https://market.fuzzwork.co.uk/aggregates/?region=" + str(region_id) + "&types=" + item_id
     r = requests.get(api_url)
     
     # encoding as json
@@ -182,7 +185,7 @@ def fetch_data(region_id, item_id):
     return raw_material_data
 
 
-# In[7]:
+# In[28]:
 
 
 def store_data():
@@ -211,13 +214,12 @@ def store_data():
 
     # Fetch the data for each region and raw material id
     print("Fetching data...")
-    with alive_bar(len(item_ids)*len(REGIONS), force_tty=True) as bar:
-        for i in item_ids:
-            for r in REGIONS:
-                data = fetch_data(region_id=r, item_id=i)
-                data[str(i)]['region_id'] = r
-                json_data.update(data)
-                bar()
+    with alive_bar(len(REGIONS), force_tty=True) as bar:
+        for r in REGIONS:
+            data = fetch_data(region_id=r, item_id=item_ids)
+            data['region_id'] = r
+            json_data.update(data)
+            bar()
     
     # Connecting to the database
     print("Trying to connect to database...")
@@ -259,18 +261,29 @@ def store_data():
     
 
 
-# In[8]:
+# In[29]:
 
 
-store_data()
+#fetch_data(0, [34,35,36,37,38,39,40])
 
 
-# In[ ]:
+# In[30]:
 
 
-# Converting to .py
-from subprocess import call
-call(['python', '-m', 'nbconvert', 'PI_Price_EDA.ipynb', '--to', 'python'])
+if __name__ == "__main__":
+    store_data()
+
+
+# In[33]:
+
+
+
+
+
+# In[34]:
+
+
+
 
 
 # ## Preprocessing

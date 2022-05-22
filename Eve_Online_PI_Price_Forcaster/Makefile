@@ -25,6 +25,13 @@ requirements: test_environment
 	$(PYTHON_INTERPRETER) -m pip install -U pip setuptools wheel
 	$(PYTHON_INTERPRETER) -m pip install -r requirements.txt
 
+## Update files
+update:
+	echo "Updating Files..."
+	$(PYTHON_INTERPRETER) -m nbconvert notebooks/PI_Price_EDA.ipynb --to python
+	cp notebooks/PI_Price_EDA.py src/data/get_data.py
+
+
 ## Collect data and store into database
 collection:
 	
