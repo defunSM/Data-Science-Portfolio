@@ -26,6 +26,7 @@ from os import path
 from dotenv import load_dotenv, find_dotenv
 from datetime import datetime
 from alive_progress import alive_bar
+from pathlib import Path
 
 """---------------------- env constants --------------------------"""
 
@@ -46,7 +47,7 @@ DATABASE_PORT = os.environ.get("DATABASE_PORT")
 """---------------------- filepath and id constants --------------------------"""
 
 # Filepath that contains the items that we are interested in forcasting
-FILENAME = '../src/data/items.txt'
+FILENAME = Path(__file__).parent / 'items.txt'
 
 # region ids that will be used in the function collect_data 
 REGIONS = [0, 30000142, 30000144, 60003760, 60008494, 60011866, 60004588, 60005686]
