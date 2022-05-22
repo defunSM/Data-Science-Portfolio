@@ -3,7 +3,7 @@
 
 # ## Imports
 
-# In[3]:
+# In[1]:
 
 
 import psycopg2
@@ -98,7 +98,7 @@ def create_tables():
             conn.close()
 
 
-# In[7]:
+# In[3]:
 
 
 #create_tables()
@@ -111,7 +111,7 @@ def create_tables():
 
 # ## Data Collection
 
-# In[6]:
+# In[4]:
 
 
 def get_raw_material_names():
@@ -182,21 +182,7 @@ def fetch_data(region_id, item_id):
     return raw_material_data
 
 
-# In[24]:
-
-
-# Testing the functions defined above
-D1 = {}
-D2 = fetch_data(0, 2073)
-D3 = fetch_data(0, 9828)
-
-D1.update(D2)
-D1.update(D3)
-for i in D1:
-    print(D1[i])
-
-
-# In[12]:
+# In[7]:
 
 
 def store_data():
@@ -229,6 +215,7 @@ def store_data():
         for i in item_ids:
             for r in REGIONS:
                 data = fetch_data(region_id=r, item_id=i)
+                data[str(i)]['region_id'] = r
                 json_data.update(data)
                 bar()
     
@@ -272,13 +259,13 @@ def store_data():
     
 
 
-# In[13]:
+# In[8]:
 
 
 store_data()
 
 
-# In[17]:
+# In[ ]:
 
 
 # Converting to .py

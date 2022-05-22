@@ -120,6 +120,7 @@ def fetch_data(region_id, item_id):
     
     return raw_material_data
 
+
 def store_data():
     """ GET Requests the Eve Online API endpoint https://market.fuzzwork.co.uk/aggregates/?region=30000142&types=9828 
     which takes two params region and types. This JSON data is then stored
@@ -150,6 +151,7 @@ def store_data():
         for i in item_ids:
             for r in REGIONS:
                 data = fetch_data(region_id=r, item_id=i)
+                data[str(i)]['region_id'] = r
                 json_data.update(data)
                 bar()
     
