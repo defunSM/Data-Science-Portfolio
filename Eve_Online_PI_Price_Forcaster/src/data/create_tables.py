@@ -15,9 +15,9 @@ DATABASE_NAME = os.environ.get("DATABASE_NAME")
 DATABASE_USER = os.environ.get("DATABASE_USER")
 DATABASE_PASSWORD = os.environ.get("DATABASE_PASSWORD")
 
-def create_tables():
+def create_raw_market_data_table():
     """ create tables in the PostgreSQL database"""
-    commands = (
+    command = (
         """
         CREATE TABLE raw_market_data (
             id SERIAL PRIMARY KEY,
@@ -36,8 +36,7 @@ def create_tables():
         cur = conn.cursor()
         
         # create table one by one
-        for command in commands:
-            cur.execute(command)
+        cur.execute(command)
         # close communication with the PostgreSQL database server
         cur.close()
         # commit the changes
@@ -51,6 +50,5 @@ def create_tables():
         if conn is not None:
             conn.close()
 
-
 if __name__ == '__main__':
-    create_tables()
+    create_raw_market_data_table()
