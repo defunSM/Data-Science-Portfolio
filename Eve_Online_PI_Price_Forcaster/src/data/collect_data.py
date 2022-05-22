@@ -14,6 +14,9 @@ a table raw_market_data.
 # TODO: api calls to https://www.fuzzwork.co.uk/api/typeid.php?typename=Microorganisms to
 # TODO: to get the typeID. (reducing about 30 seconds from the whole process)
 
+# TODO: Move constants into a seperate folder to be used in other locations since
+# TODO: database constants are needed in both collect_data and create_tables
+
 # ## Imports
 import psycopg2
 import os
@@ -47,18 +50,6 @@ FILENAME = '../src/data/items.txt'
 
 # region ids that will be used in the function collect_data 
 REGIONS = [0, 30000142, 30000144, 60003760, 60008494, 60011866, 60004588, 60005686]
-
-# find .env by walking up directories until it's found
-dotenv_path = find_dotenv()
-
-# load up the entries as environment variables
-load_dotenv(dotenv_path)
-
-DATABASE_URL = os.environ.get('DATABASE_URL')
-DATABASE_NAME = os.environ.get("DATABASE_NAME")
-DATABASE_USER = os.environ.get("DATABASE_USER")
-DATABASE_PASSWORD = os.environ.get("DATABASE_PASSWORD")
-
 
 def get_raw_material_names():
     """ Return a list of raw material names from from FILENAME
