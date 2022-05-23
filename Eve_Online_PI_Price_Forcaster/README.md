@@ -1,8 +1,8 @@
 Eve Online PI Price Forcaster
 ==============================
 
-In Eve Online there are raw materials that can be extracted from planets. These raw materials are then refined into other various refined goods often sold in the markets. 
-This project is an attempt to use machine learning techniques to try to predict/forcast the future price of these goods. Ultimately to decide which raw materials players should invest time in extracting and when to sell for the most profit as players sell in bulk. 
+In Eve Online, raw materials can be extracted from planets. These raw materials are then refined into various refined goods often sold in the markets. 
+This project is an attempt to use machine learning techniques to try to predict/forcast the future price of these goods. Ultimately to decide which raw materials players should invest time in extracting and when to sell for the most profit as players sell in bulk. We will also try to see if there are any arbitrage opportunities, aka someone is buying for higher than what someone is selling between different markets. 
 
 Project Organization
 ------------
