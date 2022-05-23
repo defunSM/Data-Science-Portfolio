@@ -3,13 +3,14 @@
 
 # ## Imports
 
-# In[24]:
+# In[56]:
 
 
 import psycopg2
 import os
 import requests
 import json
+import pathlib
 from os import path
 from dotenv import load_dotenv, find_dotenv
 from datetime import datetime
@@ -40,25 +41,7 @@ FILENAME = 'src/data/items.txt'
 REGIONS = [0, 30000142, 30000144, 60003760, 60008494, 60011866, 60004588, 60005686]
 
 
-# In[25]:
-
-
-#!/usr/bin/python
-
-import psycopg2
-import os
-from dotenv import load_dotenv, find_dotenv
-
-# find .env by walking up directories until it's found
-dotenv_path = find_dotenv()
-
-# load up the entries as environment variables
-load_dotenv(dotenv_path)
-
-DATABASE_URL = os.environ.get('DATABASE_URL')
-DATABASE_NAME = os.environ.get("DATABASE_NAME")
-DATABASE_USER = os.environ.get("DATABASE_USER")
-DATABASE_PASSWORD = os.environ.get("DATABASE_PASSWORD")
+# In[57]:
 
 
 def create_tables():
@@ -98,7 +81,7 @@ def create_tables():
             conn.close()
 
 
-# In[26]:
+# In[58]:
 
 
 #create_tables()
@@ -111,7 +94,7 @@ def create_tables():
 
 # ## Data Collection
 
-# In[27]:
+# In[59]:
 
 
 def get_raw_material_names():
@@ -185,7 +168,7 @@ def fetch_data(region_id, item_id):
     return raw_material_data
 
 
-# In[28]:
+# In[60]:
 
 
 def store_data():
@@ -261,29 +244,17 @@ def store_data():
     
 
 
-# In[29]:
+# In[61]:
 
 
 #fetch_data(0, [34,35,36,37,38,39,40])
 
 
-# In[30]:
+# In[62]:
 
 
 if __name__ == "__main__":
     store_data()
-
-
-# In[33]:
-
-
-
-
-
-# In[34]:
-
-
-
 
 
 # ## Preprocessing
