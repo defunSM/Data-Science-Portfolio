@@ -34,7 +34,6 @@ update:
 
 ## Collect data and store into database
 collection:
-	
 	$(PYTHON_INTERPRETER) src/data/collect_data.py
 
 
