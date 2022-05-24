@@ -1,4 +1,4 @@
-Eve Online PI Price Forecaster
+Eve Online Price Forecaster
 ==============================
 
 In Eve Online, raw materials can be extracted from planets. These raw materials are then refined into various refined goods often sold in the markets. 
