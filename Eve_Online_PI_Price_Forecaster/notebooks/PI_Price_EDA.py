@@ -3,7 +3,7 @@
 
 # ## Imports
 
-# In[1]:
+# In[33]:
 
 
 import psycopg2
@@ -11,6 +11,8 @@ import os
 import requests
 import json
 import pathlib
+import pickle
+import hashlib
 from os import path
 from dotenv import load_dotenv, find_dotenv
 from datetime import datetime
@@ -37,11 +39,20 @@ DATABASE_PORT = os.environ.get("DATABASE_PORT")
 # Filepath that contains the items that we are interested in forcasting
 ABS_FILE_PATH_ITEMS = 'src/data/items.txt'
 
+ITEMS_PATH = 'data/interim/pickle_items.p'
+HASH_PATH = 'data/interim/hash_for_items.p'
+
 # region ids that will be used in the function collect_data 
 REGIONS = [0, 30000142, 30000144, 60003760, 60008494, 60011866, 60004588, 60005686]
 
 
-# In[2]:
+# In[27]:
+
+
+#pickle_data(['palce'], HASH_PATH)
+
+
+# In[19]:
 
 
 def create_tables():
@@ -91,13 +102,87 @@ def create_tables():
 # ## Table of Contents
 # 
 # 1. [Data Collection](#data-collection)
-# 2. [Preprocessing](#preprocessing)
+# 2. [Data Validation](#data-validation)
+# 3. [Preprocessing](#preprocessing)
 
 # ## Data Collection
 
-# In[5]:
+# In[20]:
 
 
+def compute_hash(filepath):
+    """ Hashlib library to compute a hash for a file using sha256 algo.
+
+    Args:
+        filepath (string): path to the file in which we want to hash
+
+    Returns:
+        string: A hexadecimal string of the hash
+    """
+    
+    # The size of each read from the file (64Kb)
+    BLOCK_SIZE = 65536 
+
+    # Create the hash object
+    file_hash = hashlib.sha256() 
+    
+    with open(filepath, 'rb') as f:
+        fb = f.read(BLOCK_SIZE)
+        
+        # While there is still data being read from the file
+        while len(fb) > 0: 
+            file_hash.update(fb) 
+            fb = f.read(BLOCK_SIZE) 
+
+    return file_hash.hexdigest() # Get the hexadecimal digest of the hash
+    
+def compare_hashs(hash_for_items_path=HASH_PATH):
+    """ Compares the current hash to the hash of items.txt and returns True when the same otherwise
+    returns false.
+
+    Args:
+        hash_for_items_path (file path): The file path for the current hash we want to compare.
+    Returns:
+        boolean: comparing the current hash with the new hash
+    """
+    
+    # Open the hash_for_items that is stored
+    with open(HASH_PATH, 'rb') as pickle_file:
+        current_hash = pickle.load(pickle_file)
+    
+    new_hash = compute_hash(ABS_FILE_PATH_ITEMS)
+    
+    if current_hash == new_hash:
+        return True
+    else:
+        return False
+
+def check_if_items_changed():
+    """ Check for item added/removed from src/data/items.txt. If changes are detected a new hash will be created and items.p will be stored in data/interim for future usage to reduce API calls
+    for getting typeIDs for raw material names. If pickle_items.p doesn't exist returns True by default.
+
+    Returns:
+        Boolean: if file has changed than returns True otherwise returns False. Default to True if file non existant.
+    """
+        
+    # Boolean variables to determine if those files exist
+    pickled_items_exists = os.path.exists(ITEMS_PATH)
+    items_hash_exists = os.path.exists(HASH_PATH)
+    
+    # If the files doesn't exist will Return
+    if pickled_items_exists:
+        print("Did not find ", ITEMS_PATH)
+        return True
+    else:
+        if items_hash_exists:
+            print("Did not find ", HASH_PATH)
+            return True
+        else:
+            hash_match = compare_hashs()
+            return hash_match
+        
+    return True
+    
 def get_raw_material_names():
     """ Return a list of raw material names from from ABS_FILE_PATH_ITEMS
 
@@ -105,12 +190,11 @@ def get_raw_material_names():
         raw_material_names: item names of interest for forcast
     """
     
-    
     # List that will be returned after it has been populated
     raw_material_names = []
     
     if path.exists(ABS_FILE_PATH_ITEMS):
-        
+
         file = open(ABS_FILE_PATH_ITEMS, "r")
         
         # Read each line from ABS_FILE_PATH_ITEMS and append each item name into the list
@@ -121,7 +205,8 @@ def get_raw_material_names():
         
         # Make sure that the item names are not repeated
         raw_material_names = list(set(raw_material_names))
-    
+        
+        print(raw_material_names)
         return raw_material_names
         
     else:
@@ -212,6 +297,44 @@ def insert_data(table_name='market_data', region_id=None, json_data=None):
 # In[9]:
 
 
+# Checking for hash
+#compute_hash(ABS_FILE_PATH_ITEMS)
+
+
+# In[21]:
+
+
+# Functions related to serialization
+
+def pickle_data(item, filepath):
+    """ Picklizes the 'item' and saves it to a 'filepath'.
+
+    Args:
+        item (any): Object to be picklized
+        filepath (string): The filepath that you want to save the picklized object to.
+    """
+    with open(filepath, 'wb') as pickle_file:
+        pickle_items = pickle.dump(item, pickle_file)
+        
+def load_pickle_data(filepath):
+    """ Loads a picklized object from a pickle 'filepath'.
+
+    Args:
+        filepath (string): filepath to the picklized data
+
+    Returns:
+        any: The picklized data that was stored in the filepath
+    """
+    
+    with open(filepath, 'rb') as pickle_file:
+        data = pickle.load(pickle_file)
+        
+    return data
+
+
+# In[14]:
+
+
 # TODO: Implement concurrency when doing API calls
 
 def store_data():
@@ -232,8 +355,18 @@ def store_data():
     Types: The ID of the raw material, List of IDs: https://docs.google.com/spreadsheets/d/1X7mi7j-_yV5lq-Yd2BraE-t4QE_a4IKv2ZuCBSLD6QU/edit?usp=sharing
     """
     
-    items = get_raw_material_names()
-    item_ids = [ get_item_id(i) for i in items ]
+    # Checks if items in items.txt has changed and if it did makes api calls
+    items_changed = compare_hashs(HASH_PATH)
+    
+    if items_changed == True:
+        items = get_raw_material_names()
+        item_ids = [ get_item_id(i) for i in items ]
+        pickle_data(item_ids, HASH_PATH)
+        
+    else:
+        item_ids = load_pickle_data(ITEMS_PATH)
+        
+    
 
     json_data = {}
 
@@ -254,10 +387,10 @@ def store_data():
     
 
 
-# In[11]:
+# In[38]:
 
 
-
+#path.exists(HASH_PATH)
 
 
 # In[10]:
