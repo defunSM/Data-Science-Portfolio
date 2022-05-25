@@ -52,14 +52,14 @@ REGIONS = [0, 30000142, 30000144, 60003760, 60008494, 60011866, 60004588, 600056
 #pickle_data(['palce'], HASH_PATH)
 
 
-# In[19]:
+# In[39]:
 
 
-def create_tables():
-    """ create tables in the PostgreSQL database"""
+def create_table(table_name):
+    """ create a table by the name of 'table_name' provided in the PostgreSQL database"""
     command = (
         """
-        CREATE TABLE market_data (
+        CREATE TABLE """ + table_name + """ (
             id SERIAL PRIMARY KEY,
             time TIMESTAMP,
             region_id INTEGER,
@@ -84,7 +84,7 @@ def create_tables():
         # commit the changes
         conn.commit()
         
-        print("Table created successfully")
+        print("Table", table_name, "created successfully")
         
     except (Exception, psycopg2.DatabaseError) as error:
         print(error)
@@ -93,10 +93,10 @@ def create_tables():
             conn.close()
 
 
-# In[3]:
+# In[40]:
 
 
-#create_tables()
+#create_table('test_market_data')
 
 
 # ## Table of Contents
@@ -157,31 +157,31 @@ def compare_hashs(hash_for_items_path=HASH_PATH):
     else:
         return False
 
-def check_if_items_changed():
-    """ Check for item added/removed from src/data/items.txt. If changes are detected a new hash will be created and items.p will be stored in data/interim for future usage to reduce API calls
-    for getting typeIDs for raw material names. If pickle_items.p doesn't exist returns True by default.
+# def check_if_items_changed():
+#     """ Check for item added/removed from src/data/items.txt. If changes are detected a new hash will be created and items.p will be stored in data/interim for future usage to reduce API calls
+#     for getting typeIDs for raw material names. If pickle_items.p doesn't exist returns True by default.
 
-    Returns:
-        Boolean: if file has changed than returns True otherwise returns False. Default to True if file non existant.
-    """
+#     Returns:
+#         Boolean: if file has changed than returns True otherwise returns False. Default to True if file non existant.
+#     """
         
-    # Boolean variables to determine if those files exist
-    pickled_items_exists = os.path.exists(ITEMS_PATH)
-    items_hash_exists = os.path.exists(HASH_PATH)
+#     # Boolean variables to determine if those files exist
+#     pickled_items_exists = os.path.exists(ITEMS_PATH)
+#     items_hash_exists = os.path.exists(HASH_PATH)
     
-    # If the files doesn't exist will Return
-    if pickled_items_exists:
-        print("Did not find ", ITEMS_PATH)
-        return True
-    else:
-        if items_hash_exists:
-            print("Did not find ", HASH_PATH)
-            return True
-        else:
-            hash_match = compare_hashs()
-            return hash_match
+#     # If the files doesn't exist will Return
+#     if pickled_items_exists:
+#         print("Did not find ", ITEMS_PATH)
+#         return True
+#     else:
+#         if items_hash_exists:
+#             print("Did not find ", HASH_PATH)
+#             return True
+#         else:
+#             hash_match = compare_hashs()
+#             return hash_match
         
-    return True
+#     return True
     
 def get_raw_material_names():
     """ Return a list of raw material names from from ABS_FILE_PATH_ITEMS
@@ -337,7 +337,7 @@ def load_pickle_data(filepath):
 
 # TODO: Implement concurrency when doing API calls
 
-def store_data():
+def store_data(table_name="market_data"):
     """ GET Requests the Eve Online API endpoint https://market.fuzzwork.co.uk/aggregates/?region=30000142&types=9828 
     which takes two params region and types. This JSON data is then stored
     
@@ -385,12 +385,6 @@ def store_data():
     print("Successfully stored data for all regions!")
     
     
-
-
-# In[38]:
-
-
-#path.exists(HASH_PATH)
 
 
 # In[10]:

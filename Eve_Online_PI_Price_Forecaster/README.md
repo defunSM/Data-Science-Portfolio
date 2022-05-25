@@ -59,6 +59,9 @@ Project Organization
 2. [Data Collection](#data-collection)
 
 # 1. Setup Instructions
+    1. run `make requirements` to install dependencies from requirements.txt and set up environment
+    2. create .env file and store DATABASE_URL, DATABASE_NAME,DATABASE_USER, DATABASE_PASSWORD, DATABASE_PORT for Postgresql database.
+    3. run `make update && make collection` to run collect_data.py which will store the JSON data into the database.
 
 # 2. Data Collection
 ![](docs/ERD.svg)
