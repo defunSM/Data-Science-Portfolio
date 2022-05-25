@@ -57,17 +57,21 @@ Project Organization
 # Table of Contents
 1. [Setup Instructions](#setup-instructions)
 2. [Data Collection](#data-collection)
+3. [References](#references)
 
-# 1. Setup Instructions
+# Setup Instructions
     1. run `make requirements` to install dependencies from requirements.txt and set up environment
     2. create .env file and store DATABASE_URL, DATABASE_NAME,DATABASE_USER, DATABASE_PASSWORD, DATABASE_PORT for Postgresql database.
     3. run `make update && make collection` to run collect_data.py which will store the JSON data into the database.
 
-# 2. Data Collection
+# Data Collection
 ![](docs/ERD.svg)
 
 
 
+# References 
+[Hashlib](https://docs.python.org/3/library/hashlib.html) - For reducing API calls by detecting when items.txt has been changed.
 
+[Psycopg](https://www.psycopg.org/) - Accessing Postgresql databases within python.
 
 <p><small>Project based on the <a target="_blank" href="https://drivendata.github.io/cookiecutter-data-science/">cookiecutter data science project template</a>. #cookiecutterdatascience</small></p>
