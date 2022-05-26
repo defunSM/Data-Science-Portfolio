@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 import requests
 import path
 
@@ -26,7 +28,6 @@ def get_raw_material_names():
         # Make sure that the item names are not repeated
         raw_material_names = list(set(raw_material_names))
         
-        print(raw_material_names)
         return raw_material_names
         
     else:

@@ -147,7 +147,6 @@ def fetch_and_store_data(table_name="market_data"):
         item_ids = load_pickle_data(ITEMS_PATH)
         
     
-
     json_data = {}
 
     # Fetch the data for each region and raw material id
