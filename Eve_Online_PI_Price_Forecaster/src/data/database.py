@@ -15,20 +15,21 @@ store_api_data
 """
 
 import json
-import datetime
 import psycopg2
+import sys
 
+from datetime import datetime
 from alive_progress import alive_bar
 
-from .constants import DATABASE_URL, DATABASE_USER, DATABASE_PASSWORD, DATABASE_NAME, DATABASE_PORT
-from .constants import HASH_PATH, ITEMS_PATH, ABS_FILE_PATH_ITEMS
-from .constants import REGIONS
+from constants import DATABASE_URL, DATABASE_USER, DATABASE_PASSWORD, DATABASE_NAME, DATABASE_PORT
+from constants import HASH_PATH, ITEMS_PATH, ABS_FILE_PATH_ITEMS
+from constants import REGIONS
 
-from .api import get_item_id, get_raw_material_names, fetch_data
+from api import get_item_id, get_raw_material_names, fetch_data
 
-from .hash import compute_hash
+from hashs import compute_hash
 
-from .pickle_helpers import load_pickle_data, pickle_data
+from pickle_helpers import load_pickle_data, pickle_data
 
 def connect_to_database():
     """ Connects to the postgresql database
@@ -158,8 +159,13 @@ def fetch_and_store_data(table_name="market_data"):
             data = fetch_data(region_id=r, item_id=item_ids)
             
             # Storing the data into a postgresql table
-            insert_data_into_table(table_name='market_data', region_id=r, json_data=data)
+            insert_data_into_table(table_name, region_id=r, json_data=data)
             bar()
     
     print("Successfully stored data for all regions!")
-    
+
+if __name__=='__main__':
+    if sys.argv[1]:
+        fetch_and_store_data(sys.argv[1])
+    else:
+        fetch_and_store_data() 

@@ -1,9 +1,9 @@
 #!/usr/bin/env python
 
 import requests
-import path
+from os import path
 
-from .constants import ABS_FILE_PATH_ITEMS
+from constants import ABS_FILE_PATH_ITEMS
 
 def get_raw_material_names():
     """ Return a list of raw material names from from ABS_FILE_PATH_ITEMS

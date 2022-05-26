@@ -31,6 +31,10 @@ update:
 	$(PYTHON_INTERPRETER) -m nbconvert notebooks/PI_Price_EDA.ipynb --to python
 	cp notebooks/PI_Price_EDA.py src/data/get_data.py
 
+# Test various functions
+test:
+	$(PYTHON_INTERPRETER) src/data/database.py "test_market_data"
+
 
 ## Collect data and store into database
 collection:
