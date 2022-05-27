@@ -45,6 +45,35 @@ def connect_to_database():
                             port=DATABASE_PORT)
     return conn
 
+def postgresql_command(command: str) -> None:
+    """ Execute a postgresql command
+
+    Args:
+        command (str): 
+    """
+    
+    conn = connect_to_database()
+    try:
+
+        # connect to the PostgreSQL server
+        cur = conn.cursor()
+        
+        # create table one by one
+        cur.execute(command)
+        # close communication with the PostgreSQL database server
+        cur.close()
+        # commit the changes
+        conn.commit()
+        
+        print("Command executed successfully")
+        
+    except (Exception, psycopg2.DatabaseError) as error:
+        print(error)
+    finally:
+        if conn is not None:
+            conn.close()
+    
+
 def insert_data_into_table(table_name='market_data', region_id=None, json_data=None):
     """ Connects with postgresql database and inserts records into a table.
 
@@ -94,26 +123,10 @@ def create_table(table_name):
         )
         """)
     
-    conn = connect_to_database()
-    try:
+    postgresql_command(command)
 
-        # connect to the PostgreSQL server
-        cur = conn.cursor()
-        
-        # create table one by one
-        cur.execute(command)
-        # close communication with the PostgreSQL database server
-        cur.close()
-        # commit the changes
-        conn.commit()
-        
-        print("Table", table_name, "created successfully")
-        
-    except (Exception, psycopg2.DatabaseError) as error:
-        print(error)
-    finally:
-        if conn is not None:
-            conn.close()
+    
+    
             
 # TODO: Implement concurrency when doing API calls
 

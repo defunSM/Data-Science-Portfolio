@@ -215,7 +215,7 @@ latex_documents = [
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    ('index', 'eve_online_pi_price_forcaster', u'Eve Online PI Price Forcaster Documentation',
+    ('index', 'eve_online_pi_price_forecaster', u'Eve Online PI Price Forecaster Documentation',
      [u"Salman Hossain"], 1)
 ]
 
@@ -229,8 +229,8 @@ man_pages = [
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-    ('index', 'eve_online_pi_price_forcaster', u'Eve Online PI Price Forcaster Documentation',
-     u"Salman Hossain", 'Eve Online PI Price Forcaster',
+    ('index', 'eve_online_pi_price_forecaster', u'Eve Online PI Price Forecaster Documentation',
+     u"Salman Hossain", 'Eve Online PI Price Forecaster',
      'Using Machine Learning Techniques to forecast future commodity prices in Eve Online in order to create recommendations on which commodities are most profitable.', 'Miscellaneous'),
 ]
 
