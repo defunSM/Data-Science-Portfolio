@@ -3,7 +3,7 @@
 import requests
 from os import path
 
-from constants import ABS_FILE_PATH_ITEMS
+from src.data.constants import ABS_FILE_PATH_ITEMS
 
 def get_raw_material_names():
     """ Return a list of raw material names from from ABS_FILE_PATH_ITEMS

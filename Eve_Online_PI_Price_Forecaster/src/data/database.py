@@ -8,6 +8,7 @@ database. Some constants are needed to make connection with the database. Once c
 Contains:
 
 connect_to_database
+postgresql_command
 create_table
 insert_data_into_table
 store_api_data
@@ -21,15 +22,13 @@ import sys
 from datetime import datetime
 from alive_progress import alive_bar
 
-from constants import DATABASE_URL, DATABASE_USER, DATABASE_PASSWORD, DATABASE_NAME, DATABASE_PORT
-from constants import HASH_PATH, ITEMS_PATH, ABS_FILE_PATH_ITEMS
-from constants import REGIONS
+from src.data.constants import DATABASE_URL, DATABASE_USER, DATABASE_PASSWORD, DATABASE_NAME, DATABASE_PORT
+from src.data.constants import HASH_PATH, ITEMS_PATH, ABS_FILE_PATH_ITEMS
+from src.data.constants import REGIONS
 
-from api import get_item_id, get_raw_material_names, fetch_data
-
-from hashs import compute_hash
-
-from pickle_helpers import load_pickle_data, pickle_data
+from src.data.api import get_item_id, get_raw_material_names, fetch_data
+from src.data.hashs import compute_hash
+from src.data.pickle_helpers import load_pickle_data, pickle_data
 
 def connect_to_database():
     """ Connects to the postgresql database
@@ -45,11 +44,11 @@ def connect_to_database():
                             port=DATABASE_PORT)
     return conn
 
-def postgresql_command(command: str) -> None:
-    """ Execute a postgresql command
+def postgresql_command(command: str, results: bool = False) -> None:
+    """ Execute a postgresql command, if results is True will also return the query results.
 
     Args:
-        command (str): 
+        command (str): The postgresql query as a string.
     """
     
     conn = connect_to_database()
@@ -60,19 +59,26 @@ def postgresql_command(command: str) -> None:
         
         # create table one by one
         cur.execute(command)
+        
+        if results:
+            query_results = cur.fetchall()
+        
         # close communication with the PostgreSQL database server
         cur.close()
+        
         # commit the changes
         conn.commit()
         
         print("Command executed successfully")
+        
+        if results:
+            return query_results
         
     except (Exception, psycopg2.DatabaseError) as error:
         print(error)
     finally:
         if conn is not None:
             conn.close()
-    
 
 def insert_data_into_table(table_name='market_data', region_id=None, json_data=None):
     """ Connects with postgresql database and inserts records into a table.

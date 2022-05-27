@@ -9,11 +9,12 @@ def pickle_data(item, filepath):
         item (any): Object to be picklized
         filepath (string): The filepath that you want to save the picklized object to.
     """
+    
     with open(filepath, 'wb') as pickle_file:
         pickle_items = pickle.dump(item, pickle_file)
         
 def load_pickle_data(filepath):
-    """ Loads a picklized object from a pickle 'filepath'.
+    """ Loads a picklized object from a 'filepath'.
 
     Args:
         filepath (string): filepath to the picklized data
