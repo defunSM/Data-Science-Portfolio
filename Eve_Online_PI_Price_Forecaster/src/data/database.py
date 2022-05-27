@@ -49,9 +49,9 @@ def insert_data_into_table(table_name='market_data', region_id=None, json_data=N
     """ Connects with postgresql database and inserts records into a table.
 
     Args:
-        table_name (str, optional): _description_. Defaults to 'raw_material_data'.
-        region_id (int, optional): _description_. Defaults to None.
-        json_data (json, optional): _description_. Defaults to None.
+        table_name (str, optional): The name of the table that the data will be inserted into. Defaults to 'raw_material_data'.
+        region_id (int, optional): The region of the market. Defaults to None.
+        json_data (json, optional): The JSON market data from the API endpoint. Defaults to None.
     """
     
     time = datetime.now()
