@@ -6,11 +6,10 @@ Initializes data/interim/pickle_items.p and data/interim/hash_for_items.p from t
 
 """
 
-import os, sys
-
+import sys
+import subprocess
 
 from os import path
-
 from typing import List
 
 import constants as cnt
@@ -29,6 +28,7 @@ def initialize_files(item_names: List = ["Silicon"]) -> None:
     if path.exists(cnt.ABS_FILE_PATH_ITEMS):
         pass
     else:
+        
         f = open(cnt.ABS_FILE_PATH_ITEMS, "a")
         f.writelines(item_names)
         f.close()
@@ -44,7 +44,6 @@ def initialize_files(item_names: List = ["Silicon"]) -> None:
     else:
         # picklize the item_names
         pickler.pickle_data(item_names, cnt.ITEMS_PATH)
-        
 
 if __name__ == '__main__':
     print(sys.path)
