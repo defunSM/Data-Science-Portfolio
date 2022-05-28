@@ -379,7 +379,7 @@ def store_data(table_name="market_data"):
             data = fetch_data(region_id=r, item_id=item_ids)
             
             # Storing the data into a postgresql table
-            insert_data(table_name='market_data', region_id=r, json_data=data)
+            insert_data(table_name, region_id=r, json_data=data)
             bar()
     
     print("Successfully stored data for all regions!")
@@ -391,7 +391,7 @@ def store_data(table_name="market_data"):
 
 
 if __name__ == "__main__":
-    store_data()
+    store_data("test_market_data")
 
 
 # ## Preprocessing

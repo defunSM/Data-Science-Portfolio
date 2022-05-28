@@ -3,7 +3,7 @@
 import requests
 from os import path
 
-from src.data.constants import ABS_FILE_PATH_ITEMS
+import constants as cnt
 
 def get_raw_material_names():
     """ Return a list of raw material names from from ABS_FILE_PATH_ITEMS
@@ -15,9 +15,9 @@ def get_raw_material_names():
     # List that will be returned after it has been populated
     raw_material_names = []
     
-    if path.exists(ABS_FILE_PATH_ITEMS):
+    if path.exists(cnt.ABS_FILE_PATH_ITEMS):
 
-        file = open(ABS_FILE_PATH_ITEMS, "r")
+        file = open(cnt.ABS_FILE_PATH_ITEMS, "r")
         
         # Read each line from ABS_FILE_PATH_ITEMS and append each item name into the list
         for item in file.readlines():
@@ -31,7 +31,7 @@ def get_raw_material_names():
         return raw_material_names
         
     else:
-        print(ABS_FILE_PATH_ITEMS, "does not exist.")
+        print(cnt.ABS_FILE_PATH_ITEMS, "does not exist.")
         
 def get_item_id(item_name=None):
     """ Returns the item ID from using the API endpoint https://www.fuzzwork.co.uk/api/typeid.php?typename=Silicon

@@ -22,13 +22,11 @@ import sys
 from datetime import datetime
 from alive_progress import alive_bar
 
-from src.data.constants import DATABASE_URL, DATABASE_USER, DATABASE_PASSWORD, DATABASE_NAME, DATABASE_PORT
-from src.data.constants import HASH_PATH, ITEMS_PATH, ABS_FILE_PATH_ITEMS
-from src.data.constants import REGIONS
+import constants as cnt
 
-from src.data.api import get_item_id, get_raw_material_names, fetch_data
-from src.data.hashs import compute_hash
-from src.data.pickle_helpers import load_pickle_data, pickle_data
+import api
+import hashs
+import pickle_helpers as pickler
 
 def connect_to_database():
     """ Connects to the postgresql database
@@ -37,11 +35,11 @@ def connect_to_database():
         database connection: used to execute sql queries or creating tables.
     """
     
-    conn = psycopg2.connect(host=DATABASE_URL,
-                            database=DATABASE_NAME,
-                            user=DATABASE_USER,
-                            password=DATABASE_PASSWORD,
-                            port=DATABASE_PORT)
+    conn = psycopg2.connect(host=cnt.DATABASE_URL,
+                            database=cnt.DATABASE_NAME,
+                            user=cnt.DATABASE_USER,
+                            password=cnt.DATABASE_PASSWORD,
+                            port=cnt.DATABASE_PORT)
     return conn
 
 def postgresql_command(command: str, results: bool = False) -> None:
@@ -155,27 +153,27 @@ def fetch_and_store_data(table_name="market_data"):
     """
     
     # Checks if items in items.txt has changed and if it did makes api calls
-    old_hash = load_pickle_data(HASH_PATH)
-    new_hash = compute_hash(ABS_FILE_PATH_ITEMS)
+    old_hash = pickler.load_pickle_data(cnt.HASH_PATH)
+    new_hash = hashs.compute_hash(cnt.ABS_FILE_PATH_ITEMS)
     
     if old_hash != new_hash:
-        items = get_raw_material_names()
-        item_ids = [ get_item_id(i) for i in items ]
-        pickle_data(item_ids, HASH_PATH)
+        items = api.get_raw_material_names()
+        item_ids = [ api.get_item_id(i) for i in items ]
+        pickler.pickle_data(item_ids, cnt.HASH_PATH)
         
     else:
-        item_ids = load_pickle_data(ITEMS_PATH)
+        item_ids = pickler.load_pickle_data(cnt.ITEMS_PATH)
         
     
     json_data = {}
 
     # Fetch the data for each region and raw material id
     print("Attempting to fetch and insert data...")
-    with alive_bar(len(REGIONS), force_tty=True) as bar:
-        for r in REGIONS:
+    with alive_bar(len(cnt.REGIONS), force_tty=True) as bar:
+        for r in cnt.REGIONS:
             
             # Fetching the data
-            data = fetch_data(region_id=r, item_id=item_ids)
+            data = api.fetch_data(region_id=r, item_id=item_ids)
             
             # Storing the data into a postgresql table
             insert_data_into_table(table_name, region_id=r, json_data=data)
