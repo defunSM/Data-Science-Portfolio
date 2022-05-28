@@ -1,0 +1,6 @@
+make --dry-run --always-make --keep-going --print-directory
+make: Entering directory '/home/salman1567/code/Data Science - Machine Learning Projects/Data Science Portfolio'
+make: Leaving directory '/home/salman1567/code/Data Science - Machine Learning Projects/Data Science Portfolio'
+ 
+make: *** No targets specified and no makefile found.  Stop.
+
