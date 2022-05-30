@@ -28,7 +28,8 @@ import api
 import hashs
 import pickle_helpers as pickler
 
-# TODO: Add check if .env exists
+# TODO: Add check if .env exists for connect_to_database()
+# TODO: Use f-string for fetch_data()
 
 def connect_to_database():
     """ Connects to the postgresql database using .env file.

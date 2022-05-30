@@ -1,6 +1,9 @@
 import hashlib
 
-def compute_hash(filepath):
+# The size of each read from the file (64Kb)
+BLOCK_SIZE = 65536
+
+def compute_hash(filepath: str) -> str:
     """ Hashlib library to compute a hash for a file using sha256 algo.
 
     Args:
@@ -8,10 +11,7 @@ def compute_hash(filepath):
 
     Returns:
         string: A hexadecimal string of the hash
-    """
-    
-    # The size of each read from the file (64Kb)
-    BLOCK_SIZE = 65536 
+    """ 
 
     # Create the hash object
     file_hash = hashlib.sha256() 
