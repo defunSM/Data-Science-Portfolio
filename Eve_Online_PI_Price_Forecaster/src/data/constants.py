@@ -19,11 +19,13 @@ DATABASE_PORT = os.environ.get("DATABASE_PORT")
 
 """---------------------- filepath and id constants --------------------------"""
 
-# Filepath that contains the items that we are interested in forcasting
-ABS_FILE_PATH_ITEMS = 'src/data/items.txt'
+parent_dir = os.path.abspath(os.path.join('.'))
 
-ITEMS_PATH = 'data/interim/pickle_items.p'
-HASH_PATH = 'data/interim/hash_for_items.p'
+# Filepath that contains the items that we are interested in forcasting
+ABS_FILE_PATH_ITEMS = parent_dir + '/src/data/items.txt'
+
+ITEMS_PATH = parent_dir + '/data/interim/pickle_items.p'
+HASH_PATH = parent_dir + '/data/interim/hash_for_items.p'
 
 # region ids that will be used in the function collect_data 
 REGIONS = [0, 30000142, 30000144, 60003760, 60008494, 60011866, 60004588, 60005686]

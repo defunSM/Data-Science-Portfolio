@@ -164,8 +164,8 @@ def fetch_and_store_data(table_name="market_data"):
     if old_hash != new_hash:
         items = api.get_raw_material_names()
         item_ids = [ api.get_item_id(i) for i in items ]
-        pickler.pickle_data(item_ids, cnt.HASH_PATH)
-        
+        old_hash = new_hash
+        pickler.pickle_data(old_hash, cnt.HASH_PATH)
     else:
         item_ids = pickler.load_pickle_data(cnt.ITEMS_PATH)
         
