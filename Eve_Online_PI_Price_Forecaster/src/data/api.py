@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 import requests
+from typing import List
 from os import path
 
 import constants as cnt
@@ -52,7 +53,7 @@ def get_item_id(item_name=None):
     if item_id:
         return item_id
     
-def fetch_data(region_id, item_id):
+def fetch_data(region_id: int, item_id: int | List[int]):
     """ Returns JSON given an input of the region and item from an API
 
     Args:

@@ -28,8 +28,10 @@ import api
 import hashs
 import pickle_helpers as pickler
 
+# TODO: Add check if .env exists
+
 def connect_to_database():
-    """ Connects to the postgresql database
+    """ Connects to the postgresql database using .env file.
 
     Returns:
         database connection: used to execute sql queries or creating tables.
@@ -42,11 +44,12 @@ def connect_to_database():
                             port=cnt.DATABASE_PORT)
     return conn
 
-def postgresql_command(command: str, results: bool = False) -> None:
+def postgresql_command(command: str, results: bool = False) -> None | list[tuple]:
     """ Execute a postgresql command, if results is True will also return the query results.
 
     Args:
         command (str): The postgresql query as a string.
+        results (bool, optional): Determine whether to return the results of command. Defaults to False.
     """
     
     conn = connect_to_database()
@@ -165,7 +168,6 @@ def fetch_and_store_data(table_name="market_data"):
     else:
         item_ids = pickler.load_pickle_data(cnt.ITEMS_PATH)
         
-    
     json_data = {}
 
     # Fetch the data for each region and raw material id
@@ -181,6 +183,7 @@ def fetch_and_store_data(table_name="market_data"):
             bar()
     
     print("Successfully stored data for all regions!")
+
 
 if __name__=='__main__':
     if sys.argv[1]:
