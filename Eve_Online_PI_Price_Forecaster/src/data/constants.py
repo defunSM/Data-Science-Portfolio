@@ -1,5 +1,6 @@
 import os
 from dotenv import load_dotenv, find_dotenv
+from enum import Enum
 
 """---------------------- env constants --------------------------"""
 
@@ -29,3 +30,13 @@ HASH_PATH = parent_dir + '/data/interim/hash_for_items.p'
 
 # region ids that will be used in the function collect_data 
 REGIONS = [0, 30000142, 30000144, 60003760, 60008494, 60011866, 60004588, 60005686]
+
+# class Region(Enum):
+#     GLOBAL = 0
+#     JITA = 30000142
+#     PERIMETER = 30000144
+#     JITA_CNAP = 60003760
+#     AMARR = 60008494
+#     DODIXIE = 60011866
+#     RENS = 60004588
+#     HEK = 60005686
