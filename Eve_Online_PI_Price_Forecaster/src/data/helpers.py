@@ -1,6 +1,8 @@
-# Functions related to serialization
+# Helper functions
 
 import pickle
+
+"""----------------- Pickle Related Functions -------------------------"""
 
 def pickle_data(item, filepath):
     """ Picklizes the 'item' and saves it to a 'filepath'.
