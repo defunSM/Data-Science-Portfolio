@@ -14,7 +14,7 @@ from typing import List
 
 import constants as cnt
 import hashs
-import pickle_helpers as pickler
+import helpers as pickler
 
 def initialize_files(item_names: List = ["Silicon"]) -> None:
     """ Checks if items.txt exists and create items.txt based on `item_names`.
