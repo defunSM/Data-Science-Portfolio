@@ -19,5 +19,3 @@
 
 [**NYC Airbnb**](https://github.com/defunSM/Data-Science-Machine-Learning-Portfolio/blob/main/NYC_Airbnb/NYC_airbnb.ipynb) - Identifying most valuable property assets and strategies for maximizing profits for property owners in NYC from a NYC airbnb Dataset. 
 
-[**HR Analytics**](https://github.com/defunSM/Data-Science-Machine-Learning-Portfolio/tree/main/HR_Analytics) - Building a model in order for HR to make informed decisions on turnover rates.
-
