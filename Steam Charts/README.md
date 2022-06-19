@@ -5,7 +5,7 @@ In the gaming industry many games fail after their initial launch as players beg
 
 ### Problem Statement
 
-How do we accurately forecast active player at a future period of time? In order to approach this one way to begin is to determine the time series characteristics of our datasets such as trend, seasonality, noise, and stationary. Afterwards we can use some common time series models like ARIMA, LSTM and FB Prophet for forecasting.
+How to build a performant predictive model from univariate time series data? In order to approach this one way to begin is to determine the time series characteristics of our datasets such as trend, seasonality, noise, and stationary. Afterwards we can use some common time series models like ARIMA, LSTM and FB Prophet for forecasting and use metrics to evaluate their performance.
 
 ### Metrics
 

@@ -16,5 +16,5 @@
 
 [**NYC Salary Growth Predicator**](https://github.com/defunSM/NYC-Salary-Predictor) - Model to predict salary based various features and forcast expected growth of a job to help inform NYC budget. Exploratory Data Analysis of the data set from [OpenData](https://opendata.cityofnewyork.us/data/). 
 
-[**NYC Airbnb**](https://github.com/defunSM/Data-Science-Portfolio/tree/main/NYC%20Airbnb) - Identify most valuable property assets and strategies for maximizing profits for property owners in NYC from a NYC airbnb Dataset. 
+[**NYC Airbnb**](https://github.com/defunSM/Data-Science-Portfolio/tree/main/NYC%20Airbnb) - Identify the most valuable property assets and strategies for maximizing profits for property owners in NYC from a NYC airbnb Dataset. 
 
