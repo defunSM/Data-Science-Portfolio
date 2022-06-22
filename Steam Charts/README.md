@@ -16,3 +16,8 @@ In order to evaluate the performance of our models we will be using Root Mean Sq
 ---
 
 - [Project Definition](#project-definition)
+- [Setup](#setup)
+
+# Setup
+
+    pip install -r requirements.txt
