@@ -9,7 +9,7 @@ How to build a performant predictive model from univariate time series data? In 
 
 ### Metrics
 
-In order to evaluate the performance of our models we will be using Root Mean Squared Error (RMSE) and Mean Absolute Error (MAE) as metrics to evaluate our regression models.
+In order to evaluate the performance of the models we will be using Root Mean Squared Error (RMSE) and Mean Absolute Error (MAE) as metrics to evaluate our regression models.
 
 
 ## Table of Contents
