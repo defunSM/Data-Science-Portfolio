@@ -7,14 +7,16 @@
     + [Starbucks Promotional Analysis](https://github.com/defunSM/Data-Science-Portfolio/tree/main/Starbucks%20Promotion%20Analysis)
     + [NYC Salary Growth Predicator](https://github.com/defunSM/NYC-Salary-Predictor)
     + [NYC Airbnb Prices](https://github.com/defunSM/Data-Science-Portfolio/tree/main/NYC%20Airbnb)
+    + [Steam Charts](https://github.com/defunSM/Data-Science-Portfolio/tree/main/Steam%20Charts)
 
 ## Projects
 
 [**Disaster Response Classification**](https://github.com/defunSM/Data-Science-Machine-Learning-Portfolio/tree/main/Diasaster%20Response%20Classification) - Text messages as input to a **Multi-Label** classification model to identify the diasaster category. A ETL and ML pipeline to process **class imbalanced** data from [Appen](https://appen.com/) and *improved f1-score* of model using **undersampling**. 
 
-[**Starbucks Promotional Analysis**](https://github.com/defunSM/Data-Science-Portfolio/tree/main/Starbucks%20Promotion%20Analysis) - Achieve an **Optimal promotional strategy** by training a model based on the promotional data and **hypothesis testing**.
+[**Starbucks Promotional Analysis**](https://github.com/defunSM/Data-Science-Portfolio/tree/main/Starbucks%20Promotion%20Analysis) - Achieve an **optimal promotional strategy** by training a model based on the promotional data and **hypothesis testing**.
 
 [**NYC Salary Growth Predicator**](https://github.com/defunSM/NYC-Salary-Predictor) - Model to predict salary based various features and forcast expected growth of a job to help inform NYC budget. Exploratory Data Analysis of the data set from [OpenData](https://opendata.cityofnewyork.us/data/). 
 
-[**NYC Airbnb**](https://github.com/defunSM/Data-Science-Portfolio/tree/main/NYC%20Airbnb) - Identify the most valuable property assets and strategies for maximizing profits for property owners in NYC from a NYC airbnb Dataset. 
+[**NYC Airbnb**](https://github.com/defunSM/Data-Science-Portfolio/tree/main/NYC%20Airbnb) - Identify the most valuable property assets and strategies to maximize profits for property owners in NYC from a NYC airbnb Dataset. 
 
+[**Steam Charts**](https://github.com/defunSM/Data-Science-Portfolio/tree/main/Steam%20Charts) - Model and forecast **univariate time series** data of player activity in various video games with Autogression, LSTM and FB Prophet.
