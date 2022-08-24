@@ -24,5 +24,19 @@ In order to evaluate the performance of the models we will be using Root Mean Sq
     pip install -r requirements.txt
 
 ## Project Exploration and Visualizations
+Summary Statistics providing a general overview of the dataset for both players and twitch viewers for Apex Legends.
+
+![](/Steam%20Charts/visualizations/summary_statistics.png)
+
+The violin plot and line plot below indicates that most players play on Saturday around 3-4 PM.
+![](/Steam%20Charts/visualizations/players_distribution.png)
+![](/Steam%20Charts/visualizations/players_time.png)
+
+Plots of player activity and twitch viewers for Apex Legends in the month of June.
+![](/Steam%20Charts/visualizations/players_june.png)
+
+![](/Steam%20Charts/visualizations/players_trend.png)
+
+![](/Steam%20Charts/visualizations/players_decomposition.png)
 
 ## Conclusion
