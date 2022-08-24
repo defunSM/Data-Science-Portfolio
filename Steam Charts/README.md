@@ -18,6 +18,7 @@ In order to evaluate the performance of the models we will be using Root Mean Sq
 - [Project Definition](#project-definition)
 - [Setup](#setup)
 - [Exploration and Visualizations](#project-exploration-and-visualizations)
+- [Models](#models)
 - [Conclusion](#conclusion)
 
 ## Setup
@@ -43,5 +44,13 @@ The simple moving average has a trend line that has an indirect relationship. Th
 Below is a breakdown of the characteristics of the time series data into its components (trend, seasonal, residuals).
 
 ![](/Steam%20Charts/visualizations/players_decomposition.png)
+
+## Models
+
+![](/Steam%20Charts/visualizations/naive_model.png)
+
+![](/Steam%20Charts/visualizations/fbprophet_model.png)
+
+![](/Steam%20Charts/visualizations/autoregression_model.png)
 
 ## Conclusion
