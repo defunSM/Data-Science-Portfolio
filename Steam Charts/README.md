@@ -1,7 +1,7 @@
 ## Project Definition
 ### Project Overview
 
-In the gaming industry many games fail after their initial launch as players begin to decline while other games thrive and prosper. We want to be able to forecast and identify which games will continue to see growth or decline. Our datasets will consist of the 5 most currently played games on Steam as of June 2022 which are Lost Ark, Counter-Strike, Dota 2, ARK, and Apex Legends. The data will be collected from https://steamdb.info which are time series csv files.
+In the gaming industry many games experience a sharp decline in player activity after their initial launch as players move on to other games. We want to be able to forecast and identify which games will continue to see growth or decline. Our datasets will consist of the 5 most currently played games on Steam as of June 2022 which are Lost Ark, Counter-Strike, Dota 2, ARK, and Apex Legends. The data will be collected from https://steamdb.info which are time series csv files.
 
 ### Problem Statement
 
@@ -17,13 +17,14 @@ In order to evaluate the performance of the models we will be using Root Mean Sq
 
 - [Project Definition](#project-definition)
 - [Setup](#setup)
+- [Exploration and Visualizations](#project-exploration-and-visualizations)
 - [Conclusion](#conclusion)
 
 ## Setup
 
     pip install -r requirements.txt
 
-## Project Exploration and Visualizations
+## Exploration and Visualizations
 Summary Statistics providing a general overview of the dataset for both players and twitch viewers for Apex Legends.
 
 ![](/Steam%20Charts/visualizations/summary_statistics.png)
@@ -35,7 +36,11 @@ The violin plot and line plot below indicates that most players play on Saturday
 Plots of player activity and twitch viewers for Apex Legends in the month of June.
 ![](/Steam%20Charts/visualizations/players_june.png)
 
+The simple moving average has a trend line that has an indirect relationship. The slope of the trendline for the simple moving average is -11.4 and with a y-intercept of ~184000.
+
 ![](/Steam%20Charts/visualizations/players_trend.png)
+
+Below is a breakdown of the characteristics of the time series data into its components (trend, seasonal, residuals).
 
 ![](/Steam%20Charts/visualizations/players_decomposition.png)
 
