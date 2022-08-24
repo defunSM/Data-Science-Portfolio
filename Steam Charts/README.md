@@ -9,7 +9,7 @@ How to build a performant predictive model from univariate time series data? In 
 
 ### Metrics
 
-In order to evaluate the performance of the models we will be using Root Mean Squared Error (RMSE) and Mean Absolute Error (MAE) as metrics to evaluate our regression models.
+In order to evaluate the performance of the models we will be using Root Mean Squared Error (RMSE) and Mean Absolute Error (MAE) as metrics to evaluate our regression models. The RMSE will give us an idea of the standard deviation of the residuals, aka how far from the line of best fit the data points are. The MAE metric refers to the difference between the observation and the true value which will help determine the accuracy of the models. 
 
 
 ## Table of Contents
@@ -22,5 +22,7 @@ In order to evaluate the performance of the models we will be using Root Mean Sq
 ## Setup
 
     pip install -r requirements.txt
+
+## Project Exploration and Visualizations
 
 ## Conclusion
