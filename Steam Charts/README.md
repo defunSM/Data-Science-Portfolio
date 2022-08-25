@@ -13,13 +13,13 @@ In order to evaluate the performance of the models we will be using Root Mean Sq
 
 
 ## Table of Contents
----
 
 - [Project Definition](#project-definition)
 - [Setup](#setup)
 - [Exploration and Visualizations](#project-exploration-and-visualizations)
 - [Models](#models)
 - [Conclusion](#conclusion)
+- [Sources](#sources)
 
 ## Setup
 
@@ -47,10 +47,25 @@ Below is a breakdown of the characteristics of the time series data into its com
 
 ## Models
 
+### Naive Model
+The naive model assumes that the forecasted player activity will be whatever the last previous activity. This is not a good model and is only meant to serve as a baseline model for the FB Prophet and AutoRegression model. The model has about a ~22% accuracy with a RMSE of ~59000. 
+
 ![](/Steam%20Charts/visualizations/naive_model.png)
 
+### FB Prophet Model
+The FB Prophet model is an automated forecasting model meant for usage in real world business applications. The model does rather well with an accuracy of 87% and RMSE of ~19000. A huge improvement from the naive model. Some observations from the prediction made by FB Prophet seems to overexagerate the dips in player activity. One of the benefits of this model is that it works without knowing any characteristics of the univariate data.
+
 ![](/Steam%20Charts/visualizations/fbprophet_model.png)
+
+### AutoRegression Model
+In an autoregression model forecasts are made by using linear combinations of past values. The characteristics of the past values are decomposed into components such as trend, seasonal, and residuals. As such this model benefits from having prior information such as the period or likely cyclic behavior. The autoregression model outperformed the other models with a 91% accuracy and ~17000 RMSE.  
 
 ![](/Steam%20Charts/visualizations/autoregression_model.png)
 
 ## Conclusion
+
+## Sources
+
+FB Prophet - https://github.com/facebook/prophet
+
+AutoRegression - https://otexts.com/fpp2/AR.html
