@@ -3,6 +3,8 @@
 
 In the gaming industry many games experience a sharp decline in player activity after their initial launch as players move on to other games. We want to be able to forecast and identify which games will continue to see growth or decline. Our datasets will consist of the 5 most currently played games on Steam as of June 2022 which are Lost Ark, Counter-Strike, Dota 2, ARK, and Apex Legends. The data will be collected from https://steamdb.info which are time series csv files.
 
+The meat of this project are in `notebooks/eda.ipynb` which contains all of the exploratory data analysis and `notebooks/models.ipynb` which contains the the different models used to forecast player activity.
+
 ### Problem Statement
 
 How to build a performant predictive model from univariate time series data? In order to approach this one way to begin is to determine the time series characteristics of our datasets such as trend, seasonality, noise, and stationary. Afterwards we can use some common time series models like ARIMA, LSTM and FB Prophet for forecasting and use metrics to evaluate their performance.
@@ -71,6 +73,8 @@ The FB Prophet model does rather well considering there is no hyperparameter tun
 While the FB Prophet model does well it does not beat the performance of the autoregression model. The autogression model does have a downside which requires a solid understanding of the underlying data. Whereas the FB Prophet model did not require us to understand any of the data. This can also be a con for FB Prophet model is that it is more difficult to explain as it takes a neural network approach.
 
 The autoregression model is a more intuitive model and easier to understand. Similar to linear regression the univariate data is decomposed into linear combinations and thus one advantage is the model is more explainable. The disadvantage is that this model while more performant than any of the other models does require some knowledge on the data. 
+
+Throughout creating these models the most difficult aspect was the autoregression model since it required an extensive amount of exploratory data analysis beforehand. Another challenge is dealing with univariate data means that the values are dependent on each other and not independent unlike other types of datasets. This means that normal cross validation techniques can not be used.
 
 ## Sources
 
