@@ -64,6 +64,14 @@ In an autoregression model forecasts are made by using linear combinations of pa
 
 ## Conclusion
 
+Three models was created in order to forecast player activity. The naive model which served as the baseline on evaluating the other models. The FB Prophet model which was developed by Facebook for real world business applications. Last but not least the autoregression model which was developed for univariate data with known characteristics such as period, trend, and seasonality. 
+
+The FB Prophet model does rather well considering there is no hyperparameter tuning involved and no prior information about the characteristics of the univariate data is needed. The accuracy of the model is 87% with RMSE ~19120. One noticable trend in the FB Prophet model is the exageration of the down trends. 
+
+While the FB Prophet model does well it does not beat the performance of the autoregression model. The autogression model does have a downside which requires a solid understanding of the underlying data. Whereas the FB Prophet model did not require us to understand any of the data. This can also be a con for FB Prophet model is that it is more difficult to explain as it takes a neural network approach.
+
+The autoregression model is a more intuitive model and easier to understand. Similar to linear regression the univariate data is decomposed into linear combinations and thus one advantage is the model is more explainable. The disadvantage is that this model while more performant than any of the other models does require some knowledge on the data. 
+
 ## Sources
 
 FB Prophet - https://github.com/facebook/prophet
