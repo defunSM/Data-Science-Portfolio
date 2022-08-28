@@ -3,7 +3,7 @@
 
 In the gaming industry many games experience a sharp decline in player activity after their initial launch as players move on to other games. We want to be able to forecast and identify which games will continue to see growth or decline. Our datasets will consist of the 5 most currently played games on Steam as of June 2022 which are Lost Ark, Counter-Strike, Dota 2, ARK, and Apex Legends. The data will be collected from https://steamdb.info which are time series csv files.
 
-The meat of this project are in `notebooks/eda.ipynb` which contains all of the exploratory data analysis and `notebooks/models.ipynb` which contains the the different models used to forecast player activity.
+The meat of this project are in `notebooks/eda.ipynb` which contains all of the exploratory data analysis and `notebooks/models.ipynb` which contains the the different models used to forecast player activity. There is also a [medium post](https://medium.com/@salmanhossain500/forecasting-player-activity-for-apex-legends-using-time-series-data-b874495f51a2) which tries to summarize the findings and thought process behind them.
 
 ### Problem Statement
 
