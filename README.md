@@ -79,7 +79,7 @@ Data Scientist passionate about extracting actionable insights from complex data
 
 - **LinkedIn**: [LinkedIn Profile](https://www.linkedin.com/in/salman-hossain/)
 - **Email**: salmanhossain500@gmail.com
-- **Portfolio Website**: [Your Portfolio Site](https://defunsm.com)
+- **Portfolio Website**: [www.defunsm.com](https://defunsm.com)
 - **GitHub**: You're already here! 😊
 
 ---
