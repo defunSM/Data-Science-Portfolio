@@ -93,4 +93,4 @@ Data Scientist passionate about extracting actionable insights from complex data
 
 *💡 Open to collaboration and always eager to tackle new data challenges. Feel free to explore my repositories and reach out for any questions or opportunities!*
 
-![Profile Views](https://komarev.com/ghpvc/?username=yourusername&color=blue)
+![Profile Views](https://komarev.com/ghpvc/?username=defunsm&color=blue)
